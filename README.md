@@ -2,5 +2,5 @@
 
 ### Task List
 
-[x]    create tasklist
-[]     .....
+- [x]    create tasklist
+- []     .....
