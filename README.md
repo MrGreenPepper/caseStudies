@@ -1,10 +1,10 @@
-# caseStudies ;_)
+# <ins> caseStudies ;_) </ins>
 
-###  important things to know !!!
+###  <ins> important things to know !!! </ins>
 
 ...
 
-### Task List
+### <ins> Task List </ins>
 
 - [x]    create template readme
 - [ ]     .....
