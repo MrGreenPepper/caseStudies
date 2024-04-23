@@ -1,6 +1,10 @@
 # caseStudies ;_)
 
+###  important things to know !!!
+
+...
+
 ### Task List
 
-- [x]    create tasklist
-- []     .....
+- [x]    create template readme
+- [ ]     .....
