@@ -1,0 +1,20 @@
+B 3 C o m p i l a t i o n
+B 47 Equation Listing    SOLVE castStudies Using LP From line 34
+D 50 totalCosts
+D 55 powerBalance
+D 66 outputConstraint1
+D 77 outputConstraint2
+B 89 Column Listing      SOLVE castStudies Using LP From line 34
+E 92 powerGeneration
+E 117 costs
+B 125 Range Statistics    SOLVE castStudies Using LP From line 34
+B 136 Model Statistics    SOLVE castStudies Using LP From line 34
+B 149 Solution Report     SOLVE castStudies Using LP From line 34
+F 182 totalCosts
+F 184 powerBalance
+F 193 outputConstraint1
+F 210 outputConstraint2
+G 227 powerGeneration
+G 246 costs
+B 254 E x e c u t i o n
+I 254 powerGeneration
