@@ -1,20 +1,35 @@
 B 3 C o m p i l a t i o n
-B 47 Equation Listing    SOLVE castStudies Using LP From line 34
-D 50 totalCosts
-D 55 powerBalance
-D 66 outputConstraint1
-D 77 outputConstraint2
-B 89 Column Listing      SOLVE castStudies Using LP From line 34
-E 92 powerGeneration
-E 117 costs
-B 125 Range Statistics    SOLVE castStudies Using LP From line 34
-B 136 Model Statistics    SOLVE castStudies Using LP From line 34
-B 149 Solution Report     SOLVE castStudies Using LP From line 34
-F 182 totalCosts
-F 184 powerBalance
-F 193 outputConstraint1
-F 210 outputConstraint2
-G 227 powerGeneration
-G 246 costs
-B 254 E x e c u t i o n
-I 254 powerGeneration
+B 74 Include File Summary
+B 86 Equation Listing    SOLVE caseStudies Using LP From line 64
+D 89 powerBalance
+D 100 totalPlantCapacities
+D 109 generationConstraint_lowerBound
+D 120 generationConstraint_upperBound
+D 131 totalVariableCosts
+D 136 totalFixedCosts
+D 141 totalCosts
+B 147 Column Listing      SOLVE caseStudies Using LP From line 64
+E 150 powerGeneration
+E 175 newBuildPlants
+E 193 summedPlantCapacity
+E 223 summedVariableCosts
+E 231 summedFixedCosts
+E 239 summedCosts
+B 247 Range Statistics    SOLVE caseStudies Using LP From line 64
+B 258 Model Statistics    SOLVE caseStudies Using LP From line 64
+B 271 Solution Report     SOLVE caseStudies Using LP From line 64
+F 302 powerBalance
+F 311 totalPlantCapacities
+F 319 generationConstraint_lowerBound
+F 336 generationConstraint_upperBound
+F 355 totalVariableCosts
+F 356 totalFixedCosts
+F 357 totalCosts
+G 359 powerGeneration
+G 376 newBuildPlants
+G 384 summedPlantCapacity
+G 394 summedVariableCosts
+G 395 summedFixedCosts
+G 396 summedCosts
+B 404 E x e c u t i o n
+I 404 powerGeneration

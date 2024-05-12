@@ -1,36 +1,55 @@
 Set
-plants      /hydro, water, coal/
-t           /t1*t4/
+plants      /hydro, solar, coal/
 ;
 
-Parameter
-powerCapacities(plants)     /hydro 50, water 100, coal 50/
-powerDemand(t)              /t1 50, t2 100, t3 200, t4 100/
-varCosts(plants)            /hydro 5, water 1, coal 5/
-;
+$include testData
+*$include realData
 
-Variable
+Variables
 powerGeneration(t, plants)
-costs
+newBuildPlants(plants)
+summedPlantCapacity(plants)
+summedVariableCosts
+summedFixedCosts
+summedCosts
 ;
+
+
 
 Equations
-totalCosts
+*model logic
 powerBalance
-outputConstraint1
-outputConstraint2
+totalPlantCapacities
+
+*constraints
+generationConstraint_lowerBound
+generationConstraint_upperBound
+
+*costs
+totalVariableCosts
+totalFixedCosts
+totalCosts
 ;
 
+*model logic
+powerBalance(t)..          								PowerDemand(t) =e= sum((plants), powerGeneration(t, plants));
+totalPlantCapacities(plants)..							summedPlantCapacity(plants) =e= BuiltPlantCapacities(plants) + newBuildPlants(plants); 
 
-powerBalance(t)..          powerDemand(t) =e= sum((plants), powerGeneration(t, plants));
-totalCosts..               costs =e= sum((t, plants), powerGeneration(t, plants) * varCosts(plants));
+*constraints
+generationConstraint_lowerBound(t, plants)..           	powerGeneration(t, plants) =g= 0;
+generationConstraint_upperBound(t, plants)..           	powerGeneration(t, plants) =l= summedPlantCapacity(plants);
 
-outputConstraint1(t, plants)..           powerGeneration(t, plants) =g= 0;
-outputConstraint2(t, plants)..           powerGeneration(t, plants) =l= powerCapacities(plants);
+*costs
+totalVariableCosts..									summedVariableCosts =e= sum((plants, t), powerGeneration(t,plants) * VariablePlantsCosts(plants));			
+totalFixedCosts..									    summedFixedCosts =e= sum((plants, t), summedPlantCapacity(plants) * MaintainPlantsCosts(plants) + newBuildPlants(plants) * InvestmentCosts(plants));
+totalCosts.. 										    summedCosts =e= summedVariableCosts + summedFixedCosts;
+
+
+
 
 
 Model caseStudies/all/;
 
-Solve caseStudies using LP minimising costs;
+Solve caseStudies using LP minimising summedCosts;
 
 Display powerGeneration.l;
