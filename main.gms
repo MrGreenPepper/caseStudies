@@ -8,6 +8,7 @@ shortages                   /1/
 *$include loadTestData
 
 $include loadFinalData
+*$include loadTestData3
 
 $include scenarioData
 
@@ -15,7 +16,7 @@ $include scenarioData
 *EUR/tCO2    Sandbag (2019)
 Parameter
 CO2Price            /15.92/
-PoliticalSituation(plants, country)
+
 
 ;
 
@@ -58,11 +59,13 @@ storage_genConstraint_capacity
 ramping_upper_constraint(t, baseLoadPlants, country)
 ramping_bottom_constraint(t, baseLoadPlants, country)
 
+$onText
 ***     non negativity constraints
 non_negativity_constraint_power
 non_negativity_constraint_reg(t,renewablePlants, country)               
 non_negativity_constraint_storage(t,storages, country)  
 non_negativity_constraint_capacities
+$offText
 
 ***     storage handle constraints
 handleStorage
@@ -71,8 +74,8 @@ storage_loadingConstraint_performance
 storage_levelConstraint_maxCapacity
 
 ***     carbon Emissions
-totalEmissionCap_EQ
-carbonEmission_EQ(country, plants)
+*totalEmissionCap_EQ
+*carbonEmission_EQ(country, plants)
 *carbonEmissionCosts_EQ(country, plants)..
 
 ***     investment costs
@@ -94,12 +97,12 @@ total_cost
 
 
 ***     basic constraints
-energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)*PowerDemandFactor + export(country, t) + sum((storages), storageLoading(t, storages, country));
+energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)+ export(country, t) * ScenarioFactor + sum((storages), storageLoading(t, storages, country));
 trade_constraint(t)..                                               sum(country, import(country, t)) =e=  sum(country, export(country, t)) * 0.9;
 
 
 ***     powerGeneration constraints
-generation_constraint_Plants(t, plants, country)..                  powerGeneration(t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country)) * Plants_availability(plants) * PoliticalSituation(plants, country);
+generation_constraint_Plants(t, plants, country)..                  powerGeneration(t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country)) * Plants_availability(plants);
 generation_constraint_rePlants(t, renewablePlants, country)..       powerGeneration(t, renewablePlants, country) =l= (Plants_capacities(renewablePlants, country) + buildCapacities(renewablePlants, country)) * CapacityFactor(t, renewablePlants);
 storage_genConstraint_capacity(t, storages, country)..              powerGeneration(t, storages, country) =l= storageLevel(t, storages, country);
 
@@ -108,13 +111,13 @@ storage_genConstraint_capacity(t, storages, country)..              powerGenerat
 ramping_upper_constraint(t, baseLoadPlants, country)..              powerGeneration(t, baseLoadPlants, country) =l= powerGeneration(t-1, baseLoadPlants, country) + ((Plants_capacities(baseLoadPlants, country) + buildCapacities(baseLoadPlants, country)) * (0.18));
 ramping_bottom_constraint(t, baseLoadPlants, country)..             powerGeneration(t, baseLoadPlants, country) =g= powerGeneration(t-1, baseLoadPlants, country) - ((Plants_capacities(baseLoadPlants, country) + buildCapacities(baseLoadPlants, country)) * (0.18));
 
-
+$onText
 ***     non negativity constraints
 non_negativity_constraint_power(t,plants, country)..                powerGeneration(t, plants, country)=g=0;
 non_negativity_constraint_reg(t,renewablePlants, country)..         powerGeneration(t, renewablePlants, country)=g=0;
 non_negativity_constraint_storage(t,storages, country)..            powerGeneration(t, storages, country)=g=0;
 non_negativity_constraint_capacities(plants, country)..             buildCapacities(plants, country) =g= 0;
-
+$offText
 
 ***     storage handle constraints
 handleStorage(t, storages, country)..                               storageLevel(t, storages, country) =e= storageLevel(t-1, storages, country) + storageLoading(t-1, storages, country)  - powerGeneration(t-1, storages, country);
@@ -122,12 +125,12 @@ non_negativity_constraint_storagesLevel(t, storages, country)..     storageLevel
 storage_levelConstraint_maxCapacity(t, storages, country)..         storageLevel(t, storages, country) =l= StorageCapacity(storages, country) + buildCapacities(storages, country);
 storage_loadingConstraint_performance(t, storages, country)..       storageLoading(t, storages, country) =l= (StorageCapacity(storages, country) + buildCapacities(storages, country)) / 6;
 
-
+$onText
 ***     carbon Emissions
 totalEmissionCap_EQ..                                               TotalCarbonCap =g= sum((country, plants), carbonEmission(country, plants));
-carbonEmission_EQ(country, plants) ..                               carbonEmission(country, plants) =e= sum((t), powerGeneration(t, plants, country) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyFactor(plants));
-*carbonEmissionCosts_EQ(country, plants)..                          carbonEmissionCosts(country, plants) =e= sum((t), powerGeneration(t, plants, country)) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyFactor(plants) * CO2Price;
-
+carbonEmission_EQ(country, plants) ..                               carbonEmission(country, plants) =e= sum((t), powerGeneration(t, plants, country) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants));
+*carbonEmissionCosts_EQ(country, plants)..                          carbonEmissionCosts(country, plants) =e= sum((t), powerGeneration(t, plants, country)) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants) * CO2Price;
+$offText
 
 ***     investment costs
 capacityCosts(country)..                                            totalInvestmentCosts =e= sum((plants), buildCapacities(plants, country) * InvestmentCosts(plants));
@@ -141,29 +144,20 @@ waterConstraint(country)..                                          sum((constra
 overallLoad_EQ(plants)..                                            overallLoad(plants) =e= sum((country, t), powerGeneration(t, plants, country));
 
 
-
 ***     total costs - to be minimized
-*       with CO2 license
-*total_cost..                                                        TC =e= sum((t, plants, country),powerGeneration(t, plants, country) * OperatingCosts(plants)) + sum((country,plants), carbonEmissionCosts(country, plants)) + totalInvestmentCosts;
-*       without CO2 license
 total_cost..                                                        TC =e= sum((t, plants, country),powerGeneration(t, plants, country) * OperatingCosts(plants))  + totalInvestmentCosts;
 
 
 Model epmProject /all/;
-
-
-if(calcEmissionScenarios=1,   
-    loop(i, TotalCarbonCap=CarbonCaps(i);
-        PowerDemandFactor = PowerDemandFactors(i);
-        PoliticalSituation(plants, country) = PoliticalDecisions(plants, country, i)
-        Solve epmProject using LP minimising TC;
-    );
+loop(scenario,
+   ScenarioProbability= ScenarioData(scenario, 'probaility');
+   ScenarioFactor= ScenarioData(scenario, 'factor');
+    Solve epmProject using LP minimising TC;
+    Z_SP(scenario) = TC.l;
 );
 
 
-
-
-Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, carbonEmission.l;
+Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP;
 
 
 execute_unload "energyEQ.gdx" energy_balance.l

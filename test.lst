@@ -1,0 +1,67 @@
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/09/24 14:49:44 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1   
+   2  Set
+   3  scenario /s1*s2/
+   4  scenarioProp /probaility, factor/
+   5  ;
+   6   
+   7  Scalar
+   8  Probability
+   9  Factor
+  10  ;
+  11   
+  12  Parameter Table
+  13  ScenarioData(scenario, scenarioProp)
+  14          probaility          factor
+  15  s1      0.2                 2
+  16  s2      0.8                 1
+  17  ;
+  18   
+  19   
+  20  Positive Variable
+  21  q_sell
+  22  profit
+  23  ;
+  24   
+  25  Equations
+  26  profit_eq
+  27  q_con
+  28  ;
+  29   
+  30  profit_eq(scenarioProp)..                 profit =e= q_sell *Probability  *Factor ;
+  31  q_con..                     q_sell =l= 100;
+  32   
+  33   
+  34  Model test /all/;
+  35   
+  36   
+  37  loop(scenario,
+  38     Probability= ScenarioData(scenario, 'probaility');
+  39     Factor= ScenarioData(scenario, 'factor');
+  40   Solve test using LP maximizing profit;
+****                                       $246,257
+**** 246  Objective variable is not a free variable
+**** 257  Solve statement not checked because of previous errors
+  41  );
+
+**** 2 ERROR(S)   0 WARNING(S)
+
+
+COMPILATION TIME     =        0.016 SECONDS      3 MB  46.2.0 ac4adda6 WEX-WEI
+
+
+USER: Course License                                 S240430|0002AO-GEN
+      TU Dresden, Business Management and Economics             DCE3456
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\test.gms
+Output     C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\test.lst
+
+**** USER ERROR(S) ENCOUNTERED

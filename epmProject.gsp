@@ -34,6 +34,12 @@
         },
         {
             "codecMib": 106,
+            "file": "main.lst",
+            "name": "main.lst",
+            "type": "lst"
+        },
+        {
+            "codecMib": 106,
             "file": "scenarioData.gms",
             "name": "scenarioData.gms",
             "type": "gms"

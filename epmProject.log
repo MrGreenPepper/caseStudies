@@ -1,0 +1,239 @@
+
+--- Job main.gms Start 07/09/24 15:11:57 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\46\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    PageSize 0
+    ScrDir C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\225b\
+    SysDir C:\GAMS\46\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Course License                                 S240430|0002AO-GEN
+          TU Dresden, Business Management and Economics             DCE3456
+          C:\Users\sebas\Documents\GAMS\gamslice.txt
+          License Admin: Hannes Hobbie, hannes.hobbie@tu-dresden.de        
+          Course license for use within the course and related course work
+          The evaluation period of the license will expire on Oct 27, 2024
+Processor information: 1 socket(s), 8 core(s), and 16 thread(s) available
+GAMS 46.2.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
+--- Starting compilation
+--- main.gms(10) 2 Mb
+--- . loadFinalData.gms(15) 3 Mb
+--- call gdxxrw.exe waterCapacityFactors.xlsx par=WaterCapacitieFactors rng=Sheet1!A1:B7 dim=1 cdim=0 rdim=1 log=log_waterCapFactor.txt
+--- . loadFinalData.gms(17) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\waterCapacityFactors.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\waterCapacityFactors.gdx
+--- . loadFinalData.gms(23) 3 Mb
+--- call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=3 index=1,2 value=3 useHeader=y trace=1
+CSV2GDX          46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+No errors, CSV2GDX time = 0ms
+--- . loadFinalData.gms(24) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+--- . loadFinalData.gms(31) 3 Mb
+--- call gdxxrw.exe powerDemand_2019.xlsx par=PowerDemand rng=Sheet1!A1:D8761 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
+--- . loadFinalData.gms(33) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
+--- . loadFinalData.gms(38) 3 Mb
+--- call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:D15 dim=2 cdim=1 rdim=1 log=log_plantCapacities.txt
+--- . loadFinalData.gms(40) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
+--- . loadFinalData.gms(45) 3 Mb
+--- call gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
+--- . loadFinalData.gms(47) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
+--- . loadFinalData.gms(53) 3 Mb
+--- call gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
+--- . loadFinalData.gms(54) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
+--- . loadFinalData.gms(59) 3 Mb
+--- call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A1:B15 rdim=1 cdim=0 log=log_carbEm.txt
+--- . loadFinalData.gms(61) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
+--- . loadFinalData.gms(66) 3 Mb
+--- call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A1:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
+--- . loadFinalData.gms(68) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
+--- . loadFinalData.gms(73) 3 Mb
+--- call gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
+--- . loadFinalData.gms(75) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
+--- . loadFinalData.gms(80) 3 Mb
+--- call gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
+--- . loadFinalData.gms(82) 3 Mb
+--- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
+--- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
+--- . loadFinalData.gms(98) 3 Mb
+--- main.gms(13) 3 Mb
+--- . scenarioData.gms(26) 3 Mb
+--- main.gms(184) 3 Mb
+--- Starting execution: elapsed 0:00:07.178
+--- main.gms(276) 4 Mb
+--- Generating LP model epmProject
+--- main.gms(279) 4 Mb
+--- LOOPS scenario = s1
+---   918 rows  566 columns  2,900 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.667E-01, 6.218E+04] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:07.185
+
+IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.07 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 0.67 Mb (peak 0.67 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.02 Mb (peak 0.13 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 159 rows and 73 columns.
+Aggregator did 12 substitutions.
+Reduced LP has 746 rows, 481 columns, and 2091 nonzeros.
+Presolve time = 0.00 sec. (0.96 ticks)
+Initializing dual steep norms . . .
+
+Iteration log . . .
+Iteration:     1   Dual objective     =             0.000000
+Perturbation started.
+Iteration:    51   Dual objective     =             0.000000
+Iteration:   113   Dual objective     =       3326520.957203
+Iteration:   176   Dual objective     =       4703739.792724
+Iteration:   242   Dual objective     =       9624788.217998
+Removing perturbation.
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 5.85 ticks)
+
+
+Optimal solution found
+Objective:     10070672.955083
+
+--- Reading solution for model epmProject
+--- Executing after solve: elapsed 0:00:07.221
+--- main.gms(276) 4 Mb
+--- Generating LP model epmProject
+--- main.gms(279) 4 Mb
+--- LOOPS scenario = s2
+---   918 rows  566 columns  2,900 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.667E-01, 6.218E+04] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:07.227
+
+IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.07 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 0.67 Mb (peak 0.67 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.02 Mb (peak 0.13 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 2
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 159 rows and 73 columns.
+Aggregator did 12 substitutions.
+Reduced LP has 746 rows, 481 columns, and 2091 nonzeros.
+Presolve time = 0.00 sec. (0.96 ticks)
+
+Iteration log . . .
+Iteration:     1   Scaled dual infeas =           150.010718
+Iteration:     9   Dual objective     =       -814195.802980
+Iteration:   104   Dual objective     =       1538006.434248
+Iteration:   177   Dual objective     =       4076858.940699
+Iteration:   242   Dual objective     =       5157803.238212
+Iteration:   304   Dual objective     =       8768850.331274
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 6.87 ticks)
+
+
+Optimal solution found
+Objective:      8847258.738316
+
+--- Reading solution for model epmProject
+--- Executing after solve: elapsed 0:00:07.265
+--- main.gms(287) 4 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
+--- main.gms(288) 4 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.xlsx
+**** Keyword does not match symbol type, Symbol: energy_balance
+
+Any changes made to the spreadsheet were not saved
+Total time = 766 Ms
+--- main.gms(290) 4 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
+--- main.gms(291) 4 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.xls
+Total time = 890 Ms
+--- main.gms(293) 4 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+--- main.gms(294) 4 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.xls
+**** Keyword does not match symbol type, Symbol: storageCapacity
+
+Any changes made to the spreadsheet were not saved
+Total time = 610 Ms
+--- main.gms(296) 4 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
+--- main.gms(297) 4 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.xls
+Total time = 829 Ms
+--- main.gms(299) 4 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
+--- main.gms(300) 4 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.xls
+Total time = 875 Ms
+--- main.gms(302) 4 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
+--- main.gms(303) 4 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.xls
+Total time = 844 Ms
+*** Status: Normal completion
+--- Job main.gms Stop 07/09/24 15:12:10 elapsed 0:00:12.386
