@@ -2,6 +2,8 @@ Scalars
 
 calcEmissionScenarios       /1/
 shortages                   /1/
+CurrentStageOneScenario
+CurrentStageTwoScenario
 ;
 
 *for a fast code check:  $include loadTestData2 and "comment out" the rest
@@ -16,7 +18,8 @@ $include scenarioData
 *EUR/tCO2    Sandbag (2019)
 Parameter
 CO2Price            /15.92/
-
+stageOneInvestments(scenario, plants, country)
+CurrentStageOneDecision(plants, country)
 
 ;
 
@@ -97,12 +100,12 @@ total_cost
 
 
 ***     basic constraints
-energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)+ export(country, t) * ScenarioFactor + sum((storages), storageLoading(t, storages, country));
+energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)  * ScenarioFactor + export(country, t) + sum((storages), storageLoading(t, storages, country));
 trade_constraint(t)..                                               sum(country, import(country, t)) =e=  sum(country, export(country, t)) * 0.9;
 
 
 ***     powerGeneration constraints
-generation_constraint_Plants(t, plants, country)..                  powerGeneration(t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country)) * Plants_availability(plants);
+generation_constraint_Plants(t, plants, country)..                  powerGeneration(t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country) + StageOneInvestmentsDecision(plants, country)) * Plants_availability(plants);
 generation_constraint_rePlants(t, renewablePlants, country)..       powerGeneration(t, renewablePlants, country) =l= (Plants_capacities(renewablePlants, country) + buildCapacities(renewablePlants, country)) * CapacityFactor(t, renewablePlants);
 storage_genConstraint_capacity(t, storages, country)..              powerGeneration(t, storages, country) =l= storageLevel(t, storages, country);
 
@@ -149,15 +152,37 @@ total_cost..                                                        TC =e= sum((
 
 
 Model epmProject /all/;
-loop(scenario,
-   ScenarioProbability= ScenarioData(scenario, 'probaility');
-   ScenarioFactor= ScenarioData(scenario, 'factor');
+
+*** Stage 1
+loop(scenarioStageOne,
+    ScenarioProbability= ScenarioData(scenarioStageOne, 'probaility');
+    ScenarioFactor= ScenarioData(scenarioStageOne, 'factor');
+    CurrentStageOneScenario = ord(scenarioStageOne);
+     
     Solve epmProject using LP minimising TC;
-    Z_SP(scenario) = TC.l;
+    Z_SP(scenarioStageOne) = TC.l;
+    StageOneInvestmentData(scenarioStageOne, plants, country) = buildCapacities.l(plants, country);
+    Display TC.l, CurrentStageOneScenario, buildCapacities.l, totalInvestmentCosts.l;
+   
+);
+
+*** Stage 2
+loop(scenarioStageTwo,
+   ScenarioProbability= ScenarioData(scenarioStageTwo, 'probaility');
+   ScenarioFactor= ScenarioData(scenarioStageTwo, 'factor');
+   loop(scenarioStageOne, 
+        StageOneInvestmentsDecision(plants, country) = StageOneInvestmentData(scenarioStageOne, plants, country);
+        CurrentStageOneScenario = ord(scenarioStageOne);
+        CurrentStageTwoScenario = ord(scenarioStageTwo);
+
+        Solve epmProject using LP minimising TC;
+        Z_SP(scenario) = TC.l;
+        Display TC.l, Plants_capacities, totalInvestmentCosts.l, CurrentStageOneScenario, CurrentStageTwoScenario, StageOneInvestmentsDecision;
+    );
 );
 
 
-Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP;
+*Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP, stageOneInvestments, Plants_capacities;
 
 
 execute_unload "energyEQ.gdx" energy_balance.l

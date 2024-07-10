@@ -1,116 +1,358 @@
 B 3 C o m p i l a t i o n
-B 288 Include File Summary
-B 321 Equation Listing    SOLVE epmProject Using LP From line 279
-D 324 energy_balance
-D 335 trade_constraint
-D 346 generation_constraint_Plants
-D 357 generation_constraint_rePlants
-D 368 storage_genConstraint_capacity
-D 379 ramping_upper_constraint
-D 390 ramping_bottom_constraint
-D 401 handleStorage
-D 412 non_negativity_constraint_storagesLevel
-D 423 storage_loadingConstraint_performance
-D 434 storage_levelConstraint_maxCapacity
-D 445 capacityCosts
-D 454 waterConstraint
-D 463 overallLoad_EQ
-D 474 total_cost
-B 480 Column Listing      SOLVE epmProject Using LP From line 279
-E 483 TC
-E 490 totalInvestmentCosts
-E 500 buildCapacities
-E 564 powerGeneration
-E 589 storageLoading
-E 611 storageLevel
-E 639 export
-E 658 import
-E 677 overallLoad
-B 694 Range Statistics    SOLVE epmProject Using LP From line 279
-B 705 Model Statistics    SOLVE epmProject Using LP From line 279
-B 723 Solution Report     SOLVE epmProject Using LP From line 279
-F 756 energy_balance
-F 785 trade_constraint
-F 798 generation_constraint_Plants
-F 1163 generation_constraint_rePlants
-F 1336 storage_genConstraint_capacity
-F 1389 ramping_upper_constraint
-F 1442 ramping_bottom_constraint
-F 1495 handleStorage
-F 1548 non_negativity_constraint_storagesLevel
-F 1601 storage_loadingConstraint_performance
-F 1654 storage_levelConstraint_maxCapacity
-F 1707 capacityCosts
-F 1715 waterConstraint
-F 1723 overallLoad_EQ
-F 1745 total_cost
-G 1749 TC
-G 1750 totalInvestmentCosts
-G 1754 buildCapacities
-G 1804 powerGeneration
-G 2169 storageLoading
-G 2222 storageLevel
-G 2275 export
-G 2304 import
-G 2333 overallLoad
-B 2359 Equation Listing    SOLVE epmProject Using LP From line 279
-D 2362 energy_balance
-D 2373 trade_constraint
-D 2384 generation_constraint_Plants
-D 2395 generation_constraint_rePlants
-D 2406 storage_genConstraint_capacity
-D 2417 ramping_upper_constraint
-D 2428 ramping_bottom_constraint
-D 2439 handleStorage
-D 2450 non_negativity_constraint_storagesLevel
-D 2461 storage_loadingConstraint_performance
-D 2472 storage_levelConstraint_maxCapacity
-D 2483 capacityCosts
-D 2492 waterConstraint
-D 2501 overallLoad_EQ
-D 2512 total_cost
-B 2518 Column Listing      SOLVE epmProject Using LP From line 279
-E 2521 TC
-E 2528 totalInvestmentCosts
-E 2538 buildCapacities
-E 2602 powerGeneration
-E 2627 storageLoading
-E 2649 storageLevel
-E 2677 export
-E 2696 import
-E 2715 overallLoad
-B 2732 Range Statistics    SOLVE epmProject Using LP From line 279
-B 2743 Model Statistics    SOLVE epmProject Using LP From line 279
-B 2761 Solution Report     SOLVE epmProject Using LP From line 279
-F 2794 energy_balance
-F 2823 trade_constraint
-F 2836 generation_constraint_Plants
-F 3201 generation_constraint_rePlants
-F 3374 storage_genConstraint_capacity
-F 3427 ramping_upper_constraint
-F 3480 ramping_bottom_constraint
-F 3533 handleStorage
-F 3586 non_negativity_constraint_storagesLevel
-F 3639 storage_loadingConstraint_performance
-F 3692 storage_levelConstraint_maxCapacity
-F 3745 capacityCosts
-F 3753 waterConstraint
-F 3761 overallLoad_EQ
-F 3783 total_cost
-G 3787 TC
-G 3788 totalInvestmentCosts
-G 3792 buildCapacities
-G 3842 powerGeneration
-G 4207 storageLoading
-G 4260 storageLevel
-G 4313 export
-G 4342 import
-G 4371 overallLoad
-B 4397 E x e c u t i o n
-I 4399 TC
-I 4400 powerGeneration
-I 4467 StorageCapacity
-I 4475 storageLoading
-I 4484 import
-I 4492 export
-I 4500 Z_SP
+B 323 Include File Summary
+B 356 Equation Listing    SOLVE epmProject Using LP From line 296
+D 359 energy_balance
+D 370 trade_constraint
+D 381 generation_constraint_Plants
+D 392 generation_constraint_rePlants
+D 403 storage_genConstraint_capacity
+D 414 ramping_upper_constraint
+D 425 ramping_bottom_constraint
+D 436 handleStorage
+D 447 non_negativity_constraint_storagesLevel
+D 458 storage_loadingConstraint_performance
+D 469 storage_levelConstraint_maxCapacity
+D 480 capacityCosts
+D 489 waterConstraint
+D 498 overallLoad_EQ
+D 509 total_cost
+B 515 Column Listing      SOLVE epmProject Using LP From line 296
+E 518 TC
+E 525 totalInvestmentCosts
+E 535 buildCapacities
+E 599 powerGeneration
+E 624 storageLoading
+E 646 storageLevel
+E 674 export
+E 693 import
+E 712 overallLoad
+B 729 Range Statistics    SOLVE epmProject Using LP From line 296
+B 740 Model Statistics    SOLVE epmProject Using LP From line 296
+B 758 Solution Report     SOLVE epmProject Using LP From line 296
+F 791 energy_balance
+F 820 trade_constraint
+F 833 generation_constraint_Plants
+F 1198 generation_constraint_rePlants
+F 1371 storage_genConstraint_capacity
+F 1424 ramping_upper_constraint
+F 1477 ramping_bottom_constraint
+F 1530 handleStorage
+F 1583 non_negativity_constraint_storagesLevel
+F 1636 storage_loadingConstraint_performance
+F 1689 storage_levelConstraint_maxCapacity
+F 1742 capacityCosts
+F 1750 waterConstraint
+F 1758 overallLoad_EQ
+F 1780 total_cost
+G 1784 TC
+G 1785 totalInvestmentCosts
+G 1789 buildCapacities
+G 1839 powerGeneration
+G 2204 storageLoading
+G 2257 storageLevel
+G 2310 export
+G 2339 import
+G 2368 overallLoad
+B 2394 E x e c u t i o n
+I 2396 TC
+I 2397 CurrentStageOneScenario
+I 2398 buildCapacities
+I 2406 totalInvestmentCosts
+B 2410 Equation Listing    SOLVE epmProject Using LP From line 296
+D 2413 energy_balance
+D 2424 trade_constraint
+D 2435 generation_constraint_Plants
+D 2446 generation_constraint_rePlants
+D 2457 storage_genConstraint_capacity
+D 2468 ramping_upper_constraint
+D 2479 ramping_bottom_constraint
+D 2490 handleStorage
+D 2501 non_negativity_constraint_storagesLevel
+D 2512 storage_loadingConstraint_performance
+D 2523 storage_levelConstraint_maxCapacity
+D 2534 capacityCosts
+D 2543 waterConstraint
+D 2552 overallLoad_EQ
+D 2563 total_cost
+B 2569 Column Listing      SOLVE epmProject Using LP From line 296
+E 2572 TC
+E 2579 totalInvestmentCosts
+E 2589 buildCapacities
+E 2653 powerGeneration
+E 2678 storageLoading
+E 2700 storageLevel
+E 2728 export
+E 2747 import
+E 2766 overallLoad
+B 2783 Range Statistics    SOLVE epmProject Using LP From line 296
+B 2794 Model Statistics    SOLVE epmProject Using LP From line 296
+B 2812 Solution Report     SOLVE epmProject Using LP From line 296
+F 2845 energy_balance
+F 2874 trade_constraint
+F 2887 generation_constraint_Plants
+F 3252 generation_constraint_rePlants
+F 3425 storage_genConstraint_capacity
+F 3478 ramping_upper_constraint
+F 3531 ramping_bottom_constraint
+F 3584 handleStorage
+F 3637 non_negativity_constraint_storagesLevel
+F 3690 storage_loadingConstraint_performance
+F 3743 storage_levelConstraint_maxCapacity
+F 3796 capacityCosts
+F 3804 waterConstraint
+F 3812 overallLoad_EQ
+F 3834 total_cost
+G 3838 TC
+G 3839 totalInvestmentCosts
+G 3843 buildCapacities
+G 3893 powerGeneration
+G 4258 storageLoading
+G 4311 storageLevel
+G 4364 export
+G 4393 import
+G 4422 overallLoad
+B 4448 E x e c u t i o n
+I 4450 TC
+I 4451 CurrentStageOneScenario
+I 4452 buildCapacities
+I 4458 totalInvestmentCosts
+B 4462 Equation Listing    SOLVE epmProject Using LP From line 312
+D 4465 energy_balance
+D 4476 trade_constraint
+D 4487 generation_constraint_Plants
+D 4498 generation_constraint_rePlants
+D 4509 storage_genConstraint_capacity
+D 4520 ramping_upper_constraint
+D 4531 ramping_bottom_constraint
+D 4542 handleStorage
+D 4553 non_negativity_constraint_storagesLevel
+D 4564 storage_loadingConstraint_performance
+D 4575 storage_levelConstraint_maxCapacity
+D 4586 capacityCosts
+D 4595 waterConstraint
+D 4604 overallLoad_EQ
+D 4615 total_cost
+B 4621 Column Listing      SOLVE epmProject Using LP From line 312
+E 4624 TC
+E 4631 totalInvestmentCosts
+E 4641 buildCapacities
+E 4705 powerGeneration
+E 4730 storageLoading
+E 4752 storageLevel
+E 4780 export
+E 4799 import
+E 4818 overallLoad
+B 4835 Range Statistics    SOLVE epmProject Using LP From line 312
+B 4846 Model Statistics    SOLVE epmProject Using LP From line 312
+B 4866 Solution Report     SOLVE epmProject Using LP From line 312
+F 4899 energy_balance
+F 4928 trade_constraint
+F 4941 generation_constraint_Plants
+F 5306 generation_constraint_rePlants
+F 5479 storage_genConstraint_capacity
+F 5532 ramping_upper_constraint
+F 5585 ramping_bottom_constraint
+F 5638 handleStorage
+F 5691 non_negativity_constraint_storagesLevel
+F 5744 storage_loadingConstraint_performance
+F 5797 storage_levelConstraint_maxCapacity
+F 5850 capacityCosts
+F 5858 waterConstraint
+F 5866 overallLoad_EQ
+F 5888 total_cost
+G 5892 TC
+G 5893 totalInvestmentCosts
+G 5897 buildCapacities
+G 5947 powerGeneration
+G 6312 storageLoading
+G 6365 storageLevel
+G 6418 export
+G 6447 import
+G 6476 overallLoad
+B 6502 E x e c u t i o n
+I 6504 TC
+I 6505 Plants_capacities
+I 6525 totalInvestmentCosts
+I 6526 CurrentStageOneScenario
+I 6527 CurrentStageTwoScenario
+I 6528 StageOneInvestmentsDecision
+B 6538 Equation Listing    SOLVE epmProject Using LP From line 312
+D 6541 energy_balance
+D 6552 trade_constraint
+D 6563 generation_constraint_Plants
+D 6574 generation_constraint_rePlants
+D 6585 storage_genConstraint_capacity
+D 6596 ramping_upper_constraint
+D 6607 ramping_bottom_constraint
+D 6618 handleStorage
+D 6629 non_negativity_constraint_storagesLevel
+D 6640 storage_loadingConstraint_performance
+D 6651 storage_levelConstraint_maxCapacity
+D 6662 capacityCosts
+D 6671 waterConstraint
+D 6680 overallLoad_EQ
+D 6691 total_cost
+B 6697 Column Listing      SOLVE epmProject Using LP From line 312
+E 6700 TC
+E 6707 totalInvestmentCosts
+E 6717 buildCapacities
+E 6781 powerGeneration
+E 6806 storageLoading
+E 6828 storageLevel
+E 6856 export
+E 6875 import
+E 6894 overallLoad
+B 6911 Range Statistics    SOLVE epmProject Using LP From line 312
+B 6922 Model Statistics    SOLVE epmProject Using LP From line 312
+B 6942 Solution Report     SOLVE epmProject Using LP From line 312
+F 6975 energy_balance
+F 7004 trade_constraint
+F 7017 generation_constraint_Plants
+F 7382 generation_constraint_rePlants
+F 7555 storage_genConstraint_capacity
+F 7608 ramping_upper_constraint
+F 7661 ramping_bottom_constraint
+F 7714 handleStorage
+F 7767 non_negativity_constraint_storagesLevel
+F 7820 storage_loadingConstraint_performance
+F 7873 storage_levelConstraint_maxCapacity
+F 7926 capacityCosts
+F 7934 waterConstraint
+F 7942 overallLoad_EQ
+F 7964 total_cost
+G 7968 TC
+G 7969 totalInvestmentCosts
+G 7973 buildCapacities
+G 8023 powerGeneration
+G 8388 storageLoading
+G 8441 storageLevel
+G 8494 export
+G 8523 import
+G 8552 overallLoad
+B 8578 E x e c u t i o n
+I 8580 TC
+I 8581 Plants_capacities
+I 8601 totalInvestmentCosts
+I 8602 CurrentStageOneScenario
+I 8603 CurrentStageTwoScenario
+I 8605 StageOneInvestmentsDecision
+B 8612 Equation Listing    SOLVE epmProject Using LP From line 312
+D 8615 energy_balance
+D 8626 trade_constraint
+D 8637 generation_constraint_Plants
+D 8648 generation_constraint_rePlants
+D 8659 storage_genConstraint_capacity
+D 8670 ramping_upper_constraint
+D 8681 ramping_bottom_constraint
+D 8692 handleStorage
+D 8703 non_negativity_constraint_storagesLevel
+D 8714 storage_loadingConstraint_performance
+D 8725 storage_levelConstraint_maxCapacity
+D 8736 capacityCosts
+D 8745 waterConstraint
+D 8754 overallLoad_EQ
+D 8765 total_cost
+B 8771 Column Listing      SOLVE epmProject Using LP From line 312
+E 8774 TC
+E 8781 totalInvestmentCosts
+E 8791 buildCapacities
+E 8855 powerGeneration
+E 8880 storageLoading
+E 8902 storageLevel
+E 8930 export
+E 8949 import
+E 8968 overallLoad
+B 8985 Range Statistics    SOLVE epmProject Using LP From line 312
+B 8996 Model Statistics    SOLVE epmProject Using LP From line 312
+B 9016 Solution Report     SOLVE epmProject Using LP From line 312
+F 9049 energy_balance
+F 9078 trade_constraint
+F 9091 generation_constraint_Plants
+F 9456 generation_constraint_rePlants
+F 9629 storage_genConstraint_capacity
+F 9682 ramping_upper_constraint
+F 9735 ramping_bottom_constraint
+F 9788 handleStorage
+F 9841 non_negativity_constraint_storagesLevel
+F 9894 storage_loadingConstraint_performance
+F 9947 storage_levelConstraint_maxCapacity
+F 10000 capacityCosts
+F 10008 waterConstraint
+F 10016 overallLoad_EQ
+F 10038 total_cost
+G 10042 TC
+G 10043 totalInvestmentCosts
+G 10047 buildCapacities
+G 10097 powerGeneration
+G 10462 storageLoading
+G 10515 storageLevel
+G 10568 export
+G 10597 import
+G 10626 overallLoad
+B 10652 E x e c u t i o n
+I 10654 TC
+I 10655 Plants_capacities
+I 10675 totalInvestmentCosts
+I 10676 CurrentStageOneScenario
+I 10677 CurrentStageTwoScenario
+I 10678 StageOneInvestmentsDecision
+B 10688 Equation Listing    SOLVE epmProject Using LP From line 312
+D 10691 energy_balance
+D 10702 trade_constraint
+D 10713 generation_constraint_Plants
+D 10724 generation_constraint_rePlants
+D 10735 storage_genConstraint_capacity
+D 10746 ramping_upper_constraint
+D 10757 ramping_bottom_constraint
+D 10768 handleStorage
+D 10779 non_negativity_constraint_storagesLevel
+D 10790 storage_loadingConstraint_performance
+D 10801 storage_levelConstraint_maxCapacity
+D 10812 capacityCosts
+D 10821 waterConstraint
+D 10830 overallLoad_EQ
+D 10841 total_cost
+B 10847 Column Listing      SOLVE epmProject Using LP From line 312
+E 10850 TC
+E 10857 totalInvestmentCosts
+E 10867 buildCapacities
+E 10931 powerGeneration
+E 10956 storageLoading
+E 10978 storageLevel
+E 11006 export
+E 11025 import
+E 11044 overallLoad
+B 11061 Range Statistics    SOLVE epmProject Using LP From line 312
+B 11072 Model Statistics    SOLVE epmProject Using LP From line 312
+B 11092 Solution Report     SOLVE epmProject Using LP From line 312
+F 11125 energy_balance
+F 11154 trade_constraint
+F 11167 generation_constraint_Plants
+F 11532 generation_constraint_rePlants
+F 11705 storage_genConstraint_capacity
+F 11758 ramping_upper_constraint
+F 11811 ramping_bottom_constraint
+F 11864 handleStorage
+F 11917 non_negativity_constraint_storagesLevel
+F 11970 storage_loadingConstraint_performance
+F 12023 storage_levelConstraint_maxCapacity
+F 12076 capacityCosts
+F 12084 waterConstraint
+F 12092 overallLoad_EQ
+F 12114 total_cost
+G 12118 TC
+G 12119 totalInvestmentCosts
+G 12123 buildCapacities
+G 12173 powerGeneration
+G 12538 storageLoading
+G 12591 storageLevel
+G 12644 export
+G 12673 import
+G 12702 overallLoad
+B 12728 E x e c u t i o n
+I 12730 TC
+I 12731 Plants_capacities
+I 12751 totalInvestmentCosts
+I 12752 CurrentStageOneScenario
+I 12753 CurrentStageTwoScenario
+I 12755 StageOneInvestmentsDecision

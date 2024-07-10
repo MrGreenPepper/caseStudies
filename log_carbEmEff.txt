@@ -3,4 +3,4 @@ Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\
 Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
 Value expected in cell: Sheet1!B1; found carbonEmissionEfficiencyFactor
 Total number of bad values for symbol carbonEmissionEfficiencyFactor = 1
-Total time = 719 Ms
+Total time = 765 Ms
