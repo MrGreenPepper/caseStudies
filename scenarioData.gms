@@ -19,7 +19,7 @@ Z_DP
 Parameter Table
 ScenarioData(scenario, scenarioProp)
         probability     factor
-s1      0.2             1
+s1      0.2             1.5
 s2      0.8             50000
 ;
 

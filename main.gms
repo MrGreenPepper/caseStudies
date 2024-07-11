@@ -45,8 +45,8 @@ powerGeneration(scenario, t, plants, country)             generation per Technol
 storageLoading(t, storages, country)
 storageGen(t, storages)
 storageLevel(t, storages, country)
-export(country, t)
-import(country, t)
+export(scenario, country, t)
+import(scenario, country, t)
 carbonEmission(country, plants)
 carbonEmissionCosts(country, plants)
 overallLoad(plants)
@@ -109,9 +109,9 @@ total_cost
 *PropabilityDis..                                                  propability =e= 1/(std* sqrt(2*pi)) * e**((-1/2*((propFactor)-mean))/std**2);
 *TrimodalEquation..                                                 
 ***     basic constraints
-energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(country, t);
+energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(scenario, country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(scenario, country, t);
 *energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(country, t) + sum((storages), storageLoading(t, storages, country));
-trade_constraint(t)..                                                           sum(country, import(country, t)) =e=  sum(country, export(country, t)) * 0.9;
+trade_constraint(scenario,t)..                                                           sum(country, import(scenario, country, t)) =e=  sum(country, export(scenario, country, t)) * 0.9;
 
 
 ***     powerGeneration constraints
@@ -163,8 +163,15 @@ total_cost..                                                                    
 
 Model epmProject /all/;
 
+
+***Stage 1
+    Solve epmProject using LP minimising TC;
+        StageOneInvestmentsDecision(plants, country) = buildCapacities.l(plants, country);
+ 
+***Stage 2
  Solve epmProject using LP minimising TC;
  
+
 $onText
 *** Stage 1
 loop(scenarioStageOne,
