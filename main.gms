@@ -4,7 +4,13 @@ calcEmissionScenarios       /1/
 shortages                   /1/
 CurrentStageOneScenario
 CurrentStageTwoScenario
+std                         /1/
+mean                        /1/
+propFactor
+propability
+e                           /2.718281828459/    
 ;
+
 
 *for a fast code check:  $include loadTestData2 and "comment out" the rest
 *$include loadTestData
@@ -49,6 +55,8 @@ addInvestCosts
 
 
 Equations
+*PropabilityDis
+*TrimodalEquation
 ***     basic constraints
 energy_balance(t, country)
 trade_constraint
@@ -98,7 +106,8 @@ total_cost
 
 
 
-
+*PropabilityDis..                                                  propability =e= 1/(std* sqrt(2*pi)) * e**((-1/2*((propFactor)-mean))/std**2);
+*TrimodalEquation..                                                 
 ***     basic constraints
 energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)  * ScenarioFactor + export(country, t) + sum((storages), storageLoading(t, storages, country));
 trade_constraint(t)..                                               sum(country, import(country, t)) =e=  sum(country, export(country, t)) * 0.9;

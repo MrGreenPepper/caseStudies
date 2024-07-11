@@ -1,7 +1,5 @@
 
-Debug-Server started. Listening at port 3563
-Debug-Server: Socket connected to GAMS
---- Job main.gms Start 07/10/24 13:53:50 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job main.gms Start 07/10/24 16:28:30 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -23,7 +21,10 @@ Licensee: Course License                                 S240430|0002AO-GEN
 Processor information: 1 socket(s), 8 core(s), and 16 thread(s) available
 GAMS 46.2.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
 --- Starting compilation
---- main.gms(12) 2 Mb
+--- main.gms(14) 2 Mb 1 Error
+*** Error 140 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Unknown symbol
+--- main.gms(19) 2 Mb
 --- . loadFinalData.gms(15) 3 Mb
 --- call gdxxrw.exe waterCapacityFactors.xlsx par=WaterCapacitieFactors rng=Sheet1!A1:B7 dim=1 cdim=0 rdim=1 log=log_waterCapFactor.txt
 --- . loadFinalData.gms(17) 3 Mb
@@ -41,103 +42,79 @@ No errors, CSV2GDX time = 0ms
 --- . loadFinalData.gms(33) 3 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
---- . loadFinalData.gms(38) 3 Mb
+--- . loadFinalData.gms(38) 4 Mb
 --- call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:D15 dim=2 cdim=1 rdim=1 log=log_plantCapacities.txt
---- . loadFinalData.gms(40) 3 Mb
+--- . loadFinalData.gms(40) 4 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
---- . loadFinalData.gms(45) 3 Mb
+--- . loadFinalData.gms(45) 4 Mb
 --- call gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
---- . loadFinalData.gms(47) 3 Mb
+--- . loadFinalData.gms(47) 4 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
---- . loadFinalData.gms(53) 3 Mb
+--- . loadFinalData.gms(53) 7 Mb
 --- call gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
---- . loadFinalData.gms(54) 3 Mb
+--- . loadFinalData.gms(54) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
---- . loadFinalData.gms(59) 3 Mb
+--- . loadFinalData.gms(59) 7 Mb
 --- call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A1:B15 rdim=1 cdim=0 log=log_carbEm.txt
---- . loadFinalData.gms(61) 3 Mb
+--- . loadFinalData.gms(61) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
---- . loadFinalData.gms(66) 3 Mb
+--- . loadFinalData.gms(62) 7 Mb 2 Errors
+*** Error 814 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
+    Cannot load data with UNDF values - use $onUNDF to allow
+    814 Plants_carbonEmissions(plants) = UNDF
+--- . loadFinalData.gms(66) 7 Mb
 --- call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A1:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
---- . loadFinalData.gms(68) 3 Mb
+--- . loadFinalData.gms(68) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
---- . loadFinalData.gms(73) 3 Mb
+--- . loadFinalData.gms(69) 7 Mb 3 Errors
+*** Error 814 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
+    Cannot load data with UNDF values - use $onUNDF to allow
+    814 CarbonEmissionEfficiencyFactor(plants) = UNDF
+--- . loadFinalData.gms(73) 7 Mb
 --- call gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
---- . loadFinalData.gms(75) 3 Mb
+--- . loadFinalData.gms(75) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
---- . loadFinalData.gms(80) 3 Mb
+--- . loadFinalData.gms(80) 7 Mb
 --- call gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
---- . loadFinalData.gms(82) 3 Mb
+--- . loadFinalData.gms(82) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
---- . loadFinalData.gms(98) 3 Mb
---- main.gms(15) 3 Mb
---- . scenarioData.gms(36) 3 Mb
---- main.gms(209) 3 Mb
---- Starting execution: elapsed 0:00:07.024
---- main.gms(291) 4 Mb
---- Generating LP model epmProject
---- main.gms(296) 4 Mb
---- LOOPS scenarioStageOne = s1
----   918 rows  566 columns  2,900 non-zeroes
---- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 1.667E-01, 6.218E+08] - Zero values observed as well
---- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:15.312
-
-IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-
---- GAMS/CPLEX licensed for continuous and discrete problems.
---- GMO setup time: 0.00s
---- Space for names approximately 0.07 Mb
---- Use option 'names no' to turn use of names off
---- GMO memory 0.67 Mb (peak 0.67 Mb)
---- Dictionary memory 0.00 Mb
---- Cplex 22.1.1.0 link memory 0.02 Mb (peak 0.13 Mb)
---- Starting Cplex
-
-Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
-CPXPARAM_Advance                                 0
-CPXPARAM_MIP_Display                             4
-CPXPARAM_MIP_Pool_Capacity                       0
-CPXPARAM_MIP_Tolerances_AbsMIPGap                0
-Tried aggregator 1 time.
-LP Presolve eliminated 159 rows and 73 columns.
-Aggregator did 12 substitutions.
-Reduced LP has 746 rows, 481 columns, and 2091 nonzeros.
-Presolve time = 0.02 sec. (0.96 ticks)
-Initializing dual steep norms . . .
-
-Iteration log . . .
-Iteration:     1   Dual objective     =             0.000000
-Iteration:    62   Dual objective     =  120411376991.689285
-Iteration:   124   Dual objective     =  246686988505.983429
-Iteration:   186   Dual objective     =  251454251899.831604
-Iteration:   248   Dual objective     =  415969881170.041809
-Iteration:   310   Dual objective     =  693547988012.048340
-Iteration:   372   Dual objective     = 2559707083886.528809
-Iteration:   434   Dual objective     = 21307319922898.109375
-Removing shift (68).
-
---- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 11.40 ticks)
-
-
-Optimal solution found
-Objective:  22214974053818.003906
-
---- Reading solution for model epmProject
---- Executing after solve: elapsed 0:00:15.350
---- main.gms(291) 4 Mb
-*** Error at line 299: Execution halted: Triggered by pending CtrlC event
---- main.gms(291) 4 Mb 1 Error  45 secs[FIL:"C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms",291,0]Debug-Server: Socket disconnected
-
-*** Status: Execution error(s)
---- Job main.gms Stop 07/10/24 13:54:51 elapsed 0:01:01.474
+--- . loadFinalData.gms(98) 7 Mb
+--- main.gms(22) 7 Mb
+--- . scenarioData.gms(36) 7 Mb
+--- main.gms(171) 7 Mb 4 Errors
+*** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Solve statement not checked because of previous errors
+--- main.gms(172) 7 Mb 5 Errors
+*** Error 141 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+--- main.gms(173) 7 Mb 6 Errors
+*** Error 141 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+--- main.gms(174) 7 Mb 7 Errors
+*** Error 141 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Symbol declared but no values have been assigned. Check for missing
+       data definition, assignment, data loading or implicit assignment
+       via a solve statement. Suppress with $onImplicitAssign.
+       A wild shot: You may have spurious commas in the explanatory
+       text of a declaration. Check symbol reference list.
+--- main.gms(187) 7 Mb 8 Errors
+*** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Solve statement not checked because of previous errors
+--- main.gms(218) 7 Mb 8 Errors
+*** Status: Compilation error(s)
+--- Job main.gms Stop 07/10/24 16:28:38 elapsed 0:00:07.569

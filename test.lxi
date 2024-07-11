@@ -1,1 +1,19 @@
 B 3 C o m p i l a t i o n
+B 68 Include File Summary
+B 80 Equation Listing    SOLVE stochastic Using LP From line 60
+D 83 bal_stochastic
+D 94 cap_con_stoch
+D 105 totalCosts_stoch
+B 111 Column Listing      SOLVE stochastic Using LP From line 60
+E 114 generation
+E 136 plant_capacities
+E 171 TC
+B 179 Range Statistics    SOLVE stochastic Using LP From line 60
+B 190 Model Statistics    SOLVE stochastic Using LP From line 60
+B 203 Solution Report     SOLVE stochastic Using LP From line 60
+F 234 bal_stochastic
+F 251 cap_con_stoch
+F 282 totalCosts_stoch
+G 284 generation
+G 313 plant_capacities
+G 322 TC

@@ -1,4 +1,4 @@
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 1
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -9,316 +9,325 @@ C o m p i l a t i o n
    4  shortages                   /1/
    5  CurrentStageOneScenario
    6  CurrentStageTwoScenario
-   7  ;
-   8   
-   9  *for a fast code check:  $include loadTestData2 and "comment out" the rest
-  10  *$include loadTestData
-  11   
-INCLUDE    C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
+   7  std                         /1/
+   8  mean                        /1/
+   9  propFactor
+  10  propability
+  11  e                           /2.718281828459/
+  12  ;
   13   
-  14  Sets
-  15  *t /t1*t168, t4200*t4368/
-  16  t /t1*t8/
-  17  snaps /snap1*snap4/
-  18  plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
-  19  conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
-  20  baseLoadPlants(plants)      /lignite, hardcoal/
-  21  renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, reservoirStorages/
-  22  constraintInvestsPlants(plants)       /water, reservoirStorages/
-  23  storages(plants)
-  24  country /DE, FR, BNL/
-  25  ;
-  26   
-  28  Parameter WaterCapacitieFactors(country)
+  14   
+  15  *for a fast code check:  $include loadTestData2 and "comment out" the rest
+  16  *$include loadTestData
+  17   
+INCLUDE    C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
+  19   
+  20  Sets
+  21  *t /t1*t168, t4200*t4368/
+  22  t /t1*t8/
+  23  snaps /snap1*snap4/
+  24  plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
+  25  conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
+  26  baseLoadPlants(plants)      /lignite, hardcoal/
+  27  renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, reservoirStorages/
+  28  constraintInvestsPlants(plants)       /water, reservoirStorages/
+  29  storages(plants)
+  30  country /DE, FR, BNL/
+  31  ;
+  32   
+  34  Parameter WaterCapacitieFactors(country)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\waterCapacityFactors.gdx
 --- LOAD  WaterCapacitieFactors = 1:WaterCapacitieFactors
-  32  ;
-  33   
-  34  Parameter StorageCapacity(storages, country);
+  38  ;
+  39   
+  40  Parameter StorageCapacity(storages, country);
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
 --- LOAD  storages = 2:Dim1
-  38  *$load country = dim2
+  44  *$load country = dim2
 --- LOAD  StorageCapacity = 1:storageCapacity
-  41  ;
-  42   
-  44  Parameter PowerDemand(t, country)
+  47  ;
+  48   
+  50  Parameter PowerDemand(t, country)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
 --- LOAD  PowerDemand = 1:PowerDemand
-  48  ;
-  49   
-  51  Parameter Plants_capacities(plants, country)
+  54  ;
+  55   
+  57  Parameter Plants_capacities(plants, country)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
 --- LOAD  Plants_capacities = 1:Plants_capacities
-  55  ;
-  56   
-  58  Parameter CapacityFactor(t, plants)
+  61  ;
+  62   
+  64  Parameter CapacityFactor(t, plants)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
 --- LOAD  CapacityFactor = 1:CapacityFactor
-  62  ;
-  63   
-  64  Parameter Plants_availability(plants);
+  68  ;
+  69   
+  70  Parameter Plants_availability(plants);
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
 --- LOAD  Plants_availability = 1:Plants_availability
-  69  ;
-  70   
-  72  Parameter Plants_carbonEmissions(plants)
+  75  ;
+  76   
+  78  Parameter Plants_carbonEmissions(plants)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
 --- LOAD  Plants_carbonEmissions = 1:Plants_carbonEmissions
-  76  ;
-  77   
-  79  Parameter CarbonEmissionEfficiencyFactor(plants)
+  82  ;
+  83   
+  85  Parameter CarbonEmissionEfficiencyFactor(plants)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
 --- LOAD  CarbonEmissionEfficiencyFactor = 1:carbonEmissionEfficiencyFactor
-  83  ;
-  84   
-  86  Parameter InvestmentCosts(plants)
+  89  ;
+  90   
+  92  Parameter InvestmentCosts(plants)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
 --- LOAD  InvestmentCosts = 1:InvestmentCosts
-  90  ;
-  91   
-  93  Parameter OperatingCosts(plants)
+  96  ;
+  97   
+  99  Parameter OperatingCosts(plants)
 GDXIN   C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
 --- LOAD  OperatingCosts = 1:OperatingCosts
-  97  ;
-  98   
-  99   
- 100   
-       
- 104  *import larger tabels like PowerDemand and plant data from excel
+ 103  ;
+ 104   
  105   
  106   
- 107   
- 108   
- 109   
- 110   
- 111  *$include loadTestData3
+       
+ 110  *import larger tabels like PowerDemand and plant data from excel
+ 111   
  112   
-INCLUDE    C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\scenarioData.gms
+ 113   
  114   
- 115  Set
- 116  scenario /s1*s2/
- 117  scenarioProp /probaility, factor/
- 118  ;
- 119  Alias(scenario, scenarioStageOne);
- 120  Alias(scenario, scenarioStageTwo);
- 121   
- 122   
- 123  Scalar
- 124  ScenarioProbability
- 125  ScenarioFactor
- 126  EVPI
- 127  VSS_max
- 128  Z_PI
- 129   
- 130  Z_DP
- 131  ;
- 132  Parameter Table
- 133  ScenarioData(scenario, scenarioProp)
- 134          probaility          factor
- 135  s1      0.2                 10000000
- 136  s2      0.8                 0.001
+ 115   
+ 116   
+ 117  *$include loadTestData3
+ 118   
+INCLUDE    C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\scenarioData.gms
+ 120   
+ 121  Set
+ 122  scenario /s1*s2/
+ 123  scenarioProp /probaility, factor/
+ 124  ;
+ 125  Alias(scenario, scenarioStageOne);
+ 126  Alias(scenario, scenarioStageTwo);
+ 127   
+ 128   
+ 129  Scalar
+ 130  ScenarioProbability
+ 131  ScenarioFactor
+ 132  EVPI
+ 133  VSS_max
+ 134  Z_PI
+ 135   
+ 136  Z_DP
  137  ;
- 138   
- 139  Parameter
- 140  Z_SP(scenario)
- 141  StageOneInvestmentData(scenario, plants, country)
- 142  StageOneInvestmentsDecision(plants, country)
+ 138  Parameter Table
+ 139  ScenarioData(scenario, scenarioProp)
+ 140          probaility          factor
+ 141  s1      0.2                 10000000
+ 142  s2      0.8                 0.001
  143  ;
  144   
- 145  loop(plants,
- 146      loop(country,
- 147          StageOneInvestmentsDecision(plants, country) = 0;
- 148      );
- 149  );
+ 145  Parameter
+ 146  Z_SP(scenario)
+ 147  StageOneInvestmentData(scenario, plants, country)
+ 148  StageOneInvestmentsDecision(plants, country)
+ 149  ;
  150   
- 151   
- 152  *EUR/tCO2    Sandbag (2019)
- 153  Parameter
- 154  CO2Price            /15.92/
- 155  stageOneInvestments(scenario, plants, country)
- 156  CurrentStageOneDecision(plants, country)
+ 151  loop(plants,
+ 152      loop(country,
+ 153          StageOneInvestmentsDecision(plants, country) = 0;
+ 154      );
+ 155  );
+ 156   
  157   
- 158  ;
- 159   
- 160  Variables
- 161  TC total cost
- 162  pumpOperation(t, storages)                  *pump operation
- 163  ;
- 164   
+ 158  *EUR/tCO2    Sandbag (2019)
+ 159  Parameter
+ 160  CO2Price            /15.92/
+ 161  stageOneInvestments(scenario, plants, country)
+ 162  CurrentStageOneDecision(plants, country)
+ 163   
+ 164  ;
  165   
- 166   
- 167  Positive Variable
- 168  totalCPCosts
- 169  totalInvestmentCosts
- 170  savedEnergy
- 171  buildCapacities(plants, country)
- 172  powerGeneration(t, plants, country)             generation per Technology (MW)
- 173  storageLoading(t, storages, country)
- 174  storageGen(t, storages)
- 175  storageLevel(t, storages, country)
- 176  export(country, t)
- 177  import(country, t)
- 178  carbonEmission(country, plants)
- 179  carbonEmissionCosts(country, plants)
- 180  overallLoad(plants)
- 181  addInvestCosts
- 182  ;
- 183   
- 184   
- 185  Equations
- 186  ***     basic constraints
- 187  energy_balance(t, country)
- 188  trade_constraint
+ 166  Variables
+ 167  TC total cost
+ 168  pumpOperation(t, storages)                  *pump operation
+ 169  ;
+ 170   
+ 171   
+ 172   
+ 173  Positive Variable
+ 174  totalCPCosts
+ 175  totalInvestmentCosts
+ 176  savedEnergy
+ 177  buildCapacities(plants, country)
+ 178  powerGeneration(t, plants, country)             generation per Technology (MW)
+ 179  storageLoading(t, storages, country)
+ 180  storageGen(t, storages)
+ 181  storageLevel(t, storages, country)
+ 182  export(country, t)
+ 183  import(country, t)
+ 184  carbonEmission(country, plants)
+ 185  carbonEmissionCosts(country, plants)
+ 186  overallLoad(plants)
+ 187  addInvestCosts
+ 188  ;
  189   
- 190  ***     powerGeneration constraints
- 191  generation_constraint_Plants
- 192  generation_constraint_rePlants(t, renewablePlants, country)
- 193  storage_genConstraint_capacity
- 194   
- 195  ***     baseload plants ramping up/down
- 196  ramping_upper_constraint(t, baseLoadPlants, country)
- 197  ramping_bottom_constraint(t, baseLoadPlants, country)
- 198   
+ 190   
+ 191  Equations
+ 192  *PropabilityDis
+ 193  *TrimodalEquation
+ 194  ***     basic constraints
+ 195  energy_balance(t, country)
+ 196  trade_constraint
+ 197   
+ 198  ***     powerGeneration constraints
+ 199  generation_constraint_Plants
+ 200  generation_constraint_rePlants(t, renewablePlants, country)
+ 201  storage_genConstraint_capacity
+ 202   
+ 203  ***     baseload plants ramping up/down
+ 204  ramping_upper_constraint(t, baseLoadPlants, country)
+ 205  ramping_bottom_constraint(t, baseLoadPlants, country)
+ 206   
       ***     non negativity constraints
       non_negativity_constraint_power
       non_negativity_constraint_reg(t,renewablePlants, country)               
       non_negativity_constraint_storage(t,storages, country)  
       non_negativity_constraint_capacities
- 206   
- 207  ***     storage handle constraints
- 208  handleStorage
- 209  non_negativity_constraint_storagesLevel
- 210  storage_loadingConstraint_performance
- 211  storage_levelConstraint_maxCapacity
- 212   
- 213  ***     carbon Emissions
- 214  *totalEmissionCap_EQ
- 215  *carbonEmission_EQ(country, plants)
- 216  *carbonEmissionCosts_EQ(country, plants)..
- 217   
- 218  ***     investment costs
- 219  capacityCosts
+ 214   
+ 215  ***     storage handle constraints
+ 216  handleStorage
+ 217  non_negativity_constraint_storagesLevel
+ 218  storage_loadingConstraint_performance
+ 219  storage_levelConstraint_maxCapacity
  220   
- 221  ***     water power constraint
- 222  waterConstraint
- 223   
- 224  ***     for some analysis
- 225  overallLoad_EQ(plants)
- 226   
- 227   
+ 221  ***     carbon Emissions
+ 222  *totalEmissionCap_EQ
+ 223  *carbonEmission_EQ(country, plants)
+ 224  *carbonEmissionCosts_EQ(country, plants)..
+ 225   
+ 226  ***     investment costs
+ 227  capacityCosts
  228   
- 229  ***     total costs - to be minimized
- 230  total_cost
- 231  ;
- 232   
- 233   
+ 229  ***     water power constraint
+ 230  waterConstraint
+ 231   
+ 232  ***     for some analysis
+ 233  overallLoad_EQ(plants)
  234   
  235   
- 236  ***     basic constraints
- 237  energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)  * ScenarioFactor + export(country, t) + sum((storages), storageLoading(t, storages, country));
- 238  trade_constraint(t)..                                               sum(country, import(country, t)) =e=  sum(country, export(country, t)) * 0.9;
- 239   
+ 236   
+ 237  ***     total costs - to be minimized
+ 238  total_cost
+ 239  ;
  240   
- 241  ***     powerGeneration constraints
- 242  generation_constraint_Plants(t, plants, country)..                  powerGeneration(t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country) + StageOneInvestmentsDecision(plants, country)) * Plants_availability(plants);
- 243  generation_constraint_rePlants(t, renewablePlants, country)..       powerGeneration(t, renewablePlants, country) =l= (Plants_capacities(renewablePlants, country) + buildCapacities(renewablePlants, country)) * CapacityFactor(t, renewablePlants);
- 244  storage_genConstraint_capacity(t, storages, country)..              powerGeneration(t, storages, country) =l= storageLevel(t, storages, country);
- 245   
- 246   
- 247  ***     baseload plants ramping up/down
- 248  ramping_upper_constraint(t, baseLoadPlants, country)..              powerGeneration(t, baseLoadPlants, country) =l= powerGeneration(t-1, baseLoadPlants, country) + ((Plants_capacities(baseLoadPlants, country) + buildCapacities(baseLoadPlants, country)) * (0.18));
- 249  ramping_bottom_constraint(t, baseLoadPlants, country)..             powerGeneration(t, baseLoadPlants, country) =g= powerGeneration(t-1, baseLoadPlants, country) - ((Plants_capacities(baseLoadPlants, country) + buildCapacities(baseLoadPlants, country)) * (0.18));
- 250   
+ 241   
+ 242   
+ 243  *PropabilityDis..                                                  propability =e= 1/(std* sqrt(2*pi)) * e**((-1/2*((propFactor)-mean))/std**2);
+ 244  *TrimodalEquation..
+ 245  ***     basic constraints
+ 246  energy_balance(t, country)..                                        sum((plants),powerGeneration(t, plants, country)) + import(country, t)  =e= PowerDemand(t, country)  * ScenarioFactor + export(country, t) + sum((storages), storageLoading(t, storages, country));
+ 247  trade_constraint(t)..                                               sum(country, import(country, t)) =e=  sum(country, export(country, t)) * 0.9;
+ 248   
+ 249   
+ 250  ***     powerGeneration constraints
+ 251  generation_constraint_Plants(t, plants, country)..                  powerGeneration(t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country) + StageOneInvestmentsDecision(plants, country)) * Plants_availability(plants);
+ 252  generation_constraint_rePlants(t, renewablePlants, country)..       powerGeneration(t, renewablePlants, country) =l= (Plants_capacities(renewablePlants, country) + buildCapacities(renewablePlants, country)) * CapacityFactor(t, renewablePlants);
+ 253  storage_genConstraint_capacity(t, storages, country)..              powerGeneration(t, storages, country) =l= storageLevel(t, storages, country);
+ 254   
+ 255   
+ 256  ***     baseload plants ramping up/down
+ 257  ramping_upper_constraint(t, baseLoadPlants, country)..              powerGeneration(t, baseLoadPlants, country) =l= powerGeneration(t-1, baseLoadPlants, country) + ((Plants_capacities(baseLoadPlants, country) + buildCapacities(baseLoadPlants, country)) * (0.18));
+ 258  ramping_bottom_constraint(t, baseLoadPlants, country)..             powerGeneration(t, baseLoadPlants, country) =g= powerGeneration(t-1, baseLoadPlants, country) - ((Plants_capacities(baseLoadPlants, country) + buildCapacities(baseLoadPlants, country)) * (0.18));
+ 259   
       ***     non negativity constraints
       non_negativity_constraint_power(t,plants, country)..                powerGeneration(t, plants, country)=g=0;
       non_negativity_constraint_reg(t,renewablePlants, country)..         powerGeneration(t, renewablePlants, country)=g=0;
       non_negativity_constraint_storage(t,storages, country)..            powerGeneration(t, storages, country)=g=0;
       non_negativity_constraint_capacities(plants, country)..             buildCapacities(plants, country) =g= 0;
- 258   
- 259  ***     storage handle constraints
- 260  handleStorage(t, storages, country)..                               storageLevel(t, storages, country) =e= storageLevel(t-1, storages, country) + storageLoading(t-1, storages, country)  - powerGeneration(t-1, storages, country);
- 261  non_negativity_constraint_storagesLevel(t, storages, country)..     storageLevel(t, storages, country) =g= 0;
- 262  storage_levelConstraint_maxCapacity(t, storages, country)..         storageLevel(t, storages, country) =l= StorageCapacity(storages, country) + buildCapacities(storages, country);
- 263  storage_loadingConstraint_performance(t, storages, country)..       storageLoading(t, storages, country) =l= (StorageCapacity(storages, country) + buildCapacities(storages, country)) / 6;
- 264   
+ 267   
+ 268  ***     storage handle constraints
+ 269  handleStorage(t, storages, country)..                               storageLevel(t, storages, country) =e= storageLevel(t-1, storages, country) + storageLoading(t-1, storages, country)  - powerGeneration(t-1, storages, country);
+ 270  non_negativity_constraint_storagesLevel(t, storages, country)..     storageLevel(t, storages, country) =g= 0;
+ 271  storage_levelConstraint_maxCapacity(t, storages, country)..         storageLevel(t, storages, country) =l= StorageCapacity(storages, country) + buildCapacities(storages, country);
+ 272  storage_loadingConstraint_performance(t, storages, country)..       storageLoading(t, storages, country) =l= (StorageCapacity(storages, country) + buildCapacities(storages, country)) / 6;
+ 273   
       ***     carbon Emissions
       totalEmissionCap_EQ..                                               TotalCarbonCap =g= sum((country, plants), carbonEmission(country, plants));
       carbonEmission_EQ(country, plants) ..                               carbonEmission(country, plants) =e= sum((t), powerGeneration(t, plants, country) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants));
       *carbonEmissionCosts_EQ(country, plants)..                          carbonEmissionCosts(country, plants) =e= sum((t), powerGeneration(t, plants, country)) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants) * CO2Price;
- 271   
- 272  ***     investment costs
- 273  capacityCosts(country)..                                            totalInvestmentCosts =e= sum((plants), buildCapacities(plants, country) * InvestmentCosts(plants));
- 274   
- 275   
- 276  ***     water power constraint
- 277  waterConstraint(country)..                                          sum((constraintInvestsPlants), Plants_capacities(constraintInvestsPlants, country)) * WaterCapacitieFactors(country) =g= sum((constraintInvestsPlants), Plants_capacities(constraintInvestsPlants, country) + buildCapacities(constraintInvestsPlants, country));
- 278   
- 279   
- 280  ***     for some analysis
- 281  overallLoad_EQ(plants)..                                            overallLoad(plants) =e= sum((country, t), powerGeneration(t, plants, country));
- 282   
+ 280   
+ 281  ***     investment costs
+ 282  capacityCosts(country)..                                            totalInvestmentCosts =e= sum((plants), buildCapacities(plants, country) * InvestmentCosts(plants));
  283   
- 284  ***     total costs - to be minimized
- 285  total_cost..                                                        TC =e= sum((t, plants, country),powerGeneration(t, plants, country) * OperatingCosts(plants))  + totalInvestmentCosts;
- 286   
+ 284   
+ 285  ***     water power constraint
+ 286  waterConstraint(country)..                                          sum((constraintInvestsPlants), Plants_capacities(constraintInvestsPlants, country)) * WaterCapacitieFactors(country) =g= sum((constraintInvestsPlants), Plants_capacities(constraintInvestsPlants, country) + buildCapacities(constraintInvestsPlants, country));
  287   
- 288  Model epmProject /all/;
- 289   
- 290  *** Stage 1
- 291  loop(scenarioStageOne,
- 292      ScenarioProbability= ScenarioData(scenarioStageOne, 'probaility');
- 293      ScenarioFactor= ScenarioData(scenarioStageOne, 'factor');
- 294      CurrentStageOneScenario = ord(scenarioStageOne);
+ 288   
+ 289  ***     for some analysis
+ 290  overallLoad_EQ(plants)..                                            overallLoad(plants) =e= sum((country, t), powerGeneration(t, plants, country));
+ 291   
+ 292   
+ 293  ***     total costs - to be minimized
+ 294  total_cost..                                                        TC =e= sum((t, plants, country),powerGeneration(t, plants, country) * OperatingCosts(plants))  + totalInvestmentCosts;
  295   
- 296      Solve epmProject using LP minimising TC;
- 297      Z_SP(scenarioStageOne) = TC.l;
- 298      StageOneInvestmentData(scenarioStageOne, plants, country) = buildCapacities.l(plants, country);
- 299      Display TC.l, CurrentStageOneScenario, buildCapacities.l, totalInvestmentCosts.l;
- 300   
- 301  );
- 302   
- 303  *** Stage 2
- 304  loop(scenarioStageTwo,
- 305     ScenarioProbability= ScenarioData(scenarioStageTwo, 'probaility');
- 306     ScenarioFactor= ScenarioData(scenarioStageTwo, 'factor');
- 307     loop(scenarioStageOne,
- 308          StageOneInvestmentsDecision(plants, country) = StageOneInvestmentData(scenarioStageOne, plants, country);
- 309          CurrentStageOneScenario = ord(scenarioStageOne);
- 310          CurrentStageTwoScenario = ord(scenarioStageTwo);
+ 296   
+ 297  Model epmProject /all/;
+ 298   
+ 299  *** Stage 1
+ 300  loop(scenarioStageOne,
+ 301      ScenarioProbability= ScenarioData(scenarioStageOne, 'probaility');
+ 302      ScenarioFactor= ScenarioData(scenarioStageOne, 'factor');
+ 303      CurrentStageOneScenario = ord(scenarioStageOne);
+ 304   
+ 305      Solve epmProject using LP minimising TC;
+ 306      Z_SP(scenarioStageOne) = TC.l;
+ 307      StageOneInvestmentData(scenarioStageOne, plants, country) = buildCapacities.l(plants, country);
+ 308      Display TC.l, CurrentStageOneScenario, buildCapacities.l, totalInvestmentCosts.l;
+ 309   
+ 310  );
  311   
- 312          Solve epmProject using LP minimising TC;
- 313          Z_SP(scenario) = TC.l;
- 314          Display TC.l, Plants_capacities, totalInvestmentCosts.l, CurrentStageOneScenario, CurrentStageTwoScenario, StageOneInvestmentsDecision;
- 315      );
- 316  );
- 317   
- 318   
- 319  *Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP, stageOneInvestments, Plants_capacities;
+ 312  *** Stage 2
+ 313  loop(scenarioStageTwo,
+ 314     ScenarioProbability= ScenarioData(scenarioStageTwo, 'probaility');
+ 315     ScenarioFactor= ScenarioData(scenarioStageTwo, 'factor');
+ 316     loop(scenarioStageOne,
+ 317          StageOneInvestmentsDecision(plants, country) = StageOneInvestmentData(scenarioStageOne, plants, country);
+ 318          CurrentStageOneScenario = ord(scenarioStageOne);
+ 319          CurrentStageTwoScenario = ord(scenarioStageTwo);
  320   
- 321   
- 322  execute_unload "energyEQ.gdx" energy_balance.l
- 323  execute 'gdxxrw.exe energyEQ.gdx o=energyEQ.xlsx var=energy_balance.l'
- 324   
- 325  execute_unload "powerGeneration.gdx" powerGeneration.l
- 326  execute 'gdxxrw.exe powerGeneration.gdx o=powerGeneration.xls var=powerGeneration.l'
+ 321          Solve epmProject using LP minimising TC;
+ 322          Z_SP(scenario) = TC.l;
+ 323          Display TC.l, Plants_capacities, totalInvestmentCosts.l, CurrentStageOneScenario, CurrentStageTwoScenario, StageOneInvestmentsDecision;
+ 324      );
+ 325  );
+ 326   
  327   
- 328  execute_unload "storageCapacity.gdx"storageCapacity
- 329  execute 'gdxxrw.exe storageCapacity.gdx o=storageCapacity.xls var=storageCapacity'
+ 328  *Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP, stageOneInvestments, Plants_capacities;
+ 329   
  330   
- 331  execute_unload "storageLoading.gdx" storageLoading.l
- 332  execute 'gdxxrw.exe storageLoading.gdx o=storageLoading.xls var=storageLoading.l'
+ 331  execute_unload "energyEQ.gdx" energy_balance.l
+ 332  execute 'gdxxrw.exe energyEQ.gdx o=energyEQ.xlsx var=energy_balance.l'
  333   
- 334  execute_unload "import" import.l
- 335  execute 'gdxxrw.exe import.gdx o=import.xls var=import.l'
+ 334  execute_unload "powerGeneration.gdx" powerGeneration.l
+ 335  execute 'gdxxrw.exe powerGeneration.gdx o=powerGeneration.xls var=powerGeneration.l'
  336   
- 337  execute_unload "export" export.l
- 338  execute 'gdxxrw.exe export.gdx o=export.xls var=export.l'
+ 337  execute_unload "storageCapacity.gdx"storageCapacity
+ 338  execute 'gdxxrw.exe storageCapacity.gdx o=storageCapacity.xls var=storageCapacity'
  339   
- 340   
- 341   
+ 340  execute_unload "storageLoading.gdx" storageLoading.l
+ 341  execute 'gdxxrw.exe storageLoading.gdx o=storageLoading.xls var=storageLoading.l'
  342   
- 343  *execute 'gdxxrw.exe .gdx o=.xls var='
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 2
+ 343  execute_unload "import" import.l
+ 344  execute 'gdxxrw.exe import.gdx o=import.xls var=import.l'
+ 345   
+ 346  execute_unload "export" export.l
+ 347  execute 'gdxxrw.exe export.gdx o=export.xls var=export.l'
+ 348   
+ 349   
+ 350   
+ 351   
+ 352  *execute 'gdxxrw.exe .gdx o=.xls var='
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -326,34 +335,34 @@ Include File Summary
    SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
 
      1        1 INPUT          0       0  C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-     2       12 INCLUDE        1      12  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
-     3       27 CALL           2      15  .gdxxrw.exe waterCapacityFactors.xlsx par=WaterCapacitieFactors rng=Sheet1!A1:B7 dim=1 cdim=0 rdim=1 log=log_waterCapFactor.txt
-     4       29 GDXIN          2      17  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\waterCapacityFactors.gdx
-     5       35 CALL           2      23  .csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=3 index=1,2 value=3 useHeader=y trace=1
-     6       36 GDXIN          2      24  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
-     7       43 CALL           2      31  .gdxxrw.exe powerDemand_2019.xlsx par=PowerDemand rng=Sheet1!A1:D8761 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
-     8       45 GDXIN          2      33  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
-     9       50 CALL           2      38  .gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:D15 dim=2 cdim=1 rdim=1 log=log_plantCapacities.txt
-    10       52 GDXIN          2      40  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
-    11       57 CALL           2      45  .gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
-    12       59 GDXIN          2      47  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
-    13       65 CALL           2      53  .gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
-    14       66 GDXIN          2      54  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
-    15       71 CALL           2      59  .gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A1:B15 rdim=1 cdim=0 log=log_carbEm.txt
-    16       73 GDXIN          2      61  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
-    17       78 CALL           2      66  .gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A1:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
-    18       80 GDXIN          2      68  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
-    19       85 CALL           2      73  .gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
-    20       87 GDXIN          2      75  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
-    21       92 CALL           2      80  .gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
-    22       94 GDXIN          2      82  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
-    23      113 INCLUDE        1      15  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\scenarioData.gms
+     2       18 INCLUDE        1      18  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
+     3       33 CALL           2      15  .gdxxrw.exe waterCapacityFactors.xlsx par=WaterCapacitieFactors rng=Sheet1!A1:B7 dim=1 cdim=0 rdim=1 log=log_waterCapFactor.txt
+     4       35 GDXIN          2      17  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\waterCapacityFactors.gdx
+     5       41 CALL           2      23  .csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=3 index=1,2 value=3 useHeader=y trace=1
+     6       42 GDXIN          2      24  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+     7       49 CALL           2      31  .gdxxrw.exe powerDemand_2019.xlsx par=PowerDemand rng=Sheet1!A1:D8761 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
+     8       51 GDXIN          2      33  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand_2019.gdx
+     9       56 CALL           2      38  .gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:D15 dim=2 cdim=1 rdim=1 log=log_plantCapacities.txt
+    10       58 GDXIN          2      40  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
+    11       63 CALL           2      45  .gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
+    12       65 GDXIN          2      47  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
+    13       71 CALL           2      53  .gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
+    14       72 GDXIN          2      54  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
+    15       77 CALL           2      59  .gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A1:B15 rdim=1 cdim=0 log=log_carbEm.txt
+    16       79 GDXIN          2      61  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
+    17       84 CALL           2      66  .gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A1:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
+    18       86 GDXIN          2      68  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
+    19       91 CALL           2      73  .gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
+    20       93 GDXIN          2      75  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
+    21       98 CALL           2      80  .gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
+    22      100 GDXIN          2      82  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
+    23      119 INCLUDE        1      21  .C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\scenarioData.gms
 
 
-COMPILATION TIME     =        8.141 SECONDS      3 MB  46.2.0 ac4adda6 WEX-WEI
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 3
+COMPILATION TIME     =        7.375 SECONDS      3 MB  46.2.0 ac4adda6 WEX-WEI
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE epmProject Using LP From line 296
+Equation Listing    SOLVE epmProject Using LP From line 305
 
 
 ---- energy_balance  =E=  
@@ -510,9 +519,9 @@ REMAINING 12 ENTRIES SKIPPED
 
 total_cost..  TC - totalInvestmentCosts - 27.4626*powerGeneration(t1,biomass,DE) - 27.4626*powerGeneration(t1,biomass,FR) - 27.4626*powerGeneration(t1,biomass,BNL) - powerGeneration(t1,waste,DE) - powerGeneration(t1,waste,FR) - powerGeneration(t1,waste,BNL) - 9.86160088082501*powerGeneration(t1,lignite,DE) - 9.86160088082501*powerGeneration(t1,lignite,FR) - 9.86160088082501*powerGeneration(t1,lignite,BNL) - 17.8666666666667*powerGeneration(t1,nuclear,DE) - 17.8666666666667*powerGeneration(t1,nuclear,FR) - 17.8666666666667*powerGeneration(t1,nuclear,BNL) - 31.2222144610957*powerGeneration(t1,hardcoal,DE) - 31.2222144610957*powerGeneration(t1,hardcoal,FR) - 31.2222144610957*powerGeneration(t1,hardcoal,BNL) - 66.5898697603756*powerGeneration(t1,gas,DE) - 66.5898697603756*powerGeneration(t1,gas,FR) - 66.5898697603756*powerGeneration(t1,gas,BNL) - 94.7999255544933*powerGeneration(t1,oil,DE) - 94.7999255544933*powerGeneration(t1,oil,FR) - 94.7999255544933*powerGeneration(t1,oil,BNL) - 27.4626*powerGeneration(t2,biomass,DE) - 27.4626*powerGeneration(t2,biomass,FR) - 27.4626*powerGeneration(t2,biomass,BNL) - powerGeneration(t2,waste,DE) - powerGeneration(t2,waste,FR) - powerGeneration(t2,waste,BNL) - 9.86160088082501*powerGeneration(t2,lignite,DE) - 9.86160088082501*powerGeneration(t2,lignite,FR) - 9.86160088082501*powerGeneration(t2,lignite,BNL) - 17.8666666666667*powerGeneration(t2,nuclear,DE) - 17.8666666666667*powerGeneration(t2,nuclear,FR) - 17.8666666666667*powerGeneration(t2,nuclear,BNL) - 31.2222144610957*powerGeneration(t2,hardcoal,DE) - 31.2222144610957*powerGeneration(t2,hardcoal,FR) - 31.2222144610957*powerGeneration(t2,hardcoal,BNL) - 66.5898697603756*powerGeneration(t2,gas,DE) - 66.5898697603756*powerGeneration(t2,gas,FR) - 66.5898697603756*powerGeneration(t2,gas,BNL) - 94.7999255544933*powerGeneration(t2,oil,DE) - 94.7999255544933*powerGeneration(t2,oil,FR) - 94.7999255544933*powerGeneration(t2,oil,BNL) - 27.4626*powerGeneration(t3,biomass,DE) - 27.4626*powerGeneration(t3,biomass,FR) - 27.4626*powerGeneration(t3,biomass,BNL) - powerGeneration(t3,waste,DE) - powerGeneration(t3,waste,FR) - powerGeneration(t3,waste,BNL) - 9.86160088082501*powerGeneration(t3,lignite,DE) - 9.86160088082501*powerGeneration(t3,lignite,FR) - 9.86160088082501*powerGeneration(t3,lignite,BNL) - 17.8666666666667*powerGeneration(t3,nuclear,DE) - 17.8666666666667*powerGeneration(t3,nuclear,FR) - 17.8666666666667*powerGeneration(t3,nuclear,BNL) - 31.2222144610957*powerGeneration(t3,hardcoal,DE) - 31.2222144610957*powerGeneration(t3,hardcoal,FR) - 31.2222144610957*powerGeneration(t3,hardcoal,BNL) - 66.5898697603756*powerGeneration(t3,gas,DE) - 66.5898697603756*powerGeneration(t3,gas,FR) - 66.5898697603756*powerGeneration(t3,gas,BNL) - 94.7999255544933*powerGeneration(t3,oil,DE) - 94.7999255544933*powerGeneration(t3,oil,FR) - 94.7999255544933*powerGeneration(t3,oil,BNL) - 27.4626*powerGeneration(t4,biomass,DE) - 27.4626*powerGeneration(t4,biomass,FR) - 27.4626*powerGeneration(t4,biomass,BNL) - powerGeneration(t4,waste,DE) - powerGeneration(t4,waste,FR) - powerGeneration(t4,waste,BNL) - 9.86160088082501*powerGeneration(t4,lignite,DE) - 9.86160088082501*powerGeneration(t4,lignite,FR) - 9.86160088082501*powerGeneration(t4,lignite,BNL) - 17.8666666666667*powerGeneration(t4,nuclear,DE) - 17.8666666666667*powerGeneration(t4,nuclear,FR) - 17.8666666666667*powerGeneration(t4,nuclear,BNL) - 31.2222144610957*powerGeneration(t4,hardcoal,DE) - 31.2222144610957*powerGeneration(t4,hardcoal,FR) - 31.2222144610957*powerGeneration(t4,hardcoal,BNL) - 66.5898697603756*powerGeneration(t4,gas,DE) - 66.5898697603756*powerGeneration(t4,gas,FR) - 66.5898697603756*powerGeneration(t4,gas,BNL) - 94.7999255544933*powerGeneration(t4,oil,DE) - 94.7999255544933*powerGeneration(t4,oil,FR) - 94.7999255544933*powerGeneration(t4,oil,BNL) - 27.4626*powerGeneration(t5,biomass,DE) - 27.4626*powerGeneration(t5,biomass,FR) - 27.4626*powerGeneration(t5,biomass,BNL) - powerGeneration(t5,waste,DE) - powerGeneration(t5,waste,FR) - powerGeneration(t5,waste,BNL) - 9.86160088082501*powerGeneration(t5,lignite,DE) - 9.86160088082501*powerGeneration(t5,lignite,FR) - 9.86160088082501*powerGeneration(t5,lignite,BNL) - 17.8666666666667*powerGeneration(t5,nuclear,DE) - 17.8666666666667*powerGeneration(t5,nuclear,FR) - 17.8666666666667*powerGeneration(t5,nuclear,BNL) - 31.2222144610957*powerGeneration(t5,hardcoal,DE) - 31.2222144610957*powerGeneration(t5,hardcoal,FR) - 31.2222144610957*powerGeneration(t5,hardcoal,BNL) - 66.5898697603756*powerGeneration(t5,gas,DE) - 66.5898697603756*powerGeneration(t5,gas,FR) - 66.5898697603756*powerGeneration(t5,gas,BNL) - 94.7999255544933*powerGeneration(t5,oil,DE) - 94.7999255544933*powerGeneration(t5,oil,FR) - 94.7999255544933*powerGeneration(t5,oil,BNL) - 27.4626*powerGeneration(t6,biomass,DE) - 27.4626*powerGeneration(t6,biomass,FR) - 27.4626*powerGeneration(t6,biomass,BNL) - powerGeneration(t6,waste,DE) - powerGeneration(t6,waste,FR) - powerGeneration(t6,waste,BNL) - 9.86160088082501*powerGeneration(t6,lignite,DE) - 9.86160088082501*powerGeneration(t6,lignite,FR) - 9.86160088082501*powerGeneration(t6,lignite,BNL) - 17.8666666666667*powerGeneration(t6,nuclear,DE) - 17.8666666666667*powerGeneration(t6,nuclear,FR) - 17.8666666666667*powerGeneration(t6,nuclear,BNL) - 31.2222144610957*powerGeneration(t6,hardcoal,DE) - 31.2222144610957*powerGeneration(t6,hardcoal,FR) - 31.2222144610957*powerGeneration(t6,hardcoal,BNL) - 66.5898697603756*powerGeneration(t6,gas,DE) - 66.5898697603756*powerGeneration(t6,gas,FR) - 66.5898697603756*powerGeneration(t6,gas,BNL) - 94.7999255544933*powerGeneration(t6,oil,DE) - 94.7999255544933*powerGeneration(t6,oil,FR) - 94.7999255544933*powerGeneration(t6,oil,BNL) - 27.4626*powerGeneration(t7,biomass,DE) - 27.4626*powerGeneration(t7,biomass,FR) - 27.4626*powerGeneration(t7,biomass,BNL) - powerGeneration(t7,waste,DE) - powerGeneration(t7,waste,FR) - powerGeneration(t7,waste,BNL) - 9.86160088082501*powerGeneration(t7,lignite,DE) - 9.86160088082501*powerGeneration(t7,lignite,FR) - 9.86160088082501*powerGeneration(t7,lignite,BNL) - 17.8666666666667*powerGeneration(t7,nuclear,DE) - 17.8666666666667*powerGeneration(t7,nuclear,FR) - 17.8666666666667*powerGeneration(t7,nuclear,BNL) - 31.2222144610957*powerGeneration(t7,hardcoal,DE) - 31.2222144610957*powerGeneration(t7,hardcoal,FR) - 31.2222144610957*powerGeneration(t7,hardcoal,BNL) - 66.5898697603756*powerGeneration(t7,gas,DE) - 66.5898697603756*powerGeneration(t7,gas,FR) - 66.5898697603756*powerGeneration(t7,gas,BNL) - 94.7999255544933*powerGeneration(t7,oil,DE) - 94.7999255544933*powerGeneration(t7,oil,FR) - 94.7999255544933*powerGeneration(t7,oil,BNL) - 27.4626*powerGeneration(t8,biomass,DE) - 27.4626*powerGeneration(t8,biomass,FR) - 27.4626*powerGeneration(t8,biomass,BNL) - powerGeneration(t8,waste,DE) - powerGeneration(t8,waste,FR) - powerGeneration(t8,waste,BNL) - 9.86160088082501*powerGeneration(t8,lignite,DE) - 9.86160088082501*powerGeneration(t8,lignite,FR) - 9.86160088082501*powerGeneration(t8,lignite,BNL) - 17.8666666666667*powerGeneration(t8,nuclear,DE) - 17.8666666666667*powerGeneration(t8,nuclear,FR) - 17.8666666666667*powerGeneration(t8,nuclear,BNL) - 31.2222144610957*powerGeneration(t8,hardcoal,DE) - 31.2222144610957*powerGeneration(t8,hardcoal,FR) - 31.2222144610957*powerGeneration(t8,hardcoal,BNL) - 66.5898697603756*powerGeneration(t8,gas,DE) - 66.5898697603756*powerGeneration(t8,gas,FR) - 66.5898697603756*powerGeneration(t8,gas,BNL) - 94.7999255544933*powerGeneration(t8,oil,DE) - 94.7999255544933*powerGeneration(t8,oil,FR) - 94.7999255544933*powerGeneration(t8,oil,BNL) =E= 0 ; (LHS = 0)
      
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 4
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE epmProject Using LP From line 296
+Column Listing      SOLVE epmProject Using LP From line 305
 
 
 ---- TC  total cost
@@ -724,9 +733,9 @@ overallLoad(water)
         1       overallLoad_EQ(water)
 
 REMAINING 12 ENTRIES SKIPPED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 5
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE epmProject Using LP From line 296
+Range Statistics    SOLVE epmProject Using LP From line 305
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -735,9 +744,9 @@ RHS       [min, max] : [ 1.667E-01, 6.218E+11] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 6
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE epmProject Using LP From line 296
+Model Statistics    SOLVE epmProject Using LP From line 305
 
 
 LOOPS                           scenarioStageOne   s1
@@ -750,25 +759,25 @@ BLOCKS OF VARIABLES           9     SINGLE VARIABLES          566
 NON ZERO ELEMENTS         2,900
 
 
-GENERATION TIME      =        0.000 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
+GENERATION TIME      =        0.015 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
                L O O P S         scenarioStageOne s1
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 7
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 7
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE epmProject Using LP From line 296
+Solution Report     SOLVE epmProject Using LP From line 305
 
 
                S O L V E      S U M M A R Y
 
      MODEL   epmProject          OBJECTIVE  TC
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  296
+     SOLVER  CPLEX               FROM LINE  305
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE   16725389584753844.0000
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
  ITERATION COUNT, LIMIT       440    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -781,7 +790,7 @@ Solution Report     SOLVE epmProject Using LP From line 296
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 10.05 ticks)
+--- Cplex Time: 0.02sec (det. 10.05 ticks)
 
 
 Optimal solution found
@@ -2389,25 +2398,25 @@ reservoirStorages             .          4238.1471        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 8
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    299 VARIABLE TC.L                  =  1.67254E+16  total cost
+----    308 VARIABLE TC.L                  =  1.67254E+16  total cost
             PARAMETER CurrentStageOneScenario =        1.000  
 
-----    299 VARIABLE buildCapacities.L  
+----    308 VARIABLE buildCapacities.L  
 
                               DE          FR         BNL
 
 gas                  4.95038E+11 4.95038E+11 4.95038E+11
 
 
-----    299 VARIABLE totalInvestmentCosts.L =  1.61015E+16  
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 9
+----    308 VARIABLE totalInvestmentCosts.L =  1.61015E+16  
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE epmProject Using LP From line 296
+Equation Listing    SOLVE epmProject Using LP From line 305
 
 
 ---- energy_balance  =E=  
@@ -2564,9 +2573,9 @@ REMAINING 12 ENTRIES SKIPPED
 
 total_cost..  TC - totalInvestmentCosts - 27.4626*powerGeneration(t1,biomass,DE) - 27.4626*powerGeneration(t1,biomass,FR) - 27.4626*powerGeneration(t1,biomass,BNL) - powerGeneration(t1,waste,DE) - powerGeneration(t1,waste,FR) - powerGeneration(t1,waste,BNL) - 9.86160088082501*powerGeneration(t1,lignite,DE) - 9.86160088082501*powerGeneration(t1,lignite,FR) - 9.86160088082501*powerGeneration(t1,lignite,BNL) - 17.8666666666667*powerGeneration(t1,nuclear,DE) - 17.8666666666667*powerGeneration(t1,nuclear,FR) - 17.8666666666667*powerGeneration(t1,nuclear,BNL) - 31.2222144610957*powerGeneration(t1,hardcoal,DE) - 31.2222144610957*powerGeneration(t1,hardcoal,FR) - 31.2222144610957*powerGeneration(t1,hardcoal,BNL) - 66.5898697603756*powerGeneration(t1,gas,DE) - 66.5898697603756*powerGeneration(t1,gas,FR) - 66.5898697603756*powerGeneration(t1,gas,BNL) - 94.7999255544933*powerGeneration(t1,oil,DE) - 94.7999255544933*powerGeneration(t1,oil,FR) - 94.7999255544933*powerGeneration(t1,oil,BNL) - 27.4626*powerGeneration(t2,biomass,DE) - 27.4626*powerGeneration(t2,biomass,FR) - 27.4626*powerGeneration(t2,biomass,BNL) - powerGeneration(t2,waste,DE) - powerGeneration(t2,waste,FR) - powerGeneration(t2,waste,BNL) - 9.86160088082501*powerGeneration(t2,lignite,DE) - 9.86160088082501*powerGeneration(t2,lignite,FR) - 9.86160088082501*powerGeneration(t2,lignite,BNL) - 17.8666666666667*powerGeneration(t2,nuclear,DE) - 17.8666666666667*powerGeneration(t2,nuclear,FR) - 17.8666666666667*powerGeneration(t2,nuclear,BNL) - 31.2222144610957*powerGeneration(t2,hardcoal,DE) - 31.2222144610957*powerGeneration(t2,hardcoal,FR) - 31.2222144610957*powerGeneration(t2,hardcoal,BNL) - 66.5898697603756*powerGeneration(t2,gas,DE) - 66.5898697603756*powerGeneration(t2,gas,FR) - 66.5898697603756*powerGeneration(t2,gas,BNL) - 94.7999255544933*powerGeneration(t2,oil,DE) - 94.7999255544933*powerGeneration(t2,oil,FR) - 94.7999255544933*powerGeneration(t2,oil,BNL) - 27.4626*powerGeneration(t3,biomass,DE) - 27.4626*powerGeneration(t3,biomass,FR) - 27.4626*powerGeneration(t3,biomass,BNL) - powerGeneration(t3,waste,DE) - powerGeneration(t3,waste,FR) - powerGeneration(t3,waste,BNL) - 9.86160088082501*powerGeneration(t3,lignite,DE) - 9.86160088082501*powerGeneration(t3,lignite,FR) - 9.86160088082501*powerGeneration(t3,lignite,BNL) - 17.8666666666667*powerGeneration(t3,nuclear,DE) - 17.8666666666667*powerGeneration(t3,nuclear,FR) - 17.8666666666667*powerGeneration(t3,nuclear,BNL) - 31.2222144610957*powerGeneration(t3,hardcoal,DE) - 31.2222144610957*powerGeneration(t3,hardcoal,FR) - 31.2222144610957*powerGeneration(t3,hardcoal,BNL) - 66.5898697603756*powerGeneration(t3,gas,DE) - 66.5898697603756*powerGeneration(t3,gas,FR) - 66.5898697603756*powerGeneration(t3,gas,BNL) - 94.7999255544933*powerGeneration(t3,oil,DE) - 94.7999255544933*powerGeneration(t3,oil,FR) - 94.7999255544933*powerGeneration(t3,oil,BNL) - 27.4626*powerGeneration(t4,biomass,DE) - 27.4626*powerGeneration(t4,biomass,FR) - 27.4626*powerGeneration(t4,biomass,BNL) - powerGeneration(t4,waste,DE) - powerGeneration(t4,waste,FR) - powerGeneration(t4,waste,BNL) - 9.86160088082501*powerGeneration(t4,lignite,DE) - 9.86160088082501*powerGeneration(t4,lignite,FR) - 9.86160088082501*powerGeneration(t4,lignite,BNL) - 17.8666666666667*powerGeneration(t4,nuclear,DE) - 17.8666666666667*powerGeneration(t4,nuclear,FR) - 17.8666666666667*powerGeneration(t4,nuclear,BNL) - 31.2222144610957*powerGeneration(t4,hardcoal,DE) - 31.2222144610957*powerGeneration(t4,hardcoal,FR) - 31.2222144610957*powerGeneration(t4,hardcoal,BNL) - 66.5898697603756*powerGeneration(t4,gas,DE) - 66.5898697603756*powerGeneration(t4,gas,FR) - 66.5898697603756*powerGeneration(t4,gas,BNL) - 94.7999255544933*powerGeneration(t4,oil,DE) - 94.7999255544933*powerGeneration(t4,oil,FR) - 94.7999255544933*powerGeneration(t4,oil,BNL) - 27.4626*powerGeneration(t5,biomass,DE) - 27.4626*powerGeneration(t5,biomass,FR) - 27.4626*powerGeneration(t5,biomass,BNL) - powerGeneration(t5,waste,DE) - powerGeneration(t5,waste,FR) - powerGeneration(t5,waste,BNL) - 9.86160088082501*powerGeneration(t5,lignite,DE) - 9.86160088082501*powerGeneration(t5,lignite,FR) - 9.86160088082501*powerGeneration(t5,lignite,BNL) - 17.8666666666667*powerGeneration(t5,nuclear,DE) - 17.8666666666667*powerGeneration(t5,nuclear,FR) - 17.8666666666667*powerGeneration(t5,nuclear,BNL) - 31.2222144610957*powerGeneration(t5,hardcoal,DE) - 31.2222144610957*powerGeneration(t5,hardcoal,FR) - 31.2222144610957*powerGeneration(t5,hardcoal,BNL) - 66.5898697603756*powerGeneration(t5,gas,DE) - 66.5898697603756*powerGeneration(t5,gas,FR) - 66.5898697603756*powerGeneration(t5,gas,BNL) - 94.7999255544933*powerGeneration(t5,oil,DE) - 94.7999255544933*powerGeneration(t5,oil,FR) - 94.7999255544933*powerGeneration(t5,oil,BNL) - 27.4626*powerGeneration(t6,biomass,DE) - 27.4626*powerGeneration(t6,biomass,FR) - 27.4626*powerGeneration(t6,biomass,BNL) - powerGeneration(t6,waste,DE) - powerGeneration(t6,waste,FR) - powerGeneration(t6,waste,BNL) - 9.86160088082501*powerGeneration(t6,lignite,DE) - 9.86160088082501*powerGeneration(t6,lignite,FR) - 9.86160088082501*powerGeneration(t6,lignite,BNL) - 17.8666666666667*powerGeneration(t6,nuclear,DE) - 17.8666666666667*powerGeneration(t6,nuclear,FR) - 17.8666666666667*powerGeneration(t6,nuclear,BNL) - 31.2222144610957*powerGeneration(t6,hardcoal,DE) - 31.2222144610957*powerGeneration(t6,hardcoal,FR) - 31.2222144610957*powerGeneration(t6,hardcoal,BNL) - 66.5898697603756*powerGeneration(t6,gas,DE) - 66.5898697603756*powerGeneration(t6,gas,FR) - 66.5898697603756*powerGeneration(t6,gas,BNL) - 94.7999255544933*powerGeneration(t6,oil,DE) - 94.7999255544933*powerGeneration(t6,oil,FR) - 94.7999255544933*powerGeneration(t6,oil,BNL) - 27.4626*powerGeneration(t7,biomass,DE) - 27.4626*powerGeneration(t7,biomass,FR) - 27.4626*powerGeneration(t7,biomass,BNL) - powerGeneration(t7,waste,DE) - powerGeneration(t7,waste,FR) - powerGeneration(t7,waste,BNL) - 9.86160088082501*powerGeneration(t7,lignite,DE) - 9.86160088082501*powerGeneration(t7,lignite,FR) - 9.86160088082501*powerGeneration(t7,lignite,BNL) - 17.8666666666667*powerGeneration(t7,nuclear,DE) - 17.8666666666667*powerGeneration(t7,nuclear,FR) - 17.8666666666667*powerGeneration(t7,nuclear,BNL) - 31.2222144610957*powerGeneration(t7,hardcoal,DE) - 31.2222144610957*powerGeneration(t7,hardcoal,FR) - 31.2222144610957*powerGeneration(t7,hardcoal,BNL) - 66.5898697603756*powerGeneration(t7,gas,DE) - 66.5898697603756*powerGeneration(t7,gas,FR) - 66.5898697603756*powerGeneration(t7,gas,BNL) - 94.7999255544933*powerGeneration(t7,oil,DE) - 94.7999255544933*powerGeneration(t7,oil,FR) - 94.7999255544933*powerGeneration(t7,oil,BNL) - 27.4626*powerGeneration(t8,biomass,DE) - 27.4626*powerGeneration(t8,biomass,FR) - 27.4626*powerGeneration(t8,biomass,BNL) - powerGeneration(t8,waste,DE) - powerGeneration(t8,waste,FR) - powerGeneration(t8,waste,BNL) - 9.86160088082501*powerGeneration(t8,lignite,DE) - 9.86160088082501*powerGeneration(t8,lignite,FR) - 9.86160088082501*powerGeneration(t8,lignite,BNL) - 17.8666666666667*powerGeneration(t8,nuclear,DE) - 17.8666666666667*powerGeneration(t8,nuclear,FR) - 17.8666666666667*powerGeneration(t8,nuclear,BNL) - 31.2222144610957*powerGeneration(t8,hardcoal,DE) - 31.2222144610957*powerGeneration(t8,hardcoal,FR) - 31.2222144610957*powerGeneration(t8,hardcoal,BNL) - 66.5898697603756*powerGeneration(t8,gas,DE) - 66.5898697603756*powerGeneration(t8,gas,FR) - 66.5898697603756*powerGeneration(t8,gas,BNL) - 94.7999255544933*powerGeneration(t8,oil,DE) - 94.7999255544933*powerGeneration(t8,oil,FR) - 94.7999255544933*powerGeneration(t8,oil,BNL) =E= 0 ; (LHS = -4, INFES = 4 ****)
      
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 10
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE epmProject Using LP From line 296
+Column Listing      SOLVE epmProject Using LP From line 305
 
 
 ---- TC  total cost
@@ -2778,9 +2787,9 @@ overallLoad(water)
         1       overallLoad_EQ(water)
 
 REMAINING 12 ENTRIES SKIPPED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 11
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE epmProject Using LP From line 296
+Range Statistics    SOLVE epmProject Using LP From line 305
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -2789,9 +2798,9 @@ RHS       [min, max] : [ 1.667E-01, 5.871E+04] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 12
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 12
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE epmProject Using LP From line 296
+Model Statistics    SOLVE epmProject Using LP From line 305
 
 
 LOOPS                           scenarioStageOne   s2
@@ -2804,19 +2813,19 @@ BLOCKS OF VARIABLES           9     SINGLE VARIABLES          566
 NON ZERO ELEMENTS         2,900
 
 
-GENERATION TIME      =        0.015 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
+GENERATION TIME      =        0.000 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
                L O O P S         scenarioStageOne s2
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 13
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 13
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE epmProject Using LP From line 296
+Solution Report     SOLVE epmProject Using LP From line 305
 
 
                S O L V E      S U M M A R Y
 
      MODEL   epmProject          OBJECTIVE  TC
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  296
+     SOLVER  CPLEX               FROM LINE  305
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -4443,23 +4452,23 @@ reservoirStorages             .           821.2126        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 14
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    299 VARIABLE TC.L                  =        0.000  total cost
+----    308 VARIABLE TC.L                  =        0.000  total cost
             PARAMETER CurrentStageOneScenario =        2.000  
 
-----    299 VARIABLE buildCapacities.L  
+----    308 VARIABLE buildCapacities.L  
 
                       ( ALL       0.000 )
 
 
-----    299 VARIABLE totalInvestmentCosts.L =        0.000  
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 15
+----    308 VARIABLE totalInvestmentCosts.L =        0.000  
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 15
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE epmProject Using LP From line 312
+Equation Listing    SOLVE epmProject Using LP From line 321
 
 
 ---- energy_balance  =E=  
@@ -4616,9 +4625,9 @@ REMAINING 12 ENTRIES SKIPPED
 
 total_cost..  TC - totalInvestmentCosts - 27.4626*powerGeneration(t1,biomass,DE) - 27.4626*powerGeneration(t1,biomass,FR) - 27.4626*powerGeneration(t1,biomass,BNL) - powerGeneration(t1,waste,DE) - powerGeneration(t1,waste,FR) - powerGeneration(t1,waste,BNL) - 9.86160088082501*powerGeneration(t1,lignite,DE) - 9.86160088082501*powerGeneration(t1,lignite,FR) - 9.86160088082501*powerGeneration(t1,lignite,BNL) - 17.8666666666667*powerGeneration(t1,nuclear,DE) - 17.8666666666667*powerGeneration(t1,nuclear,FR) - 17.8666666666667*powerGeneration(t1,nuclear,BNL) - 31.2222144610957*powerGeneration(t1,hardcoal,DE) - 31.2222144610957*powerGeneration(t1,hardcoal,FR) - 31.2222144610957*powerGeneration(t1,hardcoal,BNL) - 66.5898697603756*powerGeneration(t1,gas,DE) - 66.5898697603756*powerGeneration(t1,gas,FR) - 66.5898697603756*powerGeneration(t1,gas,BNL) - 94.7999255544933*powerGeneration(t1,oil,DE) - 94.7999255544933*powerGeneration(t1,oil,FR) - 94.7999255544933*powerGeneration(t1,oil,BNL) - 27.4626*powerGeneration(t2,biomass,DE) - 27.4626*powerGeneration(t2,biomass,FR) - 27.4626*powerGeneration(t2,biomass,BNL) - powerGeneration(t2,waste,DE) - powerGeneration(t2,waste,FR) - powerGeneration(t2,waste,BNL) - 9.86160088082501*powerGeneration(t2,lignite,DE) - 9.86160088082501*powerGeneration(t2,lignite,FR) - 9.86160088082501*powerGeneration(t2,lignite,BNL) - 17.8666666666667*powerGeneration(t2,nuclear,DE) - 17.8666666666667*powerGeneration(t2,nuclear,FR) - 17.8666666666667*powerGeneration(t2,nuclear,BNL) - 31.2222144610957*powerGeneration(t2,hardcoal,DE) - 31.2222144610957*powerGeneration(t2,hardcoal,FR) - 31.2222144610957*powerGeneration(t2,hardcoal,BNL) - 66.5898697603756*powerGeneration(t2,gas,DE) - 66.5898697603756*powerGeneration(t2,gas,FR) - 66.5898697603756*powerGeneration(t2,gas,BNL) - 94.7999255544933*powerGeneration(t2,oil,DE) - 94.7999255544933*powerGeneration(t2,oil,FR) - 94.7999255544933*powerGeneration(t2,oil,BNL) - 27.4626*powerGeneration(t3,biomass,DE) - 27.4626*powerGeneration(t3,biomass,FR) - 27.4626*powerGeneration(t3,biomass,BNL) - powerGeneration(t3,waste,DE) - powerGeneration(t3,waste,FR) - powerGeneration(t3,waste,BNL) - 9.86160088082501*powerGeneration(t3,lignite,DE) - 9.86160088082501*powerGeneration(t3,lignite,FR) - 9.86160088082501*powerGeneration(t3,lignite,BNL) - 17.8666666666667*powerGeneration(t3,nuclear,DE) - 17.8666666666667*powerGeneration(t3,nuclear,FR) - 17.8666666666667*powerGeneration(t3,nuclear,BNL) - 31.2222144610957*powerGeneration(t3,hardcoal,DE) - 31.2222144610957*powerGeneration(t3,hardcoal,FR) - 31.2222144610957*powerGeneration(t3,hardcoal,BNL) - 66.5898697603756*powerGeneration(t3,gas,DE) - 66.5898697603756*powerGeneration(t3,gas,FR) - 66.5898697603756*powerGeneration(t3,gas,BNL) - 94.7999255544933*powerGeneration(t3,oil,DE) - 94.7999255544933*powerGeneration(t3,oil,FR) - 94.7999255544933*powerGeneration(t3,oil,BNL) - 27.4626*powerGeneration(t4,biomass,DE) - 27.4626*powerGeneration(t4,biomass,FR) - 27.4626*powerGeneration(t4,biomass,BNL) - powerGeneration(t4,waste,DE) - powerGeneration(t4,waste,FR) - powerGeneration(t4,waste,BNL) - 9.86160088082501*powerGeneration(t4,lignite,DE) - 9.86160088082501*powerGeneration(t4,lignite,FR) - 9.86160088082501*powerGeneration(t4,lignite,BNL) - 17.8666666666667*powerGeneration(t4,nuclear,DE) - 17.8666666666667*powerGeneration(t4,nuclear,FR) - 17.8666666666667*powerGeneration(t4,nuclear,BNL) - 31.2222144610957*powerGeneration(t4,hardcoal,DE) - 31.2222144610957*powerGeneration(t4,hardcoal,FR) - 31.2222144610957*powerGeneration(t4,hardcoal,BNL) - 66.5898697603756*powerGeneration(t4,gas,DE) - 66.5898697603756*powerGeneration(t4,gas,FR) - 66.5898697603756*powerGeneration(t4,gas,BNL) - 94.7999255544933*powerGeneration(t4,oil,DE) - 94.7999255544933*powerGeneration(t4,oil,FR) - 94.7999255544933*powerGeneration(t4,oil,BNL) - 27.4626*powerGeneration(t5,biomass,DE) - 27.4626*powerGeneration(t5,biomass,FR) - 27.4626*powerGeneration(t5,biomass,BNL) - powerGeneration(t5,waste,DE) - powerGeneration(t5,waste,FR) - powerGeneration(t5,waste,BNL) - 9.86160088082501*powerGeneration(t5,lignite,DE) - 9.86160088082501*powerGeneration(t5,lignite,FR) - 9.86160088082501*powerGeneration(t5,lignite,BNL) - 17.8666666666667*powerGeneration(t5,nuclear,DE) - 17.8666666666667*powerGeneration(t5,nuclear,FR) - 17.8666666666667*powerGeneration(t5,nuclear,BNL) - 31.2222144610957*powerGeneration(t5,hardcoal,DE) - 31.2222144610957*powerGeneration(t5,hardcoal,FR) - 31.2222144610957*powerGeneration(t5,hardcoal,BNL) - 66.5898697603756*powerGeneration(t5,gas,DE) - 66.5898697603756*powerGeneration(t5,gas,FR) - 66.5898697603756*powerGeneration(t5,gas,BNL) - 94.7999255544933*powerGeneration(t5,oil,DE) - 94.7999255544933*powerGeneration(t5,oil,FR) - 94.7999255544933*powerGeneration(t5,oil,BNL) - 27.4626*powerGeneration(t6,biomass,DE) - 27.4626*powerGeneration(t6,biomass,FR) - 27.4626*powerGeneration(t6,biomass,BNL) - powerGeneration(t6,waste,DE) - powerGeneration(t6,waste,FR) - powerGeneration(t6,waste,BNL) - 9.86160088082501*powerGeneration(t6,lignite,DE) - 9.86160088082501*powerGeneration(t6,lignite,FR) - 9.86160088082501*powerGeneration(t6,lignite,BNL) - 17.8666666666667*powerGeneration(t6,nuclear,DE) - 17.8666666666667*powerGeneration(t6,nuclear,FR) - 17.8666666666667*powerGeneration(t6,nuclear,BNL) - 31.2222144610957*powerGeneration(t6,hardcoal,DE) - 31.2222144610957*powerGeneration(t6,hardcoal,FR) - 31.2222144610957*powerGeneration(t6,hardcoal,BNL) - 66.5898697603756*powerGeneration(t6,gas,DE) - 66.5898697603756*powerGeneration(t6,gas,FR) - 66.5898697603756*powerGeneration(t6,gas,BNL) - 94.7999255544933*powerGeneration(t6,oil,DE) - 94.7999255544933*powerGeneration(t6,oil,FR) - 94.7999255544933*powerGeneration(t6,oil,BNL) - 27.4626*powerGeneration(t7,biomass,DE) - 27.4626*powerGeneration(t7,biomass,FR) - 27.4626*powerGeneration(t7,biomass,BNL) - powerGeneration(t7,waste,DE) - powerGeneration(t7,waste,FR) - powerGeneration(t7,waste,BNL) - 9.86160088082501*powerGeneration(t7,lignite,DE) - 9.86160088082501*powerGeneration(t7,lignite,FR) - 9.86160088082501*powerGeneration(t7,lignite,BNL) - 17.8666666666667*powerGeneration(t7,nuclear,DE) - 17.8666666666667*powerGeneration(t7,nuclear,FR) - 17.8666666666667*powerGeneration(t7,nuclear,BNL) - 31.2222144610957*powerGeneration(t7,hardcoal,DE) - 31.2222144610957*powerGeneration(t7,hardcoal,FR) - 31.2222144610957*powerGeneration(t7,hardcoal,BNL) - 66.5898697603756*powerGeneration(t7,gas,DE) - 66.5898697603756*powerGeneration(t7,gas,FR) - 66.5898697603756*powerGeneration(t7,gas,BNL) - 94.7999255544933*powerGeneration(t7,oil,DE) - 94.7999255544933*powerGeneration(t7,oil,FR) - 94.7999255544933*powerGeneration(t7,oil,BNL) - 27.4626*powerGeneration(t8,biomass,DE) - 27.4626*powerGeneration(t8,biomass,FR) - 27.4626*powerGeneration(t8,biomass,BNL) - powerGeneration(t8,waste,DE) - powerGeneration(t8,waste,FR) - powerGeneration(t8,waste,BNL) - 9.86160088082501*powerGeneration(t8,lignite,DE) - 9.86160088082501*powerGeneration(t8,lignite,FR) - 9.86160088082501*powerGeneration(t8,lignite,BNL) - 17.8666666666667*powerGeneration(t8,nuclear,DE) - 17.8666666666667*powerGeneration(t8,nuclear,FR) - 17.8666666666667*powerGeneration(t8,nuclear,BNL) - 31.2222144610957*powerGeneration(t8,hardcoal,DE) - 31.2222144610957*powerGeneration(t8,hardcoal,FR) - 31.2222144610957*powerGeneration(t8,hardcoal,BNL) - 66.5898697603756*powerGeneration(t8,gas,DE) - 66.5898697603756*powerGeneration(t8,gas,FR) - 66.5898697603756*powerGeneration(t8,gas,BNL) - 94.7999255544933*powerGeneration(t8,oil,DE) - 94.7999255544933*powerGeneration(t8,oil,FR) - 94.7999255544933*powerGeneration(t8,oil,BNL) =E= 0 ; (LHS = 0)
      
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 16
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 16
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE epmProject Using LP From line 312
+Column Listing      SOLVE epmProject Using LP From line 321
 
 
 ---- TC  total cost
@@ -4830,9 +4839,9 @@ overallLoad(water)
         1       overallLoad_EQ(water)
 
 REMAINING 12 ENTRIES SKIPPED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 17
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 17
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE epmProject Using LP From line 312
+Range Statistics    SOLVE epmProject Using LP From line 321
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -4841,9 +4850,9 @@ RHS       [min, max] : [ 1.667E-01, 6.218E+11] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 18
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 18
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE epmProject Using LP From line 312
+Model Statistics    SOLVE epmProject Using LP From line 321
 
 
 LOOPS                           scenarioStageTwo   s1
@@ -4857,20 +4866,20 @@ BLOCKS OF VARIABLES           9     SINGLE VARIABLES          566
 NON ZERO ELEMENTS         2,900
 
 
-GENERATION TIME      =        0.016 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
+GENERATION TIME      =        0.000 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
                L O O P S         scenarioStageTwo s1
                                  scenarioStageOne s1
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 19
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 19
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE epmProject Using LP From line 312
+Solution Report     SOLVE epmProject Using LP From line 321
 
 
                S O L V E      S U M M A R Y
 
      MODEL   epmProject          OBJECTIVE  TC
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  312
+     SOLVER  CPLEX               FROM LINE  321
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -4889,7 +4898,7 @@ Solution Report     SOLVE epmProject Using LP From line 312
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.02sec (det. 8.94 ticks)
+--- Cplex Time: 0.01sec (det. 8.94 ticks)
 
 
 Optimal solution found
@@ -6497,14 +6506,14 @@ reservoirStorages             .          4238.1471        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 20
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 20
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    314 VARIABLE TC.L                  =  6.23924E+14  total cost
+----    323 VARIABLE TC.L                  =  6.23924E+14  total cost
 
-----    314 PARAMETER Plants_capacities  
+----    323 PARAMETER Plants_capacities  
 
                               DE          FR         BNL
 
@@ -6523,19 +6532,19 @@ pumpedStoragesPlants    9422.000    5023.000    1308.000
 reservoirStorages       1298.000    8279.000      11.000
 
 
-----    314 VARIABLE totalInvestmentCosts.L =        1.379  
+----    323 VARIABLE totalInvestmentCosts.L =        1.379  
             PARAMETER CurrentStageOneScenario =        1.000  
             PARAMETER CurrentStageTwoScenario =        1.000  
 
-----    314 PARAMETER StageOneInvestmentsDecision  
+----    323 PARAMETER StageOneInvestmentsDecision  
 
              DE          FR         BNL
 
 gas 4.95038E+11 4.95038E+11 4.95038E+11
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 21
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 21
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE epmProject Using LP From line 312
+Equation Listing    SOLVE epmProject Using LP From line 321
 
 
 ---- energy_balance  =E=  
@@ -6692,9 +6701,9 @@ REMAINING 12 ENTRIES SKIPPED
 
 total_cost..  TC - totalInvestmentCosts - 27.4626*powerGeneration(t1,biomass,DE) - 27.4626*powerGeneration(t1,biomass,FR) - 27.4626*powerGeneration(t1,biomass,BNL) - powerGeneration(t1,waste,DE) - powerGeneration(t1,waste,FR) - powerGeneration(t1,waste,BNL) - 9.86160088082501*powerGeneration(t1,lignite,DE) - 9.86160088082501*powerGeneration(t1,lignite,FR) - 9.86160088082501*powerGeneration(t1,lignite,BNL) - 17.8666666666667*powerGeneration(t1,nuclear,DE) - 17.8666666666667*powerGeneration(t1,nuclear,FR) - 17.8666666666667*powerGeneration(t1,nuclear,BNL) - 31.2222144610957*powerGeneration(t1,hardcoal,DE) - 31.2222144610957*powerGeneration(t1,hardcoal,FR) - 31.2222144610957*powerGeneration(t1,hardcoal,BNL) - 66.5898697603756*powerGeneration(t1,gas,DE) - 66.5898697603756*powerGeneration(t1,gas,FR) - 66.5898697603756*powerGeneration(t1,gas,BNL) - 94.7999255544933*powerGeneration(t1,oil,DE) - 94.7999255544933*powerGeneration(t1,oil,FR) - 94.7999255544933*powerGeneration(t1,oil,BNL) - 27.4626*powerGeneration(t2,biomass,DE) - 27.4626*powerGeneration(t2,biomass,FR) - 27.4626*powerGeneration(t2,biomass,BNL) - powerGeneration(t2,waste,DE) - powerGeneration(t2,waste,FR) - powerGeneration(t2,waste,BNL) - 9.86160088082501*powerGeneration(t2,lignite,DE) - 9.86160088082501*powerGeneration(t2,lignite,FR) - 9.86160088082501*powerGeneration(t2,lignite,BNL) - 17.8666666666667*powerGeneration(t2,nuclear,DE) - 17.8666666666667*powerGeneration(t2,nuclear,FR) - 17.8666666666667*powerGeneration(t2,nuclear,BNL) - 31.2222144610957*powerGeneration(t2,hardcoal,DE) - 31.2222144610957*powerGeneration(t2,hardcoal,FR) - 31.2222144610957*powerGeneration(t2,hardcoal,BNL) - 66.5898697603756*powerGeneration(t2,gas,DE) - 66.5898697603756*powerGeneration(t2,gas,FR) - 66.5898697603756*powerGeneration(t2,gas,BNL) - 94.7999255544933*powerGeneration(t2,oil,DE) - 94.7999255544933*powerGeneration(t2,oil,FR) - 94.7999255544933*powerGeneration(t2,oil,BNL) - 27.4626*powerGeneration(t3,biomass,DE) - 27.4626*powerGeneration(t3,biomass,FR) - 27.4626*powerGeneration(t3,biomass,BNL) - powerGeneration(t3,waste,DE) - powerGeneration(t3,waste,FR) - powerGeneration(t3,waste,BNL) - 9.86160088082501*powerGeneration(t3,lignite,DE) - 9.86160088082501*powerGeneration(t3,lignite,FR) - 9.86160088082501*powerGeneration(t3,lignite,BNL) - 17.8666666666667*powerGeneration(t3,nuclear,DE) - 17.8666666666667*powerGeneration(t3,nuclear,FR) - 17.8666666666667*powerGeneration(t3,nuclear,BNL) - 31.2222144610957*powerGeneration(t3,hardcoal,DE) - 31.2222144610957*powerGeneration(t3,hardcoal,FR) - 31.2222144610957*powerGeneration(t3,hardcoal,BNL) - 66.5898697603756*powerGeneration(t3,gas,DE) - 66.5898697603756*powerGeneration(t3,gas,FR) - 66.5898697603756*powerGeneration(t3,gas,BNL) - 94.7999255544933*powerGeneration(t3,oil,DE) - 94.7999255544933*powerGeneration(t3,oil,FR) - 94.7999255544933*powerGeneration(t3,oil,BNL) - 27.4626*powerGeneration(t4,biomass,DE) - 27.4626*powerGeneration(t4,biomass,FR) - 27.4626*powerGeneration(t4,biomass,BNL) - powerGeneration(t4,waste,DE) - powerGeneration(t4,waste,FR) - powerGeneration(t4,waste,BNL) - 9.86160088082501*powerGeneration(t4,lignite,DE) - 9.86160088082501*powerGeneration(t4,lignite,FR) - 9.86160088082501*powerGeneration(t4,lignite,BNL) - 17.8666666666667*powerGeneration(t4,nuclear,DE) - 17.8666666666667*powerGeneration(t4,nuclear,FR) - 17.8666666666667*powerGeneration(t4,nuclear,BNL) - 31.2222144610957*powerGeneration(t4,hardcoal,DE) - 31.2222144610957*powerGeneration(t4,hardcoal,FR) - 31.2222144610957*powerGeneration(t4,hardcoal,BNL) - 66.5898697603756*powerGeneration(t4,gas,DE) - 66.5898697603756*powerGeneration(t4,gas,FR) - 66.5898697603756*powerGeneration(t4,gas,BNL) - 94.7999255544933*powerGeneration(t4,oil,DE) - 94.7999255544933*powerGeneration(t4,oil,FR) - 94.7999255544933*powerGeneration(t4,oil,BNL) - 27.4626*powerGeneration(t5,biomass,DE) - 27.4626*powerGeneration(t5,biomass,FR) - 27.4626*powerGeneration(t5,biomass,BNL) - powerGeneration(t5,waste,DE) - powerGeneration(t5,waste,FR) - powerGeneration(t5,waste,BNL) - 9.86160088082501*powerGeneration(t5,lignite,DE) - 9.86160088082501*powerGeneration(t5,lignite,FR) - 9.86160088082501*powerGeneration(t5,lignite,BNL) - 17.8666666666667*powerGeneration(t5,nuclear,DE) - 17.8666666666667*powerGeneration(t5,nuclear,FR) - 17.8666666666667*powerGeneration(t5,nuclear,BNL) - 31.2222144610957*powerGeneration(t5,hardcoal,DE) - 31.2222144610957*powerGeneration(t5,hardcoal,FR) - 31.2222144610957*powerGeneration(t5,hardcoal,BNL) - 66.5898697603756*powerGeneration(t5,gas,DE) - 66.5898697603756*powerGeneration(t5,gas,FR) - 66.5898697603756*powerGeneration(t5,gas,BNL) - 94.7999255544933*powerGeneration(t5,oil,DE) - 94.7999255544933*powerGeneration(t5,oil,FR) - 94.7999255544933*powerGeneration(t5,oil,BNL) - 27.4626*powerGeneration(t6,biomass,DE) - 27.4626*powerGeneration(t6,biomass,FR) - 27.4626*powerGeneration(t6,biomass,BNL) - powerGeneration(t6,waste,DE) - powerGeneration(t6,waste,FR) - powerGeneration(t6,waste,BNL) - 9.86160088082501*powerGeneration(t6,lignite,DE) - 9.86160088082501*powerGeneration(t6,lignite,FR) - 9.86160088082501*powerGeneration(t6,lignite,BNL) - 17.8666666666667*powerGeneration(t6,nuclear,DE) - 17.8666666666667*powerGeneration(t6,nuclear,FR) - 17.8666666666667*powerGeneration(t6,nuclear,BNL) - 31.2222144610957*powerGeneration(t6,hardcoal,DE) - 31.2222144610957*powerGeneration(t6,hardcoal,FR) - 31.2222144610957*powerGeneration(t6,hardcoal,BNL) - 66.5898697603756*powerGeneration(t6,gas,DE) - 66.5898697603756*powerGeneration(t6,gas,FR) - 66.5898697603756*powerGeneration(t6,gas,BNL) - 94.7999255544933*powerGeneration(t6,oil,DE) - 94.7999255544933*powerGeneration(t6,oil,FR) - 94.7999255544933*powerGeneration(t6,oil,BNL) - 27.4626*powerGeneration(t7,biomass,DE) - 27.4626*powerGeneration(t7,biomass,FR) - 27.4626*powerGeneration(t7,biomass,BNL) - powerGeneration(t7,waste,DE) - powerGeneration(t7,waste,FR) - powerGeneration(t7,waste,BNL) - 9.86160088082501*powerGeneration(t7,lignite,DE) - 9.86160088082501*powerGeneration(t7,lignite,FR) - 9.86160088082501*powerGeneration(t7,lignite,BNL) - 17.8666666666667*powerGeneration(t7,nuclear,DE) - 17.8666666666667*powerGeneration(t7,nuclear,FR) - 17.8666666666667*powerGeneration(t7,nuclear,BNL) - 31.2222144610957*powerGeneration(t7,hardcoal,DE) - 31.2222144610957*powerGeneration(t7,hardcoal,FR) - 31.2222144610957*powerGeneration(t7,hardcoal,BNL) - 66.5898697603756*powerGeneration(t7,gas,DE) - 66.5898697603756*powerGeneration(t7,gas,FR) - 66.5898697603756*powerGeneration(t7,gas,BNL) - 94.7999255544933*powerGeneration(t7,oil,DE) - 94.7999255544933*powerGeneration(t7,oil,FR) - 94.7999255544933*powerGeneration(t7,oil,BNL) - 27.4626*powerGeneration(t8,biomass,DE) - 27.4626*powerGeneration(t8,biomass,FR) - 27.4626*powerGeneration(t8,biomass,BNL) - powerGeneration(t8,waste,DE) - powerGeneration(t8,waste,FR) - powerGeneration(t8,waste,BNL) - 9.86160088082501*powerGeneration(t8,lignite,DE) - 9.86160088082501*powerGeneration(t8,lignite,FR) - 9.86160088082501*powerGeneration(t8,lignite,BNL) - 17.8666666666667*powerGeneration(t8,nuclear,DE) - 17.8666666666667*powerGeneration(t8,nuclear,FR) - 17.8666666666667*powerGeneration(t8,nuclear,BNL) - 31.2222144610957*powerGeneration(t8,hardcoal,DE) - 31.2222144610957*powerGeneration(t8,hardcoal,FR) - 31.2222144610957*powerGeneration(t8,hardcoal,BNL) - 66.5898697603756*powerGeneration(t8,gas,DE) - 66.5898697603756*powerGeneration(t8,gas,FR) - 66.5898697603756*powerGeneration(t8,gas,BNL) - 94.7999255544933*powerGeneration(t8,oil,DE) - 94.7999255544933*powerGeneration(t8,oil,FR) - 94.7999255544933*powerGeneration(t8,oil,BNL) =E= 0 ; (LHS = -5.875, INFES = 5.875 ****)
      
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 22
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 22
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE epmProject Using LP From line 312
+Column Listing      SOLVE epmProject Using LP From line 321
 
 
 ---- TC  total cost
@@ -6906,9 +6915,9 @@ overallLoad(water)
         1       overallLoad_EQ(water)
 
 REMAINING 12 ENTRIES SKIPPED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 23
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 23
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE epmProject Using LP From line 312
+Range Statistics    SOLVE epmProject Using LP From line 321
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -6917,9 +6926,9 @@ RHS       [min, max] : [ 1.667E-01, 6.218E+11] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 24
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 24
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE epmProject Using LP From line 312
+Model Statistics    SOLVE epmProject Using LP From line 321
 
 
 LOOPS                           scenarioStageTwo   s1
@@ -6937,16 +6946,16 @@ GENERATION TIME      =        0.000 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
                L O O P S         scenarioStageTwo s1
                                  scenarioStageOne s2
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 25
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 25
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE epmProject Using LP From line 312
+Solution Report     SOLVE epmProject Using LP From line 321
 
 
                S O L V E      S U M M A R Y
 
      MODEL   epmProject          OBJECTIVE  TC
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  312
+     SOLVER  CPLEX               FROM LINE  321
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -8573,14 +8582,14 @@ reservoirStorages             .          4238.1471        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 26
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 26
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    314 VARIABLE TC.L                  =  1.67254E+16  total cost
+----    323 VARIABLE TC.L                  =  1.67254E+16  total cost
 
-----    314 PARAMETER Plants_capacities  
+----    323 PARAMETER Plants_capacities  
 
                               DE          FR         BNL
 
@@ -8599,17 +8608,17 @@ pumpedStoragesPlants    9422.000    5023.000    1308.000
 reservoirStorages       1298.000    8279.000      11.000
 
 
-----    314 VARIABLE totalInvestmentCosts.L =  1.61015E+16  
+----    323 VARIABLE totalInvestmentCosts.L =  1.61015E+16  
             PARAMETER CurrentStageOneScenario =        2.000  
             PARAMETER CurrentStageTwoScenario =        1.000  
 
-----    314 PARAMETER StageOneInvestmentsDecision  
+----    323 PARAMETER StageOneInvestmentsDecision  
 
                       ( ALL       0.000 )
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 27
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 27
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE epmProject Using LP From line 312
+Equation Listing    SOLVE epmProject Using LP From line 321
 
 
 ---- energy_balance  =E=  
@@ -8766,9 +8775,9 @@ REMAINING 12 ENTRIES SKIPPED
 
 total_cost..  TC - totalInvestmentCosts - 27.4626*powerGeneration(t1,biomass,DE) - 27.4626*powerGeneration(t1,biomass,FR) - 27.4626*powerGeneration(t1,biomass,BNL) - powerGeneration(t1,waste,DE) - powerGeneration(t1,waste,FR) - powerGeneration(t1,waste,BNL) - 9.86160088082501*powerGeneration(t1,lignite,DE) - 9.86160088082501*powerGeneration(t1,lignite,FR) - 9.86160088082501*powerGeneration(t1,lignite,BNL) - 17.8666666666667*powerGeneration(t1,nuclear,DE) - 17.8666666666667*powerGeneration(t1,nuclear,FR) - 17.8666666666667*powerGeneration(t1,nuclear,BNL) - 31.2222144610957*powerGeneration(t1,hardcoal,DE) - 31.2222144610957*powerGeneration(t1,hardcoal,FR) - 31.2222144610957*powerGeneration(t1,hardcoal,BNL) - 66.5898697603756*powerGeneration(t1,gas,DE) - 66.5898697603756*powerGeneration(t1,gas,FR) - 66.5898697603756*powerGeneration(t1,gas,BNL) - 94.7999255544933*powerGeneration(t1,oil,DE) - 94.7999255544933*powerGeneration(t1,oil,FR) - 94.7999255544933*powerGeneration(t1,oil,BNL) - 27.4626*powerGeneration(t2,biomass,DE) - 27.4626*powerGeneration(t2,biomass,FR) - 27.4626*powerGeneration(t2,biomass,BNL) - powerGeneration(t2,waste,DE) - powerGeneration(t2,waste,FR) - powerGeneration(t2,waste,BNL) - 9.86160088082501*powerGeneration(t2,lignite,DE) - 9.86160088082501*powerGeneration(t2,lignite,FR) - 9.86160088082501*powerGeneration(t2,lignite,BNL) - 17.8666666666667*powerGeneration(t2,nuclear,DE) - 17.8666666666667*powerGeneration(t2,nuclear,FR) - 17.8666666666667*powerGeneration(t2,nuclear,BNL) - 31.2222144610957*powerGeneration(t2,hardcoal,DE) - 31.2222144610957*powerGeneration(t2,hardcoal,FR) - 31.2222144610957*powerGeneration(t2,hardcoal,BNL) - 66.5898697603756*powerGeneration(t2,gas,DE) - 66.5898697603756*powerGeneration(t2,gas,FR) - 66.5898697603756*powerGeneration(t2,gas,BNL) - 94.7999255544933*powerGeneration(t2,oil,DE) - 94.7999255544933*powerGeneration(t2,oil,FR) - 94.7999255544933*powerGeneration(t2,oil,BNL) - 27.4626*powerGeneration(t3,biomass,DE) - 27.4626*powerGeneration(t3,biomass,FR) - 27.4626*powerGeneration(t3,biomass,BNL) - powerGeneration(t3,waste,DE) - powerGeneration(t3,waste,FR) - powerGeneration(t3,waste,BNL) - 9.86160088082501*powerGeneration(t3,lignite,DE) - 9.86160088082501*powerGeneration(t3,lignite,FR) - 9.86160088082501*powerGeneration(t3,lignite,BNL) - 17.8666666666667*powerGeneration(t3,nuclear,DE) - 17.8666666666667*powerGeneration(t3,nuclear,FR) - 17.8666666666667*powerGeneration(t3,nuclear,BNL) - 31.2222144610957*powerGeneration(t3,hardcoal,DE) - 31.2222144610957*powerGeneration(t3,hardcoal,FR) - 31.2222144610957*powerGeneration(t3,hardcoal,BNL) - 66.5898697603756*powerGeneration(t3,gas,DE) - 66.5898697603756*powerGeneration(t3,gas,FR) - 66.5898697603756*powerGeneration(t3,gas,BNL) - 94.7999255544933*powerGeneration(t3,oil,DE) - 94.7999255544933*powerGeneration(t3,oil,FR) - 94.7999255544933*powerGeneration(t3,oil,BNL) - 27.4626*powerGeneration(t4,biomass,DE) - 27.4626*powerGeneration(t4,biomass,FR) - 27.4626*powerGeneration(t4,biomass,BNL) - powerGeneration(t4,waste,DE) - powerGeneration(t4,waste,FR) - powerGeneration(t4,waste,BNL) - 9.86160088082501*powerGeneration(t4,lignite,DE) - 9.86160088082501*powerGeneration(t4,lignite,FR) - 9.86160088082501*powerGeneration(t4,lignite,BNL) - 17.8666666666667*powerGeneration(t4,nuclear,DE) - 17.8666666666667*powerGeneration(t4,nuclear,FR) - 17.8666666666667*powerGeneration(t4,nuclear,BNL) - 31.2222144610957*powerGeneration(t4,hardcoal,DE) - 31.2222144610957*powerGeneration(t4,hardcoal,FR) - 31.2222144610957*powerGeneration(t4,hardcoal,BNL) - 66.5898697603756*powerGeneration(t4,gas,DE) - 66.5898697603756*powerGeneration(t4,gas,FR) - 66.5898697603756*powerGeneration(t4,gas,BNL) - 94.7999255544933*powerGeneration(t4,oil,DE) - 94.7999255544933*powerGeneration(t4,oil,FR) - 94.7999255544933*powerGeneration(t4,oil,BNL) - 27.4626*powerGeneration(t5,biomass,DE) - 27.4626*powerGeneration(t5,biomass,FR) - 27.4626*powerGeneration(t5,biomass,BNL) - powerGeneration(t5,waste,DE) - powerGeneration(t5,waste,FR) - powerGeneration(t5,waste,BNL) - 9.86160088082501*powerGeneration(t5,lignite,DE) - 9.86160088082501*powerGeneration(t5,lignite,FR) - 9.86160088082501*powerGeneration(t5,lignite,BNL) - 17.8666666666667*powerGeneration(t5,nuclear,DE) - 17.8666666666667*powerGeneration(t5,nuclear,FR) - 17.8666666666667*powerGeneration(t5,nuclear,BNL) - 31.2222144610957*powerGeneration(t5,hardcoal,DE) - 31.2222144610957*powerGeneration(t5,hardcoal,FR) - 31.2222144610957*powerGeneration(t5,hardcoal,BNL) - 66.5898697603756*powerGeneration(t5,gas,DE) - 66.5898697603756*powerGeneration(t5,gas,FR) - 66.5898697603756*powerGeneration(t5,gas,BNL) - 94.7999255544933*powerGeneration(t5,oil,DE) - 94.7999255544933*powerGeneration(t5,oil,FR) - 94.7999255544933*powerGeneration(t5,oil,BNL) - 27.4626*powerGeneration(t6,biomass,DE) - 27.4626*powerGeneration(t6,biomass,FR) - 27.4626*powerGeneration(t6,biomass,BNL) - powerGeneration(t6,waste,DE) - powerGeneration(t6,waste,FR) - powerGeneration(t6,waste,BNL) - 9.86160088082501*powerGeneration(t6,lignite,DE) - 9.86160088082501*powerGeneration(t6,lignite,FR) - 9.86160088082501*powerGeneration(t6,lignite,BNL) - 17.8666666666667*powerGeneration(t6,nuclear,DE) - 17.8666666666667*powerGeneration(t6,nuclear,FR) - 17.8666666666667*powerGeneration(t6,nuclear,BNL) - 31.2222144610957*powerGeneration(t6,hardcoal,DE) - 31.2222144610957*powerGeneration(t6,hardcoal,FR) - 31.2222144610957*powerGeneration(t6,hardcoal,BNL) - 66.5898697603756*powerGeneration(t6,gas,DE) - 66.5898697603756*powerGeneration(t6,gas,FR) - 66.5898697603756*powerGeneration(t6,gas,BNL) - 94.7999255544933*powerGeneration(t6,oil,DE) - 94.7999255544933*powerGeneration(t6,oil,FR) - 94.7999255544933*powerGeneration(t6,oil,BNL) - 27.4626*powerGeneration(t7,biomass,DE) - 27.4626*powerGeneration(t7,biomass,FR) - 27.4626*powerGeneration(t7,biomass,BNL) - powerGeneration(t7,waste,DE) - powerGeneration(t7,waste,FR) - powerGeneration(t7,waste,BNL) - 9.86160088082501*powerGeneration(t7,lignite,DE) - 9.86160088082501*powerGeneration(t7,lignite,FR) - 9.86160088082501*powerGeneration(t7,lignite,BNL) - 17.8666666666667*powerGeneration(t7,nuclear,DE) - 17.8666666666667*powerGeneration(t7,nuclear,FR) - 17.8666666666667*powerGeneration(t7,nuclear,BNL) - 31.2222144610957*powerGeneration(t7,hardcoal,DE) - 31.2222144610957*powerGeneration(t7,hardcoal,FR) - 31.2222144610957*powerGeneration(t7,hardcoal,BNL) - 66.5898697603756*powerGeneration(t7,gas,DE) - 66.5898697603756*powerGeneration(t7,gas,FR) - 66.5898697603756*powerGeneration(t7,gas,BNL) - 94.7999255544933*powerGeneration(t7,oil,DE) - 94.7999255544933*powerGeneration(t7,oil,FR) - 94.7999255544933*powerGeneration(t7,oil,BNL) - 27.4626*powerGeneration(t8,biomass,DE) - 27.4626*powerGeneration(t8,biomass,FR) - 27.4626*powerGeneration(t8,biomass,BNL) - powerGeneration(t8,waste,DE) - powerGeneration(t8,waste,FR) - powerGeneration(t8,waste,BNL) - 9.86160088082501*powerGeneration(t8,lignite,DE) - 9.86160088082501*powerGeneration(t8,lignite,FR) - 9.86160088082501*powerGeneration(t8,lignite,BNL) - 17.8666666666667*powerGeneration(t8,nuclear,DE) - 17.8666666666667*powerGeneration(t8,nuclear,FR) - 17.8666666666667*powerGeneration(t8,nuclear,BNL) - 31.2222144610957*powerGeneration(t8,hardcoal,DE) - 31.2222144610957*powerGeneration(t8,hardcoal,FR) - 31.2222144610957*powerGeneration(t8,hardcoal,BNL) - 66.5898697603756*powerGeneration(t8,gas,DE) - 66.5898697603756*powerGeneration(t8,gas,FR) - 66.5898697603756*powerGeneration(t8,gas,BNL) - 94.7999255544933*powerGeneration(t8,oil,DE) - 94.7999255544933*powerGeneration(t8,oil,FR) - 94.7999255544933*powerGeneration(t8,oil,BNL) =E= 0 ; (LHS = -4, INFES = 4 ****)
      
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 28
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 28
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE epmProject Using LP From line 312
+Column Listing      SOLVE epmProject Using LP From line 321
 
 
 ---- TC  total cost
@@ -8980,9 +8989,9 @@ overallLoad(water)
         1       overallLoad_EQ(water)
 
 REMAINING 12 ENTRIES SKIPPED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 29
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 29
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE epmProject Using LP From line 312
+Range Statistics    SOLVE epmProject Using LP From line 321
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -8991,9 +9000,9 @@ RHS       [min, max] : [ 1.667E-01, 4.307E+11] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 30
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 30
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE epmProject Using LP From line 312
+Model Statistics    SOLVE epmProject Using LP From line 321
 
 
 LOOPS                           scenarioStageTwo   s2
@@ -9011,22 +9020,22 @@ GENERATION TIME      =        0.016 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
                L O O P S         scenarioStageTwo s2
                                  scenarioStageOne s1
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 31
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 31
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE epmProject Using LP From line 312
+Solution Report     SOLVE epmProject Using LP From line 321
 
 
                S O L V E      S U M M A R Y
 
      MODEL   epmProject          OBJECTIVE  TC
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  312
+     SOLVER  CPLEX               FROM LINE  321
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
 **** OBJECTIVE VALUE                0.0000
 
- RESOURCE USAGE, LIMIT          0.000 10000000000.000
+ RESOURCE USAGE, LIMIT          0.016 10000000000.000
  ITERATION COUNT, LIMIT       400    2147483647
 --- GAMS/CPLEX licensed for continuous and discrete problems.
 --- GMO setup time: 0.00s
@@ -9039,7 +9048,7 @@ Solution Report     SOLVE epmProject Using LP From line 312
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.00sec (det. 8.42 ticks)
+--- Cplex Time: 0.02sec (det. 8.42 ticks)
 
 
 Optimal solution found
@@ -10647,14 +10656,14 @@ reservoirStorages             .           823.5878        +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 32
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 32
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    314 VARIABLE TC.L                  =        0.000  total cost
+----    323 VARIABLE TC.L                  =        0.000  total cost
 
-----    314 PARAMETER Plants_capacities  
+----    323 PARAMETER Plants_capacities  
 
                               DE          FR         BNL
 
@@ -10673,19 +10682,19 @@ pumpedStoragesPlants    9422.000    5023.000    1308.000
 reservoirStorages       1298.000    8279.000      11.000
 
 
-----    314 VARIABLE totalInvestmentCosts.L =        0.000  
+----    323 VARIABLE totalInvestmentCosts.L =        0.000  
             PARAMETER CurrentStageOneScenario =        1.000  
             PARAMETER CurrentStageTwoScenario =        2.000  
 
-----    314 PARAMETER StageOneInvestmentsDecision  
+----    323 PARAMETER StageOneInvestmentsDecision  
 
              DE          FR         BNL
 
 gas 4.95038E+11 4.95038E+11 4.95038E+11
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 33
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 33
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE epmProject Using LP From line 312
+Equation Listing    SOLVE epmProject Using LP From line 321
 
 
 ---- energy_balance  =E=  
@@ -10842,9 +10851,9 @@ REMAINING 12 ENTRIES SKIPPED
 
 total_cost..  TC - totalInvestmentCosts - 27.4626*powerGeneration(t1,biomass,DE) - 27.4626*powerGeneration(t1,biomass,FR) - 27.4626*powerGeneration(t1,biomass,BNL) - powerGeneration(t1,waste,DE) - powerGeneration(t1,waste,FR) - powerGeneration(t1,waste,BNL) - 9.86160088082501*powerGeneration(t1,lignite,DE) - 9.86160088082501*powerGeneration(t1,lignite,FR) - 9.86160088082501*powerGeneration(t1,lignite,BNL) - 17.8666666666667*powerGeneration(t1,nuclear,DE) - 17.8666666666667*powerGeneration(t1,nuclear,FR) - 17.8666666666667*powerGeneration(t1,nuclear,BNL) - 31.2222144610957*powerGeneration(t1,hardcoal,DE) - 31.2222144610957*powerGeneration(t1,hardcoal,FR) - 31.2222144610957*powerGeneration(t1,hardcoal,BNL) - 66.5898697603756*powerGeneration(t1,gas,DE) - 66.5898697603756*powerGeneration(t1,gas,FR) - 66.5898697603756*powerGeneration(t1,gas,BNL) - 94.7999255544933*powerGeneration(t1,oil,DE) - 94.7999255544933*powerGeneration(t1,oil,FR) - 94.7999255544933*powerGeneration(t1,oil,BNL) - 27.4626*powerGeneration(t2,biomass,DE) - 27.4626*powerGeneration(t2,biomass,FR) - 27.4626*powerGeneration(t2,biomass,BNL) - powerGeneration(t2,waste,DE) - powerGeneration(t2,waste,FR) - powerGeneration(t2,waste,BNL) - 9.86160088082501*powerGeneration(t2,lignite,DE) - 9.86160088082501*powerGeneration(t2,lignite,FR) - 9.86160088082501*powerGeneration(t2,lignite,BNL) - 17.8666666666667*powerGeneration(t2,nuclear,DE) - 17.8666666666667*powerGeneration(t2,nuclear,FR) - 17.8666666666667*powerGeneration(t2,nuclear,BNL) - 31.2222144610957*powerGeneration(t2,hardcoal,DE) - 31.2222144610957*powerGeneration(t2,hardcoal,FR) - 31.2222144610957*powerGeneration(t2,hardcoal,BNL) - 66.5898697603756*powerGeneration(t2,gas,DE) - 66.5898697603756*powerGeneration(t2,gas,FR) - 66.5898697603756*powerGeneration(t2,gas,BNL) - 94.7999255544933*powerGeneration(t2,oil,DE) - 94.7999255544933*powerGeneration(t2,oil,FR) - 94.7999255544933*powerGeneration(t2,oil,BNL) - 27.4626*powerGeneration(t3,biomass,DE) - 27.4626*powerGeneration(t3,biomass,FR) - 27.4626*powerGeneration(t3,biomass,BNL) - powerGeneration(t3,waste,DE) - powerGeneration(t3,waste,FR) - powerGeneration(t3,waste,BNL) - 9.86160088082501*powerGeneration(t3,lignite,DE) - 9.86160088082501*powerGeneration(t3,lignite,FR) - 9.86160088082501*powerGeneration(t3,lignite,BNL) - 17.8666666666667*powerGeneration(t3,nuclear,DE) - 17.8666666666667*powerGeneration(t3,nuclear,FR) - 17.8666666666667*powerGeneration(t3,nuclear,BNL) - 31.2222144610957*powerGeneration(t3,hardcoal,DE) - 31.2222144610957*powerGeneration(t3,hardcoal,FR) - 31.2222144610957*powerGeneration(t3,hardcoal,BNL) - 66.5898697603756*powerGeneration(t3,gas,DE) - 66.5898697603756*powerGeneration(t3,gas,FR) - 66.5898697603756*powerGeneration(t3,gas,BNL) - 94.7999255544933*powerGeneration(t3,oil,DE) - 94.7999255544933*powerGeneration(t3,oil,FR) - 94.7999255544933*powerGeneration(t3,oil,BNL) - 27.4626*powerGeneration(t4,biomass,DE) - 27.4626*powerGeneration(t4,biomass,FR) - 27.4626*powerGeneration(t4,biomass,BNL) - powerGeneration(t4,waste,DE) - powerGeneration(t4,waste,FR) - powerGeneration(t4,waste,BNL) - 9.86160088082501*powerGeneration(t4,lignite,DE) - 9.86160088082501*powerGeneration(t4,lignite,FR) - 9.86160088082501*powerGeneration(t4,lignite,BNL) - 17.8666666666667*powerGeneration(t4,nuclear,DE) - 17.8666666666667*powerGeneration(t4,nuclear,FR) - 17.8666666666667*powerGeneration(t4,nuclear,BNL) - 31.2222144610957*powerGeneration(t4,hardcoal,DE) - 31.2222144610957*powerGeneration(t4,hardcoal,FR) - 31.2222144610957*powerGeneration(t4,hardcoal,BNL) - 66.5898697603756*powerGeneration(t4,gas,DE) - 66.5898697603756*powerGeneration(t4,gas,FR) - 66.5898697603756*powerGeneration(t4,gas,BNL) - 94.7999255544933*powerGeneration(t4,oil,DE) - 94.7999255544933*powerGeneration(t4,oil,FR) - 94.7999255544933*powerGeneration(t4,oil,BNL) - 27.4626*powerGeneration(t5,biomass,DE) - 27.4626*powerGeneration(t5,biomass,FR) - 27.4626*powerGeneration(t5,biomass,BNL) - powerGeneration(t5,waste,DE) - powerGeneration(t5,waste,FR) - powerGeneration(t5,waste,BNL) - 9.86160088082501*powerGeneration(t5,lignite,DE) - 9.86160088082501*powerGeneration(t5,lignite,FR) - 9.86160088082501*powerGeneration(t5,lignite,BNL) - 17.8666666666667*powerGeneration(t5,nuclear,DE) - 17.8666666666667*powerGeneration(t5,nuclear,FR) - 17.8666666666667*powerGeneration(t5,nuclear,BNL) - 31.2222144610957*powerGeneration(t5,hardcoal,DE) - 31.2222144610957*powerGeneration(t5,hardcoal,FR) - 31.2222144610957*powerGeneration(t5,hardcoal,BNL) - 66.5898697603756*powerGeneration(t5,gas,DE) - 66.5898697603756*powerGeneration(t5,gas,FR) - 66.5898697603756*powerGeneration(t5,gas,BNL) - 94.7999255544933*powerGeneration(t5,oil,DE) - 94.7999255544933*powerGeneration(t5,oil,FR) - 94.7999255544933*powerGeneration(t5,oil,BNL) - 27.4626*powerGeneration(t6,biomass,DE) - 27.4626*powerGeneration(t6,biomass,FR) - 27.4626*powerGeneration(t6,biomass,BNL) - powerGeneration(t6,waste,DE) - powerGeneration(t6,waste,FR) - powerGeneration(t6,waste,BNL) - 9.86160088082501*powerGeneration(t6,lignite,DE) - 9.86160088082501*powerGeneration(t6,lignite,FR) - 9.86160088082501*powerGeneration(t6,lignite,BNL) - 17.8666666666667*powerGeneration(t6,nuclear,DE) - 17.8666666666667*powerGeneration(t6,nuclear,FR) - 17.8666666666667*powerGeneration(t6,nuclear,BNL) - 31.2222144610957*powerGeneration(t6,hardcoal,DE) - 31.2222144610957*powerGeneration(t6,hardcoal,FR) - 31.2222144610957*powerGeneration(t6,hardcoal,BNL) - 66.5898697603756*powerGeneration(t6,gas,DE) - 66.5898697603756*powerGeneration(t6,gas,FR) - 66.5898697603756*powerGeneration(t6,gas,BNL) - 94.7999255544933*powerGeneration(t6,oil,DE) - 94.7999255544933*powerGeneration(t6,oil,FR) - 94.7999255544933*powerGeneration(t6,oil,BNL) - 27.4626*powerGeneration(t7,biomass,DE) - 27.4626*powerGeneration(t7,biomass,FR) - 27.4626*powerGeneration(t7,biomass,BNL) - powerGeneration(t7,waste,DE) - powerGeneration(t7,waste,FR) - powerGeneration(t7,waste,BNL) - 9.86160088082501*powerGeneration(t7,lignite,DE) - 9.86160088082501*powerGeneration(t7,lignite,FR) - 9.86160088082501*powerGeneration(t7,lignite,BNL) - 17.8666666666667*powerGeneration(t7,nuclear,DE) - 17.8666666666667*powerGeneration(t7,nuclear,FR) - 17.8666666666667*powerGeneration(t7,nuclear,BNL) - 31.2222144610957*powerGeneration(t7,hardcoal,DE) - 31.2222144610957*powerGeneration(t7,hardcoal,FR) - 31.2222144610957*powerGeneration(t7,hardcoal,BNL) - 66.5898697603756*powerGeneration(t7,gas,DE) - 66.5898697603756*powerGeneration(t7,gas,FR) - 66.5898697603756*powerGeneration(t7,gas,BNL) - 94.7999255544933*powerGeneration(t7,oil,DE) - 94.7999255544933*powerGeneration(t7,oil,FR) - 94.7999255544933*powerGeneration(t7,oil,BNL) - 27.4626*powerGeneration(t8,biomass,DE) - 27.4626*powerGeneration(t8,biomass,FR) - 27.4626*powerGeneration(t8,biomass,BNL) - powerGeneration(t8,waste,DE) - powerGeneration(t8,waste,FR) - powerGeneration(t8,waste,BNL) - 9.86160088082501*powerGeneration(t8,lignite,DE) - 9.86160088082501*powerGeneration(t8,lignite,FR) - 9.86160088082501*powerGeneration(t8,lignite,BNL) - 17.8666666666667*powerGeneration(t8,nuclear,DE) - 17.8666666666667*powerGeneration(t8,nuclear,FR) - 17.8666666666667*powerGeneration(t8,nuclear,BNL) - 31.2222144610957*powerGeneration(t8,hardcoal,DE) - 31.2222144610957*powerGeneration(t8,hardcoal,FR) - 31.2222144610957*powerGeneration(t8,hardcoal,BNL) - 66.5898697603756*powerGeneration(t8,gas,DE) - 66.5898697603756*powerGeneration(t8,gas,FR) - 66.5898697603756*powerGeneration(t8,gas,BNL) - 94.7999255544933*powerGeneration(t8,oil,DE) - 94.7999255544933*powerGeneration(t8,oil,FR) - 94.7999255544933*powerGeneration(t8,oil,BNL) =E= 0 ; (LHS = 0)
      
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 34
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 34
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE epmProject Using LP From line 312
+Column Listing      SOLVE epmProject Using LP From line 321
 
 
 ---- TC  total cost
@@ -11056,9 +11065,9 @@ overallLoad(water)
         1       overallLoad_EQ(water)
 
 REMAINING 12 ENTRIES SKIPPED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 35
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 35
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Range Statistics    SOLVE epmProject Using LP From line 312
+Range Statistics    SOLVE epmProject Using LP From line 321
 
 
 RANGE STATISTICS (ABSOLUTE NON-ZERO FINITE VALUES)
@@ -11067,9 +11076,9 @@ RHS       [min, max] : [ 1.667E-01, 5.871E+04] - Zero values observed as well
 Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 Matrix    [min, max] : [ 1.769E-03, 4.849E+05]
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 36
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 36
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE epmProject Using LP From line 312
+Model Statistics    SOLVE epmProject Using LP From line 321
 
 
 LOOPS                           scenarioStageTwo   s2
@@ -11087,16 +11096,16 @@ GENERATION TIME      =        0.000 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
                L O O P S         scenarioStageTwo s2
                                  scenarioStageOne s2
 
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 37
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 37
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE epmProject Using LP From line 312
+Solution Report     SOLVE epmProject Using LP From line 321
 
 
                S O L V E      S U M M A R Y
 
      MODEL   epmProject          OBJECTIVE  TC
      TYPE    LP                  DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  312
+     SOLVER  CPLEX               FROM LINE  321
 
 **** SOLVER STATUS     1 Normal Completion
 **** MODEL STATUS      1 Optimal
@@ -12723,14 +12732,14 @@ reservoirStorages             .              .            +INF             .
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 13:58:16 Page 38
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/10/24 16:31:06 Page 38
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    314 VARIABLE TC.L                  =        0.000  total cost
+----    323 VARIABLE TC.L                  =        0.000  total cost
 
-----    314 PARAMETER Plants_capacities  
+----    323 PARAMETER Plants_capacities  
 
                               DE          FR         BNL
 
@@ -12749,17 +12758,17 @@ pumpedStoragesPlants    9422.000    5023.000    1308.000
 reservoirStorages       1298.000    8279.000      11.000
 
 
-----    314 VARIABLE totalInvestmentCosts.L =        0.000  
+----    323 VARIABLE totalInvestmentCosts.L =        0.000  
             PARAMETER CurrentStageOneScenario =        2.000  
             PARAMETER CurrentStageTwoScenario =        2.000  
 
-----    314 PARAMETER StageOneInvestmentsDecision  
+----    323 PARAMETER StageOneInvestmentsDecision  
 
                       ( ALL       0.000 )
 
 
 
-EXECUTION TIME       =        5.765 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
+EXECUTION TIME       =        5.781 SECONDS      4 MB  46.2.0 ac4adda6 WEX-WEI
 
 
 USER: Course License                                 S240430|0002AO-GEN

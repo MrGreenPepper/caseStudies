@@ -1,11 +1,11 @@
 
---- Job test.gms Start 07/09/24 14:49:44 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job test.gms Start 07/11/24 09:57:28 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
     Input C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\test.gms
     PageSize 0
-    ScrDir C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\225b\
+    ScrDir C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\225f\
     SysDir C:\GAMS\46\
     LogOption 3
     ErrMsg 1
@@ -21,11 +21,57 @@ Licensee: Course License                                 S240430|0002AO-GEN
 Processor information: 1 socket(s), 8 core(s), and 16 thread(s) available
 GAMS 46.2.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
 --- Starting compilation
---- test.gms(40) 3 Mb 2 Errors
-*** Error 246 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\test.gms
-    Objective variable is not a free variable
-*** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\test.gms
-    Solve statement not checked because of previous errors
---- test.gms(41) 3 Mb 2 Errors
-*** Status: Compilation error(s)
---- Job test.gms Stop 07/09/24 14:49:44 elapsed 0:00:00.006
+--- test.gms(2) 2 Mb
+--- . test_stochastic.gms(58) 3 Mb
+--- test.gms(2) 3 Mb
+--- Starting execution: elapsed 0:00:00.008
+--- Generating LP model stochastic
+--- test.gms(60) 4 Mb
+---   37 rows  27 columns  99 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.000E+01, 4.000E+01] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 2.500E-01, 1.000E+01]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:00.014
+
+IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- GMO memory 0.50 Mb (peak 0.50 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.00 Mb (peak 0.00 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 12 substitutions.
+Reduced LP has 24 rows, 14 columns, and 48 nonzeros.
+Presolve time = 0.00 sec. (0.03 ticks)
+Symmetry aggregator did 27 additional substitutions.
+
+Iteration log . . .
+Iteration:     1   Dual objective     =           170.000000
+
+Dual crossover.
+  Dual:  Fixing 6 variables.
+        5 DMoves:  Infeasibility  0.00000000e+00  Objective  3.60000000e+02
+        0 DMoves:  Infeasibility  0.00000000e+00  Objective  3.60000000e+02
+  Dual:  Pushed 5, exchanged 1.
+  Primal:  Fixed no variables.
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.00sec (det. 0.07 ticks)
+
+
+Optimal solution found
+Objective:          360.000000
+
+--- Reading solution for model stochastic
+*** Status: Normal completion
+--- Job test.gms Stop 07/11/24 09:57:28 elapsed 0:00:00.042
