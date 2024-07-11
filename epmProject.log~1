@@ -1,5 +1,5 @@
 
---- Job main.gms Start 07/11/24 15:16:05 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job main.gms Start 07/11/24 15:18:22 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -77,17 +77,17 @@ No errors, CSV2GDX time = 0ms
 --- . loadFinalData.gms(98) 3 Mb
 --- main.gms(21) 3 Mb
 --- . scenarioData.gms(36) 3 Mb
---- main.gms(222) 3 Mb
---- Starting execution: elapsed 0:00:06.977
+--- main.gms(229) 3 Mb
+--- Starting execution: elapsed 0:00:07.027
 --- main.gms(151) 4 Mb
 --- Generating LP model epmProject
---- main.gms(300) 5 Mb
+--- main.gms(302) 5 Mb
 ---   4,981 rows  2,798 columns  16,208 non-zeroes
 --- Range statistics (absolute non-zero finite values)
 --- RHS       [min, max] : [ 1.667E-01, 3.187E+09] - Zero values observed as well
 --- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
 --- Matrix    [min, max] : [ 4.634E-04, 4.849E+05]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:07.001
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:07.050
 
 IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 
@@ -113,7 +113,7 @@ Tried aggregator 1 time.
 LP Presolve eliminated 536 rows and 260 columns.
 Aggregator did 20 substitutions.
 Reduced LP has 4424 rows, 2518 columns, and 13962 nonzeros.
-Presolve time = 0.02 sec. (6.58 ticks)
+Presolve time = 0.01 sec. (6.58 ticks)
 Initializing dual steep norms . . .
 
 Iteration log . . .
@@ -142,23 +142,80 @@ Iteration:  1773   Dual objective     = 1912516549707.515869
 Iteration:  1896   Dual objective     = 3262485397228.307617
 Iteration:  2005   Dual objective     = 4430301342786.270508
 Iteration:  2109   Dual objective     = 5539951605781.509766
+Iteration:  2221   Dual objective     = 7109359593420.905273
 Removing perturbation.
 
 Barrier solved model.
 
 
 --- LP status (1): optimal.
---- Cplex Time: 0.17sec (det. 209.26 ticks)
+--- Cplex Time: 0.19sec (det. 209.26 ticks)
 
 
 Optimal solution found
 Objective:  99864877358803.484375
 
 --- Reading solution for model epmProject
---- Executing after solve: elapsed 0:00:07.229
---- main.gms(335) 5 Mb
+--- Executing after solve: elapsed 0:00:07.292
+--- main.gms(303) 5 Mb
+--- Generating LP model epmProject
+--- main.gms(306) 6 Mb
+---   4,981 rows  2,798 columns  16,208 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.667E-01, 3.187E+09] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 4.634E-04, 4.849E+05]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:07.318
+
+IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.38 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 1.88 Mb (peak 1.90 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.11 Mb (peak 0.72 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 2
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Parallel mode: deterministic, using up to 16 threads for concurrent optimization:
+ * Starting dual Simplex on 1 thread...
+ * Starting Barrier on 14 threads...
+ * Starting primal Simplex on 1 thread...
+Tried aggregator 1 time.
+LP Presolve eliminated 536 rows and 260 columns.
+Aggregator did 20 substitutions.
+Reduced LP has 4424 rows, 2518 columns, and 13962 nonzeros.
+Presolve time = 0.02 sec. (6.58 ticks)
+
+Iteration log . . .
+Iteration:     1   Dual objective     = 10121642665648.722656
+Iteration:   125   Dual objective     = 10121642665648.732422
+Iteration:   272   Dual objective     = 10121643527292.128906
+Iteration:   443   Dual objective     = 10121644709164.939453
+Iteration:   604   Dual objective     = 10121644709167.529297
+Removing shift (218).
+
+Dual simplex solved model.
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.05sec (det. 62.19 ticks)
+
+
+Optimal solution found
+Objective:  10121642665648.656250
+
+--- Reading solution for model epmProject
+--- Executing after solve: elapsed 0:00:07.419
+--- main.gms(342) 6 Mb
 --- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
---- main.gms(336) 5 Mb
+--- main.gms(343) 6 Mb
 
 GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
@@ -166,18 +223,18 @@ Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\
 **** Keyword does not match symbol type, Symbol: energy_balance
 
 Any changes made to the spreadsheet were not saved
-Total time = 594 Ms
---- main.gms(338) 5 Mb
+Total time = 562 Ms
+--- main.gms(345) 6 Mb
 --- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
---- main.gms(339) 5 Mb
+--- main.gms(346) 6 Mb
 
 GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
 Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.xls
-Total time = 781 Ms
---- main.gms(341) 5 Mb
+Total time = 797 Ms
+--- main.gms(348) 6 Mb
 --- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
---- main.gms(342) 5 Mb
+--- main.gms(349) 6 Mb
 
 GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
@@ -185,30 +242,30 @@ Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\
 **** Keyword does not match symbol type, Symbol: storageCapacity
 
 Any changes made to the spreadsheet were not saved
-Total time = 578 Ms
---- main.gms(344) 5 Mb
+Total time = 593 Ms
+--- main.gms(351) 6 Mb
 --- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
---- main.gms(345) 5 Mb
+--- main.gms(352) 6 Mb
 
 GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
 Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.xls
-Total time = 750 Ms
---- main.gms(347) 5 Mb
+Total time = 735 Ms
+--- main.gms(354) 6 Mb
 --- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
---- main.gms(348) 5 Mb
+--- main.gms(355) 6 Mb
 
 GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
 Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.xls
-Total time = 750 Ms
---- main.gms(350) 5 Mb
+Total time = 765 Ms
+--- main.gms(357) 6 Mb
 --- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
---- main.gms(351) 5 Mb
+--- main.gms(358) 6 Mb
 
 GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
 Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
 Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.xls
-Total time = 734 Ms
+Total time = 797 Ms
 *** Status: Normal completion
---- Job main.gms Stop 07/11/24 15:16:16 elapsed 0:00:11.711
+--- Job main.gms Stop 07/11/24 15:18:34 elapsed 0:00:11.961

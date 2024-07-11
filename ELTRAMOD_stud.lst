@@ -1,0 +1,331 @@
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/11/24 15:25:47 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  * ----- ----- ----- ----- ----- ----- ----- ----- ----- ---- *
+   2  * ELTRAMOD_stud v1.0.0
+   3  * for Classroom Modelling, July 2021
+   4  *
+   5  * Hannes Hobbie, Constantin Dierstein, Matthew Schmidt,
+   6  * Dominik M�st
+   7  *
+   8  * TU Dresden, Chair of Energy Economics
+   9  * ----- ----- ----- ----- ----- ----- ----- ----- ----- ---- *
+  10   
+  11   
+  12  * -- DECLARATION OF ENTITIES -- *
+  13   
+  14  Sets
+  15  t             /t1 *t2/
+  16  r             /quick, base/
+  17  f             /oil, coal, battery/
+  18  map_rf        mapping technology-to-fuel
+  19  s(r)          /battery/
+****                       $170
+**** 170  Domain violation for element
+  20  th(r)         /oil, coal/
+****                   $170  $170
+**** 170  Domain violation for element
+  21  scen          /s1*s2/
+  22  scen_(scen)   subset of scenario
+  23  ;
+  24   
+  25   
+  26  Parameters
+  27  tech_char(r,*)        technology characteristics
+  28  time_char(t,*)        time characteristics
+  29  fuel_price(f)         fuel prices
+  30  d_res(t)              residual demand
+  31  rescap(scen,*)        RES capacity
+  32  a(r)                  annuity
+  33  co_var(r)             variable cost
+  34  R_(*)                 results
+  35  Rfuel(f,*)            fuel dependent results
+  36  Rtech(r,*)            technology dependent results
+  37  Rtechtime(t,*,r)      technology and time dependent results
+  38  ;
+  39   
+  40  loop(r,
+  41      tech_char(r,*)     = 1;
+****                  $145
+**** 145  Set identifier or quoted element expected
+  42  time_char(t,*)         = 1;
+****              $145
+**** 145  Set identifier or quoted element expected
+  43  fuel_price(f)          = 1;
+  44  d_res(t)               = 1;
+  45  rescap(scen,*)         = 1;
+****              $145
+**** 145  Set identifier or quoted element expected
+  46  a(r)                   = 1;
+  47  co_var(r)              = 1;
+  48  R_(*)                 = 1;
+****     $145
+**** 145  Set identifier or quoted element expected
+  49  Rfuel(f,*)             = 1;
+****          $145
+**** 145  Set identifier or quoted element expected
+  50  Rtech(r,*)             = 1;
+****          $145
+**** 145  Set identifier or quoted element expected
+  51  Rtechtime(t,*,r)   = 1;
+****              $145
+**** 145  Set identifier or quoted element expected
+  52  );
+  53  Scalars
+  54  PowerEnergyRatio        power-to-energy ratio
+  55  eta         storage efficiency
+  56  co_curt     penalty for curtailment
+  57  sc          scaling factor
+  58  ;
+  59   
+  60   
+  61  Positive Variables
+  62  CC          Total curtailment costs
+  63  CG          Total generation costs
+  64  CI          Total investments
+  65  C(r)        aggregated capacity
+  66  G(t,r)      aggregated generation
+  67  SL(t,r)     aggregated storage level
+  68  P(t,r)      aggregated pump operation
+  69  CU(t)       aggregated RES curtailment
+  70  ;
+  71   
+  72   
+  73  Variables
+  74  TC       total system cost
+  75  ;
+  76   
+  77   
+  78  Equations
+  79  objective_function        target function
+  80  investment_cost           investment expenses
+  81  dispatch_cost             generation expenses
+  82  curtailment_cost          curtailment expenses
+  83  energy_balance            market clearing
+  84  generation_constraint     maximal generation
+  85  storage_level             current storage level
+  86  storage_constraint        maximal storage level
+  87  storage_start             boundary condition t1
+  88  storage_end               boundary condition t2
+  89  pump_constraint           maximal pump operation
+  90  ;
+  91   
+  92   
+  93   
+  94  * -- DEFINITION OF ENTITIES -- *
+  95   
+  96  * data import
+  97  $onecho >INPUTDATA\temp.tmp
+****                            $459
+**** 459  $echo file cannot be opened
+      set=t             rng=timeseries!A4       rdim=1 cdim=0
+      set=r             rng=plants!A4           rdim=1 cdim=0
+      set=f             rng=fuels!A3            rdim=0 cdim=1
+      set=map_rf        rng=plants!A4           rdim=2 cdim=0
+      set=scen          rng=scenarios!A4        rdim=1 cdim=0
+      par=tech_char     rng=plants!A3           rdim=1 cdim=1
+      par=time_char     rng=timeseries!A3       rdim=1 cdim=1
+      par=fuel_price    rng=fuels!A3            rdim=0 cdim=1
+      par=rescap        rng=scenarios!A3        rdim=1 cdim=1
+ 107  $offecho
+ 108   
+**** File: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\INPUTDATA\INPUTDATA.gdx
+**** Msg : No such file or directory
+ 111  $gdxin INPUTDATA\INPUTDATA
+****                           $510
+**** 510  Unable to open gdx file for $GDXIN
+ 112  $load t r f map_rf tech_char time_char fuel_price scen rescap
+****      $502
+**** 502  GDXIN  file not open - ignore rest of line
+ 115   
+ 116  * subset definition
+ 117  s('psp') = yes ;
+****        $170
+**** 170  Domain violation for element
+ 118  th(r) = yes ;
+ 119  th('psp') = no ;
+****         $170
+**** 170  Domain violation for element
+ 120   
+ 121  * scenario definition
+ 122  scen_('scen3') = yes ;
+****              $170
+**** 170  Domain violation for element
+ 123   
+ 124  * scalar definition
+ 125  PowerEnergyRatio = 6 ;
+ 126  co_curt = 100 ;
+ 127  eta = sum(s, tech_char(s,'efficiency')) ;
+****                                      $116
+**** 116  Label is unknown
+ 128  sc = 1/1e6 ;
+ 129   
+ 130  * residual demand definition
+ 131  d_res(t) = time_char(t,'demand') - time_char(t,'cfsolar') * sum(scen_, rescap(scen_,'solar')) - time_char(t,'cfwind') * sum(scen_, rescap(scen_,'wind')) ;
+****                                $116                     $116                               $116                     $116                              $116
+**** 116  Label is unknown
+ 132   
+ 133  * cost factors
+ 134  a(r) = tech_char(r,'annuity') + tech_char(r,'maintenance') + tech_char(r,'staff') + tech_char(r,'insurance') ;
+****                             $116                         $116                   $116                       $116
+**** 116  Label is unknown
+ 135   
+ 136  co_var(r) = 1/tech_char(r,'efficiency') * sum(f$map_rf(r,f), fuel_price(f)) +
+****                                                       $141
+**** 141  Symbol declared but no values have been assigned. Check for missing
+****         data definition, assignment, data loading or implicit assignment
+****         via a solve statement. Suppress with $onImplicitAssign.
+****         A wild shot: You may have spurious commas in the explanatory
+****         text of a declaration. Check symbol reference list.
+ 137              1/tech_char(r,'efficiency') * tech_char(r,'emission') * fuel_price('carbon') +
+****                                                                 $116                   $116,170
+**** 116  Label is unknown
+**** 170  Domain violation for element
+ 138              tech_char(r,'operation') + tech_char(r,'reserves') + tech_char(r,'disposal') ;
+****                                    $116                      $116                      $116
+**** 116  Label is unknown
+ 139   
+ 140   
+ 141   
+ 142  * -- DEFINITION OF EQUATIONS -- *
+ 143   
+ 144  * costs and related definitions
+ 145   
+ 146  objective_function..
+ 147  TC  =e=  CI + CG + CC ;
+ 148   
+ 149   
+ 150  investment_cost..
+ 151  CI  =e=  sum(r, C(r) * a(r)) * sc ;
+ 152   
+ 153   
+ 154  dispatch_cost..
+ 155  CG  =e=  sum((t,r), G(t,r) * co_var(r)) * sc;
+ 156   
+ 157   
+ 158  curtailment_cost..
+ 159  CC   =e=   sum(t, CU(t) * co_curt) * sc ;
+ 160   
+ 161   
+ 162  * power market clearing
+ 163   
+ 164  energy_balance(t)..
+ 165  sum(r, G(t,r)) - CU(t) - sum(s, P(t,s))   =e=   d_res(t) ;
+ 166   
+ 167   
+ 168  CU.up(t) = time_char(t,'cfsolar') * sum(scen_, rescap(scen_,'solar')) + time_char(t,'cfwind') * sum(scen_, rescap(scen_,'wind')) ;
+ 169   
+ 170   
+ 171  * generation and storage restrictions
+ 172   
+ 173  generation_constraint(t,r)..
+ 174  G(t,r)  =l=  C(r) ;
+ 175   
+ 176   
+ 177  pump_constraint(t,s)..
+ 178  P(t,s)  =l=  C(s) ;
+ 179   
+ 180   
+ 181  storage_level(t,s) $ (ord(t)>1)..
+ 182  SL(t,s)  =e=  SL(t-1,s) - G(t,s) + P(t,s) * eta ;
+ 183   
+ 184   
+ 185  storage_constraint(t,s)..
+ 186  SL(t,s)  =l=  C(s) * PowerEnergyRatio ;
+ 187   
+ 188   
+ 189  storage_start(t,s) $ (ord(t)=1)..
+ 190  SL(t,s) =e= 0.5 * C(s) * PowerEnergyRatio - G(t,s) + P(t,s) * eta ;
+ 191   
+ 192   
+ 193  storage_end(t,s) $ (ord(t)=8760)..
+ 194  SL(t,s) =e= 0.5 * C(s) ;
+ 195   
+ 196   
+ 197   
+ 198  * -- MODEL BUILDING AND SOLVING -- *
+ 199   
+ 200  C.up(s) = 15000 ;
+ 201  *C.fx(s) = 0 ;
+ 202   
+ 203  model ELTRAMOD_stud / all / ;
+ 204  solve ELTRAMOD_stud using lp minimising TC ;
+****                                             $257
+**** 257  Solve statement not checked because of previous errors
+ 205   
+ 206   
+ 207   
+ 208   
+ 209  * -- RESULT PROCESSING -- *
+ 210   
+ 211  * result definitions
+ 212  R_('01_COST') = TC.l ;
+****                     $141
+**** 141  Symbol declared but no values have been assigned. Check for missing
+****         data definition, assignment, data loading or implicit assignment
+****         via a solve statement. Suppress with $onImplicitAssign.
+****         A wild shot: You may have spurious commas in the explanatory
+****         text of a declaration. Check symbol reference list.
+ 213   
+ 214  Rfuel(f,'01_GENERATION') = sum((t,r) $ map_rf(r,f), G.l(t,r)) ;
+****                                                        $141
+**** 141  Symbol declared but no values have been assigned. Check for missing
+****         data definition, assignment, data loading or implicit assignment
+****         via a solve statement. Suppress with $onImplicitAssign.
+****         A wild shot: You may have spurious commas in the explanatory
+****         text of a declaration. Check symbol reference list.
+ 215   
+ 216  Rtech(r,'01_GENERATION') = sum(t, G.l(t,r)) ;
+ 217  Rtech(r,'02_CAP') = C.l(r) ;
+ 218  Rtech(r,'03_FLH') $ C.l(r) = sum(t, G.l(t,r)) / C.l(r) ;
+ 219  Rtech(r,'04_CARBONEMISSION') = sum(t, G.l(t,r)) / tech_char(r,'efficiency') * tech_char(r,'emission') ;
+ 220   
+ 221  Rtechtime(t,'01_GENERATION',r) = G.l(t,r) ;
+ 222  Rtechtime(t,'02_PUMP',s) = P.l(t,s) ;
+****                               $141
+**** 141  Symbol declared but no values have been assigned. Check for missing
+****         data definition, assignment, data loading or implicit assignment
+****         via a solve statement. Suppress with $onImplicitAssign.
+****         A wild shot: You may have spurious commas in the explanatory
+****         text of a declaration. Check symbol reference list.
+ 223  Rtechtime(t,'02_PUMP',s) $ (Rtechtime(t,'02_PUMP',s)=0) = eps ;
+ 224   
+ 225   
+ 226  * gdx export
+ 227  execute_unload 'RESULTS\results_all.gdx' ;
+ 228  execute_unload 'RESULTS\results.gdx' R_, Rfuel, Rtech, Rtechtime ;
+ 229   
+ 230  * XLS export
+ 231  execute 'gdxxrw.exe RESULTS\results.gdx O=RESULTS\RESULTS.xlsx epsout=0 par=R_ rng=R_!a1' ;
+ 232  execute 'gdxxrw.exe RESULTS\results.gdx O=RESULTS\RESULTS.xlsx epsout=0 par=Rfuel rng=Rfuel!a1' ;
+ 233  execute 'gdxxrw.exe RESULTS\results.gdx O=RESULTS\RESULTS.xlsx epsout=0 par=Rtech rng=Rtech!a1' ;
+ 234  execute 'gdxxrw.exe RESULTS\results.gdx O=RESULTS\RESULTS.xlsx epsout=0 par=Rtechtime rng=Rtechtime!a1 rdim=1 cdim=2' ;
+
+**** 37 ERROR(S)   0 WARNING(S)
+GAMS 46.2.0  ac4adda6 Mar 5, 2024           WEX-WEI x86 64bit/MS Windows - 07/11/24 15:25:47 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\ELTRAMOD_stud.gms
+     2      110 CALL           1     110  gdxxrw INPUTDATA\INPUTDATA.xlsx O=INPUTDATA\INPUTDATA.gdx SQ=N SE=10 cmerge=1 @INPUTDATA\temp.tmp
+
+
+COMPILATION TIME     =        1.156 SECONDS      3 MB  46.2.0 ac4adda6 WEX-WEI
+
+
+USER: Course License                                 S240430|0002AO-GEN
+      TU Dresden, Business Management and Economics             DCE3456
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\ELTRAMOD_stud.gms
+Output     C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\ELTRAMOD_stud.lst
+
+**** USER ERROR(S) ENCOUNTERED

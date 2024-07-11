@@ -1,5 +1,5 @@
 
---- Job main.gms Start 07/11/24 15:14:31 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job main.gms Start 07/11/24 15:15:47 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -77,101 +77,39 @@ No errors, CSV2GDX time = 0ms
 --- . loadFinalData.gms(98) 3 Mb
 --- main.gms(21) 3 Mb
 --- . scenarioData.gms(36) 3 Mb
---- main.gms(222) 3 Mb
---- Starting execution: elapsed 0:00:06.865
---- main.gms(151) 4 Mb
---- Generating LP model epmProject
---- main.gms(300) 5 Mb
----   4,957 rows  2,654 columns  16,064 non-zeroes
---- Range statistics (absolute non-zero finite values)
---- RHS       [min, max] : [ 1.667E-01, 3.187E+09] - Zero values observed as well
---- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
---- Matrix    [min, max] : [ 4.634E-04, 4.849E+05]
---- Executing CPLEX (Solvelink=2): elapsed 0:00:06.886
-
-IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-
---- GAMS/CPLEX licensed for continuous and discrete problems.
---- GMO setup time: 0.00s
---- Space for names approximately 0.38 Mb
---- Use option 'names no' to turn use of names off
---- GMO memory 1.86 Mb (peak 1.88 Mb)
---- Dictionary memory 0.00 Mb
---- Cplex 22.1.1.0 link memory 0.11 Mb (peak 0.71 Mb)
---- Starting Cplex
-
-Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
-CPXPARAM_Advance                                 0
-CPXPARAM_MIP_Display                             4
-CPXPARAM_MIP_Pool_Capacity                       0
-CPXPARAM_MIP_Tolerances_AbsMIPGap                0
-Parallel mode: deterministic, using up to 16 threads for concurrent optimization:
- * Starting dual Simplex on 1 thread...
- * Starting Barrier on 14 threads...
- * Starting primal Simplex on 1 thread...
-Tried aggregator 1 time.
-Row 'overallLoad_EQ(s2,waste)' is dependent and infeasible.
-Presolve time = 0.02 sec. (6.31 ticks)
-
---- LP status (3): infeasible.
---- Cplex Time: 0.02sec (det. 101.96 ticks)
-
---- Model has been proven infeasible
---- Reading solution for model epmProject
---- Executing after solve: elapsed 0:00:06.954
---- main.gms(335) 5 Mb
---- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
---- main.gms(336) 5 Mb
-
-GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
-Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.xlsx
-**** Keyword does not match symbol type, Symbol: energy_balance
-
-Any changes made to the spreadsheet were not saved
-Total time = 578 Ms
---- main.gms(338) 5 Mb
---- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
---- main.gms(339) 5 Mb
-
-GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
-Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.xls
-Total time = 766 Ms
---- main.gms(341) 5 Mb
---- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
---- main.gms(342) 5 Mb
-
-GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
-Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.xls
-**** Keyword does not match symbol type, Symbol: storageCapacity
-
-Any changes made to the spreadsheet were not saved
-Total time = 594 Ms
---- main.gms(344) 5 Mb
---- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
---- main.gms(345) 5 Mb
-
-GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
-Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.xls
-Total time = 734 Ms
---- main.gms(347) 5 Mb
---- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
---- main.gms(348) 5 Mb
-
-GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
-Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.xls
-Total time = 765 Ms
---- main.gms(350) 5 Mb
---- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
---- main.gms(351) 5 Mb
-
-GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
-Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.xls
-Total time = 797 Ms
-*** Status: Normal completion
---- Job main.gms Stop 07/11/24 15:14:43 elapsed 0:00:11.521
+--- main.gms(112) 3 Mb 6 Errors
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 148 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Dimension different - The symbol is referenced with more/less
+       indices as declared
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 148 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Dimension different - The symbol is referenced with more/less
+       indices as declared
+--- main.gms(114) 3 Mb 12 Errors
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 148 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Dimension different - The symbol is referenced with more/less
+       indices as declared
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 171 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Domain violation for set
+*** Error 148 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Dimension different - The symbol is referenced with more/less
+       indices as declared
+--- main.gms(166) 3 Mb 13 Errors
+*** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Solve statement not checked because of previous errors
+--- main.gms(222) 3 Mb 13 Errors
+*** Status: Compilation error(s)
+--- Job main.gms Stop 07/11/24 15:15:54 elapsed 0:00:06.995
