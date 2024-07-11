@@ -1,7 +1,7 @@
 
 Set
 scenario /s1*s2/
-scenarioProp /probaility, factor/
+scenarioProp /probability, factor/
 ;
 Alias(scenario, scenarioStageOne);
 Alias(scenario, scenarioStageTwo);
@@ -18,9 +18,9 @@ Z_DP
 ;
 Parameter Table
 ScenarioData(scenario, scenarioProp)
-        probaility          factor
-s1      0.2                 10000000
-s2      0.8                 0.001
+        probability     factor
+s1      0.2             1
+s2      0.8             50000
 ;
 
 Parameter

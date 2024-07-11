@@ -1,7 +1,7 @@
 
 Sets
 *t /t1*t168, t4200*t4368/
-t /t1*t8/
+t /t1*t24/
 snaps /snap1*snap4/
 plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
 conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/

@@ -1,5 +1,5 @@
 
---- Job main.gms Start 07/10/24 16:30:48 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job main.gms Start 07/11/24 13:06:53 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -77,20 +77,12 @@ No errors, CSV2GDX time = 0ms
 --- . loadFinalData.gms(98) 3 Mb
 --- main.gms(21) 3 Mb
 --- . scenarioData.gms(36) 3 Mb
---- main.gms(171) 3 Mb 2 Errors
-*** Error  71 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    The symbol shown has been declared as an equation, but no
-       Symbolic equation (..) was found. hint - look for commas in the
-       Documentation text for the equations. use quotes around the
-       Text or eliminate the commas.
-*** Error 256 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    Error(s) in analyzing solve statement.
-*** The following LP errors were detected in model epmProject:
-     71 PropabilityDis is an undefined equation
-     71 TrimodalEquation is an undefined equation
---- main.gms(187) 3 Mb 3 Errors
+--- main.gms(112) 3 Mb 1 Error
+*** Error 119 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    Number (primary) expected
+--- main.gms(166) 3 Mb 2 Errors
 *** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
     Solve statement not checked because of previous errors
---- main.gms(218) 3 Mb 3 Errors
+--- main.gms(222) 3 Mb 2 Errors
 *** Status: Compilation error(s)
---- Job main.gms Stop 07/10/24 16:30:56 elapsed 0:00:07.226
+--- Job main.gms Stop 07/11/24 13:07:00 elapsed 0:00:07.038

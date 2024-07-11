@@ -1,5 +1,5 @@
 
---- Job main.gms Start 07/10/24 16:29:19 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job main.gms Start 07/11/24 13:05:33 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
@@ -77,19 +77,135 @@ No errors, CSV2GDX time = 0ms
 --- . loadFinalData.gms(98) 3 Mb
 --- main.gms(21) 3 Mb
 --- . scenarioData.gms(36) 3 Mb
---- main.gms(170) 3 Mb 2 Errors
-*** Error  66 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    The symbol shown has not been defined or assigned
-       A wild shot: You may have spurious commas in the explanatory
-       text of a declaration. Check symbol reference list.
-*** Error 256 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    Error(s) in analyzing solve statement.
-*** The following LP errors were detected in model epmProject:
-     66 equation TrimodalEquation.. symbol "propability" has no values assigned
-     66 equation TrimodalEquation.. symbol "propFactor" has no values assigned
---- main.gms(186) 3 Mb 3 Errors
-*** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    Solve statement not checked because of previous errors
---- main.gms(217) 3 Mb 3 Errors
-*** Status: Compilation error(s)
---- Job main.gms Stop 07/10/24 16:29:26 elapsed 0:00:07.639
+--- main.gms(222) 3 Mb
+--- Starting execution: elapsed 0:00:07.087
+--- main.gms(151) 4 Mb
+--- Generating LP model epmProject
+--- main.gms(300) 5 Mb
+---   4,957 rows  2,654 columns  16,064 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 1.667E-01, 6.374E+07] - Zero values observed as well
+--- Bound     [min, max] : [        NA,        NA] - Zero values observed as well
+--- Matrix    [min, max] : [ 4.634E-04, 4.849E+05]
+--- Executing CPLEX (Solvelink=2): elapsed 0:00:07.108
+
+IBM ILOG CPLEX   46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 0.38 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 1.86 Mb (peak 1.88 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 0.11 Mb (peak 0.71 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Parallel mode: deterministic, using up to 16 threads for concurrent optimization:
+ * Starting dual Simplex on 1 thread...
+ * Starting Barrier on 14 threads...
+ * Starting primal Simplex on 1 thread...
+Tried aggregator 1 time.
+LP Presolve eliminated 537 rows and 260 columns.
+Aggregator did 20 substitutions.
+Reduced LP has 4399 rows, 2374 columns, and 13674 nonzeros.
+Presolve time = 0.02 sec. (6.84 ticks)
+Initializing dual steep norms . . .
+
+Iteration log . . .
+Iteration:     1   Dual objective     =             0.000000
+Perturbation started.
+Iteration:   101   Dual objective     =             0.000000
+Iteration:   223   Dual objective     =           504.709268
+Iteration:   318   Dual objective     =          1083.424345
+Iteration:   404   Dual objective     =          1558.980350
+Iteration:   489   Dual objective     =          2002.458659
+Iteration:   581   Dual objective     =          2570.936183
+Iteration:   676   Dual objective     =          3052.642874
+Iteration:   789   Dual objective     =          4804.216867
+Iteration:   908   Dual objective     =        218322.497756
+Iteration:  1029   Dual objective     =     201715524.003113
+Iteration:  1117   Dual objective     =     201721857.256350
+Iteration:  1206   Dual objective     =     389574100.887708
+Iteration:  1315   Dual objective     =    2595112280.651509
+Iteration:  1400   Dual objective     =   15021384827.950106
+Iteration:  1486   Dual objective     =   20557673485.868107
+Iteration:  1594   Dual objective     =   22206260719.996475
+Iteration:  1683   Dual objective     =   32133885078.726585
+Iteration:  1795   Dual objective     =   38473120005.685738
+Iteration:  1880   Dual objective     =   48416608430.284081
+Iteration:  1969   Dual objective     =   59523922203.078529
+Removing perturbation.
+
+Barrier solved model.
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 0.14sec (det. 189.39 ticks)
+
+
+Optimal solution found
+Objective:  1993756444350.360352
+
+--- Reading solution for model epmProject
+--- Executing after solve: elapsed 0:00:07.300
+--- main.gms(335) 5 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
+--- main.gms(336) 5 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\energyEQ.xlsx
+**** Keyword does not match symbol type, Symbol: energy_balance
+
+Any changes made to the spreadsheet were not saved
+Total time = 578 Ms
+--- main.gms(338) 5 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
+--- main.gms(339) 5 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerGeneration.xls
+Total time = 828 Ms
+--- main.gms(341) 5 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+--- main.gms(342) 5 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.xls
+**** Keyword does not match symbol type, Symbol: storageCapacity
+
+Any changes made to the spreadsheet were not saved
+Total time = 578 Ms
+--- main.gms(344) 5 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
+--- main.gms(345) 5 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageLoading.xls
+Total time = 781 Ms
+--- main.gms(347) 5 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
+--- main.gms(348) 5 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\import.xls
+Total time = 797 Ms
+--- main.gms(350) 5 Mb
+--- GDX File (execute_unload) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
+--- main.gms(351) 5 Mb
+
+GDXXRW           46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
+Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.gdx
+Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\export.xls
+Total time = 797 Ms
+*** Status: Normal completion
+--- Job main.gms Stop 07/11/24 13:05:45 elapsed 0:00:11.942

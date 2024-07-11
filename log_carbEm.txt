@@ -3,4 +3,4 @@ Input file : C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\
 Output file: C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
 Value expected in cell: Sheet1!B1; found t/MWh
 Total number of bad values for symbol Plants_carbonEmissions = 1
-Total time = 687 Ms
+Total time = 719 Ms
