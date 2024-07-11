@@ -42,9 +42,9 @@ totalInvestmentCosts
 savedEnergy
 buildCapacities(plants, country)
 powerGeneration(scenario, t, plants, country)             generation per Technology (MW)
-storageLoading(t, storages, country)
-storageGen(t, storages)
-storageLevel(t, storages, country)
+storageLoading(scenario, t, storages, country)
+storageGen(scenario, t, storages)
+storageLevel(scenario, t, storages, country)
 export(scenario, country, t)
 import(scenario, country, t)
 carbonEmission(country, plants)
@@ -109,15 +109,15 @@ total_cost
 *PropabilityDis..                                                  propability =e= 1/(std* sqrt(2*pi)) * e**((-1/2*((propFactor)-mean))/std**2);
 *TrimodalEquation..                                                 
 ***     basic constraints
-energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(scenario, country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(scenario, country, t);
-*energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(country, t) + sum((storages), storageLoading(t, storages, country));
+*energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(scenario, country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(scenario, country, t);
+energy_balance(scenario, t, country)..                                          sum((plants),powerGeneration(scenario, t, plants, country)) + import(scenario, country, t)  =e= (PowerDemand(t, country) * ScenarioData(scenario, 'factor')) + export(scenario, country, t) + sum((storages), storageLoading(scenario, t, storages, country));
 trade_constraint(scenario,t)..                                                           sum(country, import(scenario, country, t)) =e=  sum(country, export(scenario, country, t)) * 0.9;
 
 
 ***     powerGeneration constraints
 generation_constraint_Plants(scenario,t, plants, country)..                     powerGeneration(scenario, t, plants, country) =l= (Plants_capacities(plants, country) + buildCapacities(plants, country) + StageOneInvestmentsDecision(plants, country)) * Plants_availability(plants);
 generation_constraint_rePlants(scenario, t, renewablePlants, country)..         powerGeneration(scenario,t, renewablePlants, country) =l= (Plants_capacities(renewablePlants, country) + buildCapacities(renewablePlants, country)) * CapacityFactor(t, renewablePlants);
-storage_genConstraint_capacity(scenario,t, storages, country)..                 powerGeneration(scenario,t, storages, country) =l= storageLevel(t, storages, country);
+storage_genConstraint_capacity(scenario,t, storages, country)..                 powerGeneration(scenario,t, storages, country) =l= storageLevel(scenario, t, storages, country);
 
 
 ***     baseload plants ramping up/down 
@@ -133,10 +133,10 @@ non_negativity_constraint_capacities(plants, country)..                         
 $offText
 
 ***     storage handle constraints
-handleStorage(scenario, t, storages, country)..                                 storageLevel(t, storages, country) =e= storageLevel(t-1, storages, country) + storageLoading(t-1, storages, country)  - powerGeneration(scenario, t-1, storages, country);
-non_negativity_constraint_storagesLevel(t, storages, country)..                 storageLevel(t, storages, country) =g= 0;
-storage_levelConstraint_maxCapacity(t, storages, country)..                     storageLevel(t, storages, country) =l= StorageCapacity(storages, country) + buildCapacities(storages, country);
-storage_loadingConstraint_performance(t, storages, country)..                   storageLoading(t, storages, country) =l= (StorageCapacity(storages, country) + buildCapacities(storages, country)) / 6;
+handleStorage(scenario, t, storages, country)..                                 storageLevel(scenario, t, storages, country) =e= storageLevel(scenario, t-1, storages, country) + storageLoading(scenario, t-1, storages, country)  - powerGeneration(scenario, t-1, storages, country);
+non_negativity_constraint_storagesLevel(scenario, t, storages, country)..                 storageLevel(scenario, t, storages, country) =g= 0;
+storage_levelConstraint_maxCapacity(scenario, t, storages, country)..                     storageLevel(scenario, t, storages, country) =l= StorageCapacity(storages, country) + buildCapacities(storages, country);
+storage_loadingConstraint_performance(scenario, t, storages, country)..                   storageLoading(scenario, t, storages, country) =l= (StorageCapacity(storages, country) + buildCapacities(storages, country)) / 6;
 
 $onText
 ***     carbon Emissions
