@@ -16,6 +16,12 @@
         },
         {
             "codecMib": 106,
+            "file": "main.gdx",
+            "name": "main.gdx",
+            "type": "gdx"
+        },
+        {
+            "codecMib": 106,
             "file": "main.gms",
             "name": "main.gms",
             "type": "gms"

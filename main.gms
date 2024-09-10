@@ -47,7 +47,7 @@ export(scenario, t)
 import(scenario, t)
 carbonEmission(plants)
 carbonEmissionCosts(plants)
-overallLoad(plants)
+overallLoad(plants, scenario)
 addInvestCosts
 ;
 
@@ -107,8 +107,8 @@ total_cost
 *PropabilityDis..                                                  propability =e= 1/(std* sqrt(2*pi)) * e**((-1/2*((propFactor)-mean))/std**2);
 *TrimodalEquation..                                                 
 ***     basic constraints
-*energy_balance(scenario, t)..                                          sum((plants),powerGeneration(scenario, t, plants)) + import(scenario, t)  =e= (PowerDemand(t) * ScenarioData(scenario, 'factor')) + export(scenario, t);
-energy_balance(scenario, t)..                                          sum((plants),powerGeneration(scenario, t, plants)) =e= (PowerDemand(t) * ScenarioData(scenario, 'factor')) + sum((storages), storageLoading(scenario, t, storages));
+*energy_balance(scenario, t)..                                          sum((plants),powerGeneration(scenario, t, plants)) + import(scenario, t)  =e= (PowerDemand(t, scenario) * ScenarioData(scenario, 'factor')) + export(scenario, t);
+energy_balance(scenario, t)..                                          sum((plants),powerGeneration(scenario, t, plants)) =e= (PowerDemand(t, scenario)) + sum((storages), storageLoading(scenario, t, storages));
 
 
 ***     powerGeneration constraints
@@ -151,14 +151,14 @@ waterConstraint..                                                      sum((cons
 
 
 ***     for some analysis
-overallLoad_EQ(scenario, plants)..                                              overallLoad(plants) =e= sum((t), powerGeneration(scenario, t, plants));
+overallLoad_EQ(scenario, plants)..                                              overallLoad(plants, scenario) =e= sum((t), powerGeneration(scenario, t, plants));
 
 
 ***     total costs - to be minimized
 *total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
 * for testData (scaled opperational costs to equal op/invest costs ratio)
 
-total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
+total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioProbability(scenario) * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
 *total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants) * 8.6666)  + totalInvestmentCosts;
 
 
@@ -206,25 +206,22 @@ $offText
 *Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP, stageOneInvestments, Plants_capacities;
 
 
-execute_unload "energyEQ.gdx" energy_balance.l
-execute 'gdxxrw.exe energyEQ.gdx o=energyEQ.xlsx var=energy_balance.l'
+execute_unload "res_energyEQ.gdx" energy_balance.l
+execute 'gdxxrw.exe res_energyEQ.gdx o=res_energyEQ.xlsx var=energy_balance.l'
 
 execute_unload "powerGeneration.gdx" powerGeneration.l
-execute 'gdxxrw.exe powerGeneration.gdx o=powerGeneration.xls var=powerGeneration.l'
+execute 'gdxxrw.exe res_powerGeneration.gdx o=res_powerGeneration.xls var=powerGeneration.l'
 
-execute_unload "storageCapacity.gdx"storageCapacity
-execute 'gdxxrw.exe storageCapacity.gdx o=storageCapacity.xls var=storageCapacity'
+execute_unload "res_storageCapacity.gdx"storageCapacity
+execute 'gdxxrw.exe res_storageCapacity.gdx o=res_storageCapacity.xls var=storageCapacity'
 
-execute_unload "storageLoading.gdx" storageLoading.l
-execute 'gdxxrw.exe storageLoading.gdx o=storageLoading.xls var=storageLoading.l'
+execute_unload "res_storageLoading.gdx" storageLoading.l
+execute 'gdxxrw.exe res_storageLoading.gdx o=res_storageLoading.xls var=storageLoading.l'
 
-execute_unload "import" import.l
-execute 'gdxxrw.exe import.gdx o=import.xls var=import.l'
+execute_unload "res_overallLoad.gdx" overallLoad.l
+execute 'gdxxrw.exe res_overallLoad.gdx o=res_overallLoad.xls var=overallLoad.l'
 
-execute_unload "export" export.l
-execute 'gdxxrw.exe export.gdx o=export.xls var=export.l'
-
-
-
+execute_unload "res_buildCapacities.gdx" buildCapacities.l
+execute 'gdxxrw.exe res_buildCapacities.gdx o=res_buildCapacities.xls var=buildCapacities.l'
 
 *execute 'gdxxrw.exe .gdx o=.xls var='

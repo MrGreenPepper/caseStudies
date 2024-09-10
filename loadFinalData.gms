@@ -1,7 +1,8 @@
 
 
 Sets
-t /t1*t8761/
+t /t1*t8760/
+scenario /s1*s3/
 snaps /snap1*snap4/
 plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
 conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
@@ -16,9 +17,9 @@ storages(plants)
 
 
 
-$call gdxxrw.exe powerDemand_DE2019.xlsx par=PowerDemand rng=full!A1:B8760 dim=1 cdim=0 rdim=1 log=log_powerDemand.txt
-Parameter PowerDemand(t)
-$gdxIn powerDemand_DE2019.gdx
+$call gdxxrw.exe powerDemand.xlsx par=PowerDemand rng=gams!A5:D8765 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
+Parameter PowerDemand(t, scenario)
+$gdxIn powerDemand.gdx
 $load PowerDemand
 $gdxIn
 ;
