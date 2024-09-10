@@ -4,6 +4,18 @@
     "nodes": [
         {
             "codecMib": 106,
+            "file": "loadFinalData.gms",
+            "name": "loadFinalData.gms",
+            "type": "gms"
+        },
+        {
+            "codecMib": 106,
+            "file": "loadTestData.gms",
+            "name": "loadTestData.gms",
+            "type": "gms"
+        },
+        {
+            "codecMib": 106,
             "file": "main.gms",
             "name": "main.gms",
             "type": "gms"
@@ -13,6 +25,12 @@
             "file": "main.lst",
             "name": "main.lst",
             "type": "lst"
+        },
+        {
+            "codecMib": 106,
+            "file": "scenarioData.gms",
+            "name": "scenarioData.gms",
+            "type": "gms"
         }
     ],
     "options": [

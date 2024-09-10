@@ -1,47 +1,56 @@
 
+
 Sets
-t /t1*t8760/
+t /t1*t168, t1460*t1628, t2920*t3088, t4380*t4548, t5840*t6008, t7300*t7468/
 snaps /snap1*snap4/
 plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
 conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
-renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, geothermal/
+baseLoadPlants(plants)      /lignite, hardcoal/
+renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, reservoirStorages/
+constraintInvestsPlants(plants)       /water, reservoirStorages/
 storages(plants)
-country /DE, FR, BNL/
-;            
 
-
-Parameter storageCapacity(storages, country);
-$call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=3 index=1,2 value=3 useHeader=y trace=1
-$gdxIn storageCapacity.gdx
-$load storages = dim1
-*$load country = dim2
-$load storageCapacity = storageCapacity
-$gdxIn
 ;
 
-$call gdxxrw.exe powerDemand_2019.xlsx par=PowerDemand rng=Sheet1!A1:D8761 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
-Parameter PowerDemand(t, country)
-$gdxIn powerDemand_2019.gdx
+
+
+$call gdxxrw.exe powerDemand_DE2019.xlsx par=PowerDemand rng=full!A1:B8760 dim=1 cdim=0 rdim=1 log=log_powerDemand.txt
+Parameter PowerDemand(t)
+$gdxIn powerDemand_DE2019.gdx
 $load PowerDemand
 $gdxIn
 ;
 
 
-$call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:D15 dim=2 cdim=1 rdim=1 log=log_plantCapacities.txt
-Parameter Plants_capacities(plants, country)
+
+Scalar
+WaterCapacitieFactors /3.793961864/
+;
+
+Parameter StorageCapacity(storages);
+$call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=2 index=1 value=2 useHeader=y trace=1
+$gdxIn storageCapacity.gdx
+$load storages = dim1
+*$load country = dim2
+$load StorageCapacity = storageCapacity
+$gdxIn
+;
+
+
+
+$call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:B15 dim=1 cdim=0 rdim=1 log=log_plantCapacities.txt
+Parameter Plants_capacities(plants)
 $gdxIn installedCapacities_2019_01_final.gdx
 $load Plants_capacities
 $gdxIn
 ;
 
-
-$call gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle2!A1:G8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
+$call gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
 Parameter CapacityFactor(t, plants)
 $gdxIn capFactors.gdx
 $load CapacityFactor
 $gdxIn
 ;
-
 
 Parameter Plants_availability(plants);
 $call gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
@@ -50,14 +59,21 @@ $load Plants_availability
 $gdxIn
 ;
 
-$call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A1:B15 rdim=1 cdim=0 log=log_carbEm.txt
+$call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A2:B15 rdim=1 cdim=0 log=log_carbEm.txt
 Parameter Plants_carbonEmissions(plants)
 $gdxIn carbonEmission_2019.gdx
 $load Plants_carbonEmissions
 $gdxIn
 ;
 
-$call gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B18 rdim=1 cdim=0 log=log_investC.txt
+$call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A2:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
+Parameter CarbonEmissionEfficiencyFactor(plants)
+$gdxIn plant_efficiency.gdx
+$load carbonEmissionEfficiencyFactor
+$gdxIn
+;
+
+$call gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
 Parameter InvestmentCosts(plants)
 $gdxIn InvestmentCosts.gdx
 $load InvestmentCosts
@@ -69,18 +85,6 @@ Parameter OperatingCosts(plants)
 $gdxIn opperational_costs_2019_2.gdx
 $load OperatingCosts
 $gdxIn
-;
-
-Parameters
-DiscountRate /0.02740/
-InvestLifeTime / 30/
-AnnuelFactor
-
-*Plants_carbonEmissions(plants)      /wind 10, gas 50, battery 1/
-*InvestmentCosts(plants)             /wind 100, gas 100, battery 10/
-*OperatingCosts(plants)              /wind 1, gas 15, battery 2, reservoirStorages 1/
-
-
 ;
 
 

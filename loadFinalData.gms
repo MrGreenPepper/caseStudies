@@ -1,7 +1,7 @@
 
+
 Sets
-*t /t1*t168, t4200*t4368/
-t /t1*t24/
+t /t1*t8761/
 snaps /snap1*snap4/
 plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
 conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
@@ -9,18 +9,28 @@ baseLoadPlants(plants)      /lignite, hardcoal/
 renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, reservoirStorages/
 constraintInvestsPlants(plants)       /water, reservoirStorages/
 storages(plants)
-country /DE, FR, BNL/
-;             
 
-$call gdxxrw.exe waterCapacityFactors.xlsx par=WaterCapacitieFactors rng=Sheet1!A1:B7 dim=1 cdim=0 rdim=1 log=log_waterCapFactor.txt
-Parameter WaterCapacitieFactors(country)
-$gdxIn waterCapacityFactors.gdx
-$load WaterCapacitieFactors
+;
+
+
+
+
+
+$call gdxxrw.exe powerDemand_DE2019.xlsx par=PowerDemand rng=full!A1:B8760 dim=1 cdim=0 rdim=1 log=log_powerDemand.txt
+Parameter PowerDemand(t)
+$gdxIn powerDemand_DE2019.gdx
+$load PowerDemand
 $gdxIn
 ;
 
-Parameter StorageCapacity(storages, country);
-$call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=3 index=1,2 value=3 useHeader=y trace=1
+
+
+Scalar
+WaterCapacitieFactors /3.793961864/
+;
+
+Parameter StorageCapacity(storages);
+$call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=2 index=1 value=2 useHeader=y trace=1
 $gdxIn storageCapacity.gdx
 $load storages = dim1
 *$load country = dim2
@@ -28,15 +38,10 @@ $load StorageCapacity = storageCapacity
 $gdxIn
 ;
 
-$call gdxxrw.exe powerDemand_2019.xlsx par=PowerDemand rng=Sheet1!A1:D8761 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
-Parameter PowerDemand(t, country)
-$gdxIn powerDemand_2019.gdx
-$load PowerDemand
-$gdxIn
-;
 
-$call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:D15 dim=2 cdim=1 rdim=1 log=log_plantCapacities.txt
-Parameter Plants_capacities(plants, country)
+
+$call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:B15 dim=1 cdim=0 rdim=1 log=log_plantCapacities.txt
+Parameter Plants_capacities(plants)
 $gdxIn installedCapacities_2019_01_final.gdx
 $load Plants_capacities
 $gdxIn
@@ -56,14 +61,14 @@ $load Plants_availability
 $gdxIn
 ;
 
-$call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A1:B15 rdim=1 cdim=0 log=log_carbEm.txt
+$call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A2:B15 rdim=1 cdim=0 log=log_carbEm.txt
 Parameter Plants_carbonEmissions(plants)
 $gdxIn carbonEmission_2019.gdx
 $load Plants_carbonEmissions
 $gdxIn
 ;
 
-$call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A1:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
+$call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A2:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
 Parameter CarbonEmissionEfficiencyFactor(plants)
 $gdxIn plant_efficiency.gdx
 $load carbonEmissionEfficiencyFactor

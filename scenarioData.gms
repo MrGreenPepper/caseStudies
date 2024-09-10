@@ -24,12 +24,12 @@ s2      0.8             1
 
 Parameter
 Z_SP(scenario)
-StageOneInvestmentData(scenario, plants, country)
-StageOneInvestmentsDecision(plants, country)
+StageOneInvestmentData(scenario, plants)
+StageOneInvestmentsDecision(plants)
 ;
 
 loop(plants,
-    loop(country,
-        StageOneInvestmentsDecision(plants, country) = 0;
-    );
+
+        StageOneInvestmentsDecision(plants) = 0;
+ 
 );

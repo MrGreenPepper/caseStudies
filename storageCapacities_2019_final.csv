@@ -1,7 +1,3 @@
-storages;country;storageCapacity
-pumpedStoragesPlants;BNL;1308
-battery;BNL;1
-pumpedStoragesPlants;DE;9422
-battery;DE;1
-pumpedStoragesPlants;FR;5023
-battery;FR;1
+storages;storageCapacity
+pumpedStoragesPlants;9422
+battery;1
