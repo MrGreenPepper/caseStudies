@@ -93,9 +93,3 @@ $onText
 
 $offText
 *import larger tabels like PowerDemand and plant data from excel
-
-
-
-
-
-

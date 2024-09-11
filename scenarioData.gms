@@ -1,6 +1,6 @@
 
-Alias(scenario, scenarioStageOne);
-Alias(scenario, scenarioStageTwo);
+*Alias(scenario, scenarioStageOne);
+*Alias(scenario, scenarioStageTwo);
 
 
 Scalar
