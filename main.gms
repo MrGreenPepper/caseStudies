@@ -28,19 +28,6 @@ CurrentStageOneDecision(plants)
 
 ;
 
-
-Set
-scenarioProp /probability, factor/
-;
-
-Parameter Table
-ScenarioData(scenario, scenarioProp)
-        probability     factor
-s1      0.2             1.5
-s2      0.5             1
-s3      0.3             2
-;
-
 Variables
 TC total cost
 pumpOperation(t, storages)                  *pump operation
@@ -122,7 +109,7 @@ total_cost
 *TrimodalEquation..                                                 
 ***     basic constraints
 *energy_balance(scenario, t)..                                                  sum((plants),powerGeneration(scenario, t, plants)) + import(scenario, t)  =e= (PowerDemand(t, scenario) * ScenarioData(scenario, 'factor')) + export(scenario, t);
-energy_balance(scenario, t)..                                                   sum((plants),powerGeneration(scenario, t, plants)) =e= (PowerDemand(t, scenario)) * ScenarioData(scenario, "factor") + sum((storages), storageLoading(scenario, t, storages));
+energy_balance(scenario, t)..                                                   sum((plants),powerGeneration(scenario, t, plants)) =e= (PowerDemand(t, scenario)) + sum((storages), storageLoading(scenario, t, storages));
 
 
 ***     powerGeneration constraints
@@ -172,7 +159,7 @@ overallLoad_EQ(plants)..                                                        
 *total_cost..                                                                   TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
 * for testData (scaled opperational costs to equal op/invest costs ratio)
 
-total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioData(scenario, "probability") * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
+total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioProbability(scenario) * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
 *total_cost..                                                                   TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants) * 8.6666)  + totalInvestmentCosts;
 
 
