@@ -1,11 +1,11 @@
 
---- Job main.gms Start 09/11/24 09:01:10 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
+--- Job main.gms Start 09/11/24 19:23:26 46.2.0 ac4adda6 WEX-WEI x86 64bit/MS Windows
 --- Applying:
     C:\GAMS\46\gmsprmNT.txt
 --- GAMS Parameters defined
     Input C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
     PageSize 0
-    ScrDir C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\225r\
+    ScrDir C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\225s\
     SysDir C:\GAMS\46\
     LogOption 3
     ErrMsg 1
@@ -22,72 +22,62 @@ Processor information: 1 socket(s), 8 core(s), and 16 thread(s) available
 GAMS 46.2.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
 --- Starting compilation
 --- main.gms(16) 2 Mb
---- . loadFinalData.gms(19) 3 Mb
---- call gdxxrw.exe powerDemand.xlsx par=PowerDemand rng=gams!A5:C8765 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
---- . loadFinalData.gms(20) 3 Mb 1 Error
-*** Error 120 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\loadFinalData.gms
-    Unknown identifier entered as set
---- . loadFinalData.gms(21) 3 Mb
+--- . loadFinalData.gms(20) 3 Mb
+--- call gdxxrw.exe powerDemand.xlsx par=PowerDemand rng=gams!A5:D8765 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
+--- . loadFinalData.gms(22) 3 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\powerDemand.gdx
---- . loadFinalData.gms(33) 4 Mb
+--- . loadFinalData.gms(34) 4 Mb
 --- call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=2 index=1 value=2 useHeader=y trace=1
 CSV2GDX          46.2.0 ac4adda6 Mar 5, 2024           WEI x86 64bit/MS Window
-No errors, CSV2GDX time = 0ms
---- . loadFinalData.gms(34) 4 Mb
+No errors, CSV2GDX time = 15ms
+--- . loadFinalData.gms(35) 4 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\storageCapacity.gdx
---- . loadFinalData.gms(43) 4 Mb
+--- . loadFinalData.gms(44) 4 Mb
 --- call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:B15 dim=1 cdim=0 rdim=1 log=log_plantCapacities.txt
---- . loadFinalData.gms(45) 4 Mb
+--- . loadFinalData.gms(46) 4 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\installedCapacities_2019_01_final.gdx
---- . loadFinalData.gms(50) 4 Mb
+--- . loadFinalData.gms(51) 4 Mb
 --- call gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
---- . loadFinalData.gms(52) 4 Mb
+--- . loadFinalData.gms(53) 4 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\capFactors.gdx
---- . loadFinalData.gms(58) 7 Mb
---- call gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
 --- . loadFinalData.gms(59) 7 Mb
+--- call gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
+--- . loadFinalData.gms(60) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_availabilities_2019.gdx
---- . loadFinalData.gms(64) 7 Mb
+--- . loadFinalData.gms(65) 7 Mb
 --- call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A2:B15 rdim=1 cdim=0 log=log_carbEm.txt
---- . loadFinalData.gms(66) 7 Mb
+--- . loadFinalData.gms(67) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\carbonEmission_2019.gdx
---- . loadFinalData.gms(71) 7 Mb
+--- . loadFinalData.gms(72) 7 Mb
 --- call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A2:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
---- . loadFinalData.gms(73) 7 Mb
+--- . loadFinalData.gms(74) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\plant_efficiency.gdx
---- . loadFinalData.gms(78) 7 Mb
+--- . loadFinalData.gms(79) 7 Mb
 --- call gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
---- . loadFinalData.gms(80) 7 Mb
+--- . loadFinalData.gms(81) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\InvestmentCosts.gdx
---- . loadFinalData.gms(85) 7 Mb
+--- . loadFinalData.gms(86) 7 Mb
 --- call gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
---- . loadFinalData.gms(87) 7 Mb
+--- . loadFinalData.gms(88) 7 Mb
 --- GDXin=C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
 --- GDX File ($gdxIn) C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\opperational_costs_2019_2.gdx
---- . loadFinalData.gms(97) 7 Mb
+--- . loadFinalData.gms(98) 7 Mb
 --- main.gms(19) 7 Mb
---- . scenarioData.gms(35) 7 Mb
---- main.gms(169) 7 Mb 2 Errors
+--- . scenarioData.gms(24) 7 Mb
+--- main.gms(160) 7 Mb 1 Error
+*** Error   8 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
+    ')' expected
+--- main.gms(168) 7 Mb 2 Errors
 *** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
     Solve statement not checked because of previous errors
---- main.gms(170) 7 Mb 3 Errors
-*** Error 141 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    Symbol declared but no values have been assigned. Check for missing
-       data definition, assignment, data loading or implicit assignment
-       via a solve statement. Suppress with $onImplicitAssign.
-       A wild shot: You may have spurious commas in the explanatory
-       text of a declaration. Check symbol reference list.
---- main.gms(173) 7 Mb 4 Errors
-*** Error 257 in C:\Users\sebas\Documents\CloudDrive\Uni\SS24\CaseStudies\gamsFiles\main.gms
-    Solve statement not checked because of previous errors
---- main.gms(230) 7 Mb 4 Errors
+--- main.gms(228) 7 Mb 2 Errors
 *** Status: Compilation error(s)
---- Job main.gms Stop 09/11/24 09:01:20 elapsed 0:00:09.976
+--- Job main.gms Stop 09/11/24 19:23:35 elapsed 0:00:09.315

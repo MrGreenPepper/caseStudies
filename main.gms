@@ -1,13 +1,13 @@
 Scalars
-calcEmissionScenarios       /1/
-shortages                   /1/
+calcEmissionScenarios                           /1/
+shortages                                       /1/
 CurrentStageOneScenario
 CurrentStageTwoScenario
-std                         /1/
-mean                        /1/
+std                                             /1/
+mean                                            /1/
 propFactor
 propability
-e                           /2.718281828459/    
+e                                               /2.718281828459/    
 ;
 
 
@@ -21,16 +21,15 @@ $include scenarioData
 
 *EUR/tCO2    Sandbag (2019)
 Parameter
-CO2Price            /15.92/
+CO2Price                                        /400/
 stageOneInvestments(scenario, plants)
 CurrentStageOneDecision(plants)
-
-
 ;
+
 
 Variables
 TC total cost
-pumpOperation(t, storages)                  *pump operation
+pumpOperation(t, storages)                      *pump operation
 ;
 
 
@@ -47,7 +46,7 @@ storageLevel(scenario, t, storages)
 export(scenario, t)
 import(scenario, t)
 carbonEmission(plants)
-carbonEmissionCosts(plants)
+carbonEmissionCosts(plants, scenario)
 overallLoad(plants)
 addInvestCosts
 ;
@@ -86,7 +85,7 @@ storage_levelConstraint_maxCapacity
 ***     carbon Emissions
 *totalEmissionCap_EQ
 *carbonEmission_EQ(plants)
-*carbonEmissionCosts_EQ(plants)..
+carbonEmissionCosts_EQ(plants, scenario)
 
 ***     investment costs
 capacityCosts
@@ -113,7 +112,7 @@ energy_balance(scenario, t)..                                                   
 
 
 ***     powerGeneration constraints
-generation_constraint_Plants(scenario,t, plants)..                              powerGeneration(scenario, t, plants) =l= (Plants_capacities(plants) + buildCapacities(plants) + StageOneInvestmentsDecision(plants)) * Plants_availability(plants);
+generation_constraint_Plants(scenario,t, plants)..                              powerGeneration(scenario, t, plants) =l= (Plants_capacities(plants) + buildCapacities(plants)) * Plants_availability(plants);
 generation_constraint_rePlants(scenario, t, renewablePlants)..                  powerGeneration(scenario,t, renewablePlants) =l= (Plants_capacities(renewablePlants) + buildCapacities(renewablePlants)) * CapacityFactor(t, renewablePlants);
 storage_genConstraint_capacity(scenario,t, storages)..                          powerGeneration(scenario,t, storages) =l= storageLevel(scenario, t, storages);
 
@@ -140,9 +139,8 @@ $onText
 ***     carbon Emissions
 totalEmissionCap_EQ..                                                           TotalCarbonCap =g= sum((plants), carbonEmission(plants));
 carbonEmission_EQ(plants) ..                                                    carbonEmission(plants) =e= sum((t), powerGeneration(scenario, t, plants) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants));
-*carbonEmissionCosts_EQ(plants)..                                               carbonEmissionCosts(plants) =e= sum((t), powerGeneration(scenario, t, plants)) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants) * CO2Price;
 $offText
-
+carbonEmissionCosts_EQ(plants, scenario)..                                      carbonEmissionCosts(plants, scenario) =e= sum((t), powerGeneration(scenario, t, plants)) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyFactor(plants) * CO2Price;
 ***     investment costs
 capacityCosts..                                                                 totalInvestmentCosts =e= sum((plants), buildCapacities(plants) * InvestmentCosts(plants));
 
@@ -159,7 +157,7 @@ overallLoad_EQ(plants)..                                                        
 *total_cost..                                                                   TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
 * for testData (scaled opperational costs to equal op/invest costs ratio)
 
-total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioProbability(scenario) * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
+total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioProbability(scenario) * (powerGeneration(scenario, t, plants) * OperatingCosts(plants) + carbonEmissionCosts(plants, scenario)))  + totalInvestmentCosts;
 *total_cost..                                                                   TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants) * 8.6666)  + totalInvestmentCosts;
 
 
@@ -168,11 +166,13 @@ Model epmProject /all/;
 
 ***Stage 1
 Solve epmProject using LP minimising TC;
+
+$onText - according to Akshay ;_)
     StageOneInvestmentsDecision(plants) = buildCapacities.l(plants);
  
 ***Stage 2
 Solve epmProject using LP minimising TC;
- 
+$offText
 
 $onText
 *** Stage 1

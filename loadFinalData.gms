@@ -39,8 +39,6 @@ $load StorageCapacity = storageCapacity
 $gdxIn
 ;
 
-
-
 $call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:B15 dim=1 cdim=0 rdim=1 log=log_plantCapacities.txt
 Parameter Plants_capacities(plants)
 $gdxIn installedCapacities_2019_01_final.gdx
