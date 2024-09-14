@@ -1,29 +1,17 @@
-Scalars
-calcEmissionScenarios                           /1/
-shortages                                       /1/
-CurrentStageOneScenario
-CurrentStageTwoScenario
-std                                             /1/
-mean                                            /1/
-propFactor
-propability
-e                                               /2.718281828459/    
-;
 
-
-*for a fast code check:  $include loadTestData and "comment out" the rest 
 
 $include loadFinalData
 *$include loadTestData
 
 $include scenarioData
+Alias(t, h);
+* h is future time step such as t+1 = h
 
 
-*EUR/tCO2    Sandbag (2019)
-Parameter
-CO2Price                                        /400/
-stageOneInvestments(scenario, plants)
-CurrentStageOneDecision(plants)
+scalars
+store_eff storage efficiency  /0.9/
+voll    value of lost load Euro per MWh year 2050 /15000/
+CO2Price            Euro per T of Co2 Eq. year 2050  /500/
 ;
 
 
@@ -32,10 +20,10 @@ TC total cost
 pumpOperation(t, storages)                      *pump operation
 ;
 
-
-
 Positive Variable
+load_shedding(scenario, t)
 totalCPCosts
+total_shed
 totalInvestmentCosts
 savedEnergy
 buildCapacities(plants)
@@ -43,21 +31,17 @@ powerGeneration(scenario, t, plants)             generation per Technology (MW)
 storageLoading(scenario, t, storages)
 storageGen(scenario, t, storages)
 storageLevel(scenario, t, storages)
-export(scenario, t)
-import(scenario, t)
 carbonEmission(plants)
-carbonEmissionCosts(plants, scenario)
+carbonEmissionCosts(plants,t, scenario)
 overallLoad(plants)
 addInvestCosts
 ;
-
+InvestmentCosts("windOff") = 324000;
 
 Equations
-*PropabilityDis
-*TrimodalEquation
 ***     basic constraints
 energy_balance
-
+load_sheddingEQ
 
 ***     powerGeneration constraints
 generation_constraint_Plants
@@ -68,24 +52,13 @@ storage_genConstraint_capacity
 ramping_upper_constraint
 ramping_bottom_constraint
 
-$onText
-***     non negativity constraints
-non_negativity_constraint_power
-non_negativity_constraint_reg(t,renewablePlants)               
-non_negativity_constraint_storage(t,storages)  
-non_negativity_constraint_capacities
-$offText
-
 ***     storage handle constraints
 handleStorage
 non_negativity_constraint_storagesLevel
 storage_loadingConstraint_performance    
 storage_levelConstraint_maxCapacity
 
-***     carbon Emissions
-*totalEmissionCap_EQ
-*carbonEmission_EQ(plants)
-carbonEmissionCosts_EQ(plants, scenario)
+carbonEmissionCosts_EQ
 
 ***     investment costs
 capacityCosts
@@ -95,22 +68,16 @@ waterConstraint
 
 ***     for some analysis
 overallLoad_EQ
-
+load_sheddingEQ2
 
 
 ***     total costs - to be minimized
 total_cost
 ;
 
-
-
-*PropabilityDis..                                                               propability =e= 1/(std* sqrt(2*pi)) * e**((-1/2*((propFactor)-mean))/std**2);
-*TrimodalEquation..                                                 
-***     basic constraints
-*energy_balance(scenario, t)..                                                  sum((plants),powerGeneration(scenario, t, plants)) + import(scenario, t)  =e= (PowerDemand(t, scenario) * ScenarioData(scenario, 'factor')) + export(scenario, t);
-energy_balance(scenario, t)..                                                   sum((plants),powerGeneration(scenario, t, plants)) =e= (PowerDemand(t, scenario)) + sum((storages), storageLoading(scenario, t, storages));
-
-
+energy_balance(scenario, t)..                                                   sum((plants),powerGeneration(scenario, t, plants))+ load_shedding(scenario, t) =e= (PowerDemand(t, scenario)) + sum((storages), storageLoading(scenario, t, storages));
+load_sheddingEQ(scenario, t)..                                                  sum((plants),powerGeneration(scenario, t, plants))=g= load_shedding(scenario, t) ;
+load_sheddingEQ2..                                                               total_shed=e= sum((scenario, t),load_shedding(scenario, t)) ;
 ***     powerGeneration constraints
 generation_constraint_Plants(scenario,t, plants)..                              powerGeneration(scenario, t, plants) =l= (Plants_capacities(plants) + buildCapacities(plants)) * Plants_availability(plants);
 generation_constraint_rePlants(scenario, t, renewablePlants)..                  powerGeneration(scenario,t, renewablePlants) =l= (Plants_capacities(renewablePlants) + buildCapacities(renewablePlants)) * CapacityFactor(t, renewablePlants);
@@ -118,93 +85,61 @@ storage_genConstraint_capacity(scenario,t, storages)..                          
 
 
 ***     baseload plants ramping up/down 
-ramping_upper_constraint(scenario,t, baseLoadPlants)..                          powerGeneration(scenario, t, baseLoadPlants) =l= powerGeneration(scenario,t-1, baseLoadPlants) + ((Plants_capacities(baseLoadPlants) + buildCapacities(baseLoadPlants)) * (0.18));
-ramping_bottom_constraint(scenario,t, baseLoadPlants)..                         powerGeneration(scenario, t, baseLoadPlants) =g= powerGeneration(scenario,t-1, baseLoadPlants) - ((Plants_capacities(baseLoadPlants) + buildCapacities(baseLoadPlants)) * (0.18));
-
-$onText
-***     non negativity constraints
-non_negativity_constraint_power(t,plants)..                                     powerGeneration(scenario, t, plants)=g=0;
-non_negativity_constraint_reg(t,renewablePlants)..                              powerGeneration(t, renewablePlants)=g=0;
-non_negativity_constraint_storage(t,storages)..                                 powerGeneration(t, storages)=g=0;
-non_negativity_constraint_capacities(plants)..                                  buildCapacities(plants) =g= 0;
-$offText
+ramping_upper_constraint(scenario,t,h, baseLoadPlants)$(ord(t)-1 = ord(h))..     powerGeneration(scenario, t, baseLoadPlants) =l= powerGeneration(scenario,h, baseLoadPlants) + ((Plants_capacities(baseLoadPlants) + buildCapacities(baseLoadPlants)))/6 ;
+ramping_bottom_constraint(scenario,t,h, baseLoadPlants)$(ord(t)-1 = ord(h))..    powerGeneration(scenario, t, baseLoadPlants) =g= powerGeneration(scenario,h, baseLoadPlants) ;
+* 6 hours for reaching full Capacity
 
 ***     storage handle constraints
-handleStorage(scenario, t, storages)..                                          storageLevel(scenario, t, storages) =e= storageLevel(scenario, t-1, storages) + storageLoading(scenario, t-1, storages)  - powerGeneration(scenario, t-1, storages);
+handleStorage(scenario, t,h,  storages)$(ord(t)-1 = ord(h))..                   storageLevel(scenario, t, storages) =e= storageLevel(scenario, h, storages) + storageLoading(scenario, h, storages)  - powerGeneration(scenario, h, storages)*store_eff;
 non_negativity_constraint_storagesLevel(scenario, t, storages)..                storageLevel(scenario, t, storages) =g= 0;
 storage_levelConstraint_maxCapacity(scenario, t, storages)..                    storageLevel(scenario, t, storages) =l= StorageCapacity(storages) + buildCapacities(storages);
 storage_loadingConstraint_performance(scenario, t, storages)..                  storageLoading(scenario, t, storages) =l= (StorageCapacity(storages) + buildCapacities(storages)) / 6;
 
-$onText
-***     carbon Emissions
-totalEmissionCap_EQ..                                                           TotalCarbonCap =g= sum((plants), carbonEmission(plants));
-carbonEmission_EQ(plants) ..                                                    carbonEmission(plants) =e= sum((t), powerGeneration(scenario, t, plants) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyScenarioFactor(plants));
-$offText
-carbonEmissionCosts_EQ(plants, scenario)..                                      carbonEmissionCosts(plants, scenario) =e= sum((t), powerGeneration(scenario, t, plants)) * Plants_carbonEmissions(plants) * CarbonEmissionEfficiencyFactor(plants) * CO2Price;
+
+carbonEmissionCosts_EQ(plants,t, scenario)..                                    carbonEmissionCosts(plants,t, scenario) =e=  powerGeneration(scenario, t, plants)*Plants_carbonEmissions(plants) * CO2Price;
 ***     investment costs
 capacityCosts..                                                                 totalInvestmentCosts =e= sum((plants), buildCapacities(plants) * InvestmentCosts(plants));
-
+* * CarbonEmissionEfficiencyFactor(plants)
 
 ***     water power constraint
 waterConstraint..                                                               sum((constraintInvestsPlants), Plants_capacities(constraintInvestsPlants)) * WaterCapacitieFactors =g= sum((constraintInvestsPlants), Plants_capacities(constraintInvestsPlants) + buildCapacities(constraintInvestsPlants));
 
 
 ***     for some analysis
-overallLoad_EQ(plants)..                                                        overallLoad(plants) =e= sum((t, scenario), powerGeneration(scenario, t, plants));
+overallLoad_EQ(plants)$(not storages(plants))..                                 overallLoad(plants) =e= sum((t, scenario), powerGeneration(scenario, t, plants));
 
 
-***     total costs - to be minimized
-*total_cost..                                                                   TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants))  + totalInvestmentCosts;
-* for testData (scaled opperational costs to equal op/invest costs ratio)
-
-total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioProbability(scenario) * (powerGeneration(scenario, t, plants) * OperatingCosts(plants) + carbonEmissionCosts(plants, scenario)))  + totalInvestmentCosts;
+total_cost..                                                                    TC =e= sum((scenario, t, plants), ScenarioProbability(scenario) * (powerGeneration(scenario, t, plants) * OperatingCosts(plants) + carbonEmissionCosts(plants,t, scenario)))  + totalInvestmentCosts+sum((scenario,t),ScenarioProbability(scenario)*load_shedding(scenario, t)*voll);
 *total_cost..                                                                   TC =e= sum((scenario, t, plants), ScenarioData(scenario, 'probability') * powerGeneration(scenario, t, plants) * OperatingCosts(plants) * 8.6666)  + totalInvestmentCosts;
 
 
 Model epmProject /all/;
 
+buildCapacities.fx("nuclear")=0;
+
+
+overallLoad.fx("nuclear")=0;
+
+
+powerGeneration.up(scenario, t,"biomass") = (PowerDemand(t, scenario))*0.05;
+powerGeneration.up(scenario, t,"waste") = (PowerDemand(t, scenario))*0.05;
+powerGeneration.up(scenario, t,"geothermal") = (PowerDemand(t, scenario))*0.05;
+* at max 5% for these technolgies
+
+
+storageLevel.up(scenario, t, storages) = (PowerDemand(t, scenario))*0.1;
+
+* at max 10% storage allowed
 
 ***Stage 1
 Solve epmProject using LP minimising TC;
 
-$onText - according to Akshay ;_)
-    StageOneInvestmentsDecision(plants) = buildCapacities.l(plants);
- 
-***Stage 2
-Solve epmProject using LP minimising TC;
-$offText
+Parameters gen_costs(scenario), shedding_cost(scenario);
 
-$onText
-*** Stage 1
-loop(scenarioStageOne,
-    ScenarioProbability= ScenarioData(scenarioStageOne, 'probability');
-    ScenarioFactor= ScenarioData(scenarioStageOne, 'factor');
-    CurrentStageOneScenario = ord(scenarioStageOne);
-     
-    Solve epmProject using LP minimising TC;
-    Z_SP(scenarioStageOne) = TC.l;
-    StageOneInvestmentData(scenarioStageOne, plants) = buildCapacities.l(plants);
-    Display TC.l, CurrentStageOneScenario, buildCapacities.l, totalInvestmentCosts.l;
-   
-);
+gen_costs(scenario) = sum((t, plants),(powerGeneration.l(scenario, t, plants) * OperatingCosts(plants) + carbonEmissionCosts.l(plants,t, scenario)));
+shedding_cost(scenario) = sum((t),load_shedding.l(scenario, t)*voll );
 
-*** Stage 2
-loop(scenarioStageTwo,
-   ScenarioProbability= ScenarioData(scenarioStageTwo, 'probability');
-   ScenarioFactor= ScenarioData(scenarioStageTwo, 'factor');
-   loop(scenarioStageOne, 
-        StageOneInvestmentsDecision(plants) = StageOneInvestmentData(scenarioStageOne, plants);
-        CurrentStageOneScenario = ord(scenarioStageOne);
-        CurrentStageTwoScenario = ord(scenarioStageTwo);
-
-        Solve epmProject using LP minimising TC;
-        Z_SP(scenario) = TC.l;
-        Display TC.l, Plants_capacities, totalInvestmentCosts.l, CurrentStageOneScenario, CurrentStageTwoScenario, StageOneInvestmentsDecision;
-    );
-);
-$offText
-
-*Display TC.l, powerGeneration.l, storageCapacity, storageLoading.l, import.l, export.l, Z_SP, stageOneInvestments, Plants_capacities;
+display gen_costs, shedding_cost;
 
 
 execute_unload "res_energyEQ.gdx" energy_balance.l
