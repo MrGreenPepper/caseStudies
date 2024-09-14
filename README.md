@@ -1,4 +1,4 @@
-File main.gms contains stochastic solution of the power plant expansion probelm
+File main.gms contains stochastic solution of the power plant expansion problem
 
 File main_deterministic_soln.gms contains deterministic equaivalent of the problem considering mean demand
 
