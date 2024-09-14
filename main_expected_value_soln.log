@@ -1,0 +1,343 @@
+
+--- Job main_expected_value_soln.gms Start 09/14/24 01:32:34 47.4.0 838fd78c WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\47\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input "C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\main_expected_value_soln.gms"
+    PageSize 0
+    ScrDir "C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\225c\"
+    SysDir C:\GAMS\47\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Course License                                 S240430|0002AO-GEN
+          TU Dresden, Business Management and Economics             DCE3456
+          C:\Users\Administrator\Documents\GAMS\gamslice.txt
+          License Admin: Hannes Hobbie, hannes.hobbie@tu-dresden.de        
+          Course license for use within the course and related course work
+          The evaluation period of the license will expire on Oct 27, 2024
+Processor information: 8 socket(s), 8 core(s), and 8 thread(s) available
+GAMS 47.4.0   Copyright (C) 1987-2024 GAMS Development. All rights reserved
+--- Starting compilation
+--- main_expected_value_soln.gms(3) 2 Mb
+--- . loadFinalData.gms(19) 3 Mb
+--- call gdxxrw.exe powerDemand.xlsx par=PowerDemand rng=gams!A5:D8765 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
+--- . loadFinalData.gms(21) 3 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\powerDemand.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\powerDemand.gdx
+--- . loadFinalData.gms(32) 4 Mb
+--- call csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=2 index=1 value=2 useHeader=y trace=1
+CSV2GDX          47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+No errors, CSV2GDX time = 0ms
+--- . loadFinalData.gms(33) 4 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\storageCapacity.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\storageCapacity.gdx
+--- . loadFinalData.gms(40) 4 Mb
+--- call gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:B15 dim=1 cdim=0 rdim=1 log=log_plantCapacities.txt
+--- . loadFinalData.gms(42) 4 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\installedCapacities_2019_01_final.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\installedCapacities_2019_01_final.gdx
+--- . loadFinalData.gms(47) 4 Mb
+--- call gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
+--- . loadFinalData.gms(49) 4 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\capFactors.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\capFactors.gdx
+--- . loadFinalData.gms(55) 7 Mb
+--- call gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
+--- . loadFinalData.gms(56) 7 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_availabilities_2019.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_availabilities_2019.gdx
+--- . loadFinalData.gms(61) 7 Mb
+--- call gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A2:B15 rdim=1 cdim=0 log=log_carbEm.txt
+--- . loadFinalData.gms(63) 7 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\carbonEmission_2019.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\carbonEmission_2019.gdx
+--- . loadFinalData.gms(68) 7 Mb
+--- call gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A2:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
+--- . loadFinalData.gms(70) 7 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_efficiency.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_efficiency.gdx
+--- . loadFinalData.gms(75) 7 Mb
+--- call gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
+--- . loadFinalData.gms(77) 7 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\InvestmentCosts.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\InvestmentCosts.gdx
+--- . loadFinalData.gms(82) 7 Mb
+--- call gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
+--- . loadFinalData.gms(84) 7 Mb
+--- GDXin=C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\opperational_costs_2019_2.gdx
+--- GDX File ($gdxIn) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\opperational_costs_2019_2.gdx
+--- . loadFinalData.gms(87) 7 Mb
+--- main_expected_value_soln.gms(6) 7 Mb
+--- . scenarioData.gms(24) 7 Mb
+--- main_expected_value_soln.gms(163) 7 Mb
+--- Starting execution: elapsed 0:00:00.527
+--- main_expected_value_soln.gms(248) 11 Mb
+--- Generating LP model epmProjectEV
+--- main_expected_value_soln.gms(204) 81 Mb  19 secs
+--- main_expected_value_soln.gms(205) 84 Mb  16 secs
+--- main_expected_value_soln.gms(210) 88 Mb  13 secs
+--- main_expected_value_soln.gms(230) 132 Mb  17 secs
+--- main_expected_value_soln.gms(253) 136 Mb
+---   481,808 rows  306,630 columns  1,476,642 non-zeroes
+--- Range statistics (absolute non-zero finite values)
+--- RHS       [min, max] : [ 8.475E-03, 9.089E+04] - Zero values observed as well
+--- Bound     [min, max] : [ 1.615E+03, 9.089E+03] - Zero values observed as well
+--- Matrix    [min, max] : [ 1.982E-05, 4.849E+05]
+--- Executing CPLEX (Solvelink=2): elapsed 0:01:09.727
+
+IBM ILOG CPLEX   47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+
+--- GAMS/CPLEX licensed for continuous and discrete problems.
+--- GMO setup time: 0.00s
+--- Space for names approximately 36.21 Mb
+--- Use option 'names no' to turn use of names off
+--- GMO memory 157.56 Mb (peak 159.90 Mb)
+--- Dictionary memory 0.00 Mb
+--- Cplex 22.1.1.0 link memory 11.36 Mb (peak 68.48 Mb)
+--- Starting Cplex
+
+Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+CPXPARAM_Advance                                 0
+CPXPARAM_MIP_Display                             4
+CPXPARAM_MIP_Pool_Capacity                       0
+CPXPARAM_MIP_Tolerances_AbsMIPGap                0
+Parallel mode: deterministic, using up to 8 threads for concurrent optimization:
+ * Starting dual Simplex on 1 thread...
+ * Starting Barrier on 6 threads...
+ * Starting primal Simplex on 1 thread...
+Tried aggregator 1 time.
+LP Presolve eliminated 200349 rows and 152745 columns.
+Reduced LP has 281458 rows, 153885 columns, and 835614 nonzeros.
+Presolve time = 0.50 sec. (400.82 ticks)
+Initializing dual steep norms . . .
+
+Iteration log . . .
+Iteration:     1   Dual objective     =             0.000000
+Iteration:  2049   Dual objective     =    3778942926.559656
+Iteration:  3685   Dual objective     =    5430652354.022228
+Iteration:  5338   Dual objective     =    6731965074.570623
+Iteration:  7009   Dual objective     =    8152253288.283937
+Iteration:  8641   Dual objective     =    9657452401.852365
+Iteration: 10296   Dual objective     =   11518674175.566515
+Iteration: 11901   Dual objective     =   13653885465.070395
+Iteration: 12656   Dual objective     =   14776800378.690826
+Iteration: 14249   Dual objective     =   17034584527.403070
+Iteration: 15849   Dual objective     =   19822597086.325058
+Iteration: 17408   Dual objective     =   22385088260.027908
+Iteration: 19081   Dual objective     =   25161088456.653126
+Perturbation started.
+Iteration: 19594   Dual objective     =   25707104404.249580
+Iteration: 21385   Dual objective     =   25878064880.893635
+Iteration: 23374   Dual objective     =   26258049733.940056
+Iteration: 24200   Dual objective     =   27029417826.036541
+Iteration: 25566   Dual objective     =   28593135020.343529
+Iteration: 26459   Dual objective     =   29108698385.802368
+Iteration: 26903   Dual objective     =   29608884235.824547
+Iteration: 29716   Dual objective     =   30316985134.705517
+Iteration: 31470   Dual objective     =   30425629626.915920
+Iteration: 33329   Dual objective     =   30588222296.922035
+Iteration: 35268   Dual objective     =   31291242738.274166
+Iteration: 35990   Dual objective     =   31771720775.159290
+Iteration: 38264   Dual objective     =   32294060669.117096
+Iteration: 38636   Dual objective     =   33122922856.666630
+Iteration: 40152   Dual objective     =   33588333737.290787
+Iteration: 40774   Dual objective     =   34189134949.857128
+Iteration: 42516   Dual objective     =   35365143318.646263
+Iteration: 42894   Dual objective     =   35876280098.020599
+Iteration: 44502   Dual objective     =   36491095252.624077
+Iteration: 46015   Dual objective     =   37078722553.733368
+Iteration: 48348   Dual objective     =   38203788630.879753
+Iteration: 49296   Dual objective     =   38578045422.748154
+Elapsed time = 8.45 sec. (10000.32 ticks, 49562 iterations)
+Iteration: 51012   Dual objective     =   39325435665.871025
+Iteration: 52269   Dual objective     =   39690609437.839294
+Iteration: 53362   Dual objective     =   39819830236.047440
+Iteration: 54113   Dual objective     =   40657795215.471458
+Iteration: 55188   Dual objective     =   40998304072.560844
+Iteration: 56063   Dual objective     =   41722057663.521019
+Iteration: 56919   Dual objective     =   42044402643.116959
+Iteration: 57524   Dual objective     =   42204672796.080536
+Iteration: 58399   Dual objective     =   42951633975.667435
+Iteration: 59342   Dual objective     =   43631573881.607124
+Iteration: 60577   Dual objective     =   43918678835.738785
+Elapsed time = 17.67 sec. (20003.13 ticks, 60890 iterations)
+Iteration: 61478   Dual objective     =   44268563914.633957
+Iteration: 63218   Dual objective     =   44574291674.619598
+Iteration: 64270   Dual objective     =   44605481568.405861
+Iteration: 65172   Dual objective     =   44956541760.660324
+Iteration: 66007   Dual objective     =   45088350607.363380
+Iteration: 66967   Dual objective     =   45723009170.736259
+Iteration: 67959   Dual objective     =   46318016961.603790
+Iteration: 69029   Dual objective     =   46621494177.662491
+Iteration: 70095   Dual objective     =   46915711199.194931
+Iteration: 70892   Dual objective     =   47228821905.133972
+Markowitz threshold set to 0.1
+Iteration: 70974   Dual objective     =   47236231165.864822
+Elapsed time = 26.62 sec. (30003.18 ticks, 71134 iterations)
+Iteration: 71953   Dual objective     =   47362381454.590630
+Iteration: 73106   Dual objective     =   47468944169.577087
+Iteration: 74060   Dual objective     =   47547037352.514618
+Iteration: 74914   Dual objective     =   47665012581.294266
+Iteration: 75961   Dual objective     =   47784027059.930573
+Iteration: 77065   Dual objective     =   47815470969.199623
+Iteration: 77801   Dual objective     =   47894860930.818619
+Iteration: 78395   Dual objective     =   47939702653.786903
+Iteration: 80109   Dual objective     =   47970337426.594902
+Iteration: 81030   Dual objective     =   48050624986.854378
+Iteration: 81854   Dual objective     =   48138221489.700073
+Elapsed time = 36.12 sec. (40003.55 ticks, 82046 iterations)
+Iteration: 82638   Dual objective     =   48211475551.905563
+Iteration: 83390   Dual objective     =   48266551721.439949
+Iteration: 84267   Dual objective     =   48327808425.200729
+Iteration: 85277   Dual objective     =   48412969346.678024
+Iteration: 86150   Dual objective     =   48480378886.488373
+Iteration: 87046   Dual objective     =   48517196169.085663
+Iteration: 88337   Dual objective     =   48571984449.798874
+Elapsed time = 46.38 sec. (50003.62 ticks, 88899 iterations)
+Iteration: 89434   Dual objective     =   48633488040.791145
+Iteration: 90213   Dual objective     =   48671831672.968941
+Iteration: 91160   Dual objective     =   48728611236.706688
+Iteration: 92152   Dual objective     =   48797001361.329628
+Iteration: 94654   Dual objective     =   48854743314.549934
+Iteration: 95430   Dual objective     =   48896869149.228271
+Iteration: 96692   Dual objective     =   48951871550.228142
+Elapsed time = 54.05 sec. (60003.76 ticks, 96730 iterations)
+Iteration: 97397   Dual objective     =   48978047928.732559
+Iteration: 98753   Dual objective     =   48989808975.914734
+Iteration: 99675   Dual objective     =   49013157706.045898
+Iteration: 100788   Dual objective     =   49038051436.165771
+Iteration: 101701   Dual objective     =   49063617179.275734
+Iteration: 102754   Dual objective     =   49087989330.883301
+Iteration: 104061   Dual objective     =   49131597776.129501
+Iteration: 104663   Dual objective     =   49133759452.335976
+Iteration: 105799   Dual objective     =   49156822123.274689
+Elapsed time = 61.89 sec. (70005.97 ticks, 106492 iterations)
+Iteration: 106657   Dual objective     =   49179773080.926933
+Iteration: 108371   Dual objective     =   49198003583.335381
+Iteration: 109188   Dual objective     =   49211616295.206596
+Iteration: 109815   Dual objective     =   49220461410.625511
+Iteration: 110197   Dual objective     =   49224235923.662819
+Iteration: 110396   Dual objective     =   49226976206.282036
+Iteration: 110424   Dual objective     =   49227743704.319939
+Iteration: 111161   Dual objective     =   49234213614.729149
+Iteration: 111810   Dual objective     =   49237063083.598083
+Iteration: 113375   Dual objective     =   49301427342.768608
+Iteration: 114172   Dual objective     =   49305650219.026741
+Iteration: 114210   Dual objective     =   49305738887.772713
+Iteration: 115023   Dual objective     =   49311353114.651886
+Elapsed time = 70.30 sec. (80009.18 ticks, 115556 iterations)
+Iteration: 115962   Dual objective     =   49319678972.418388
+Iteration: 116102   Dual objective     =   49320212901.694832
+Iteration: 116114   Dual objective     =   49320222565.502800
+Iteration: 116128   Dual objective     =   49320228943.169579
+Iteration: 116157   Dual objective     =   49320322786.038467
+Iteration: 117165   Dual objective     =   49325799103.924660
+Iteration: 117206   Dual objective     =   49325951712.391800
+Iteration: 118014   Dual objective     =   49328005592.693146
+Iteration: 118080   Dual objective     =   49328139514.865532
+Iteration: 118085   Dual objective     =   49328173625.835793
+Iteration: 118185   Dual objective     =   49328340439.667061
+Iteration: 118979   Dual objective     =   49331016009.830162
+Iteration: 119007   Dual objective     =   49331155833.366989
+Iteration: 119022   Dual objective     =   49331192282.172028
+Iteration: 119582   Dual objective     =   49331689466.911911
+Iteration: 119851   Dual objective     =   49331923472.500404
+Iteration: 120247   Dual objective     =   49332545310.477211
+Iteration: 120347   Dual objective     =   49332606989.139977
+Iteration: 120350   Dual objective     =   49332672131.160774
+Iteration: 120403   Dual objective     =   49332686217.005470
+Iteration: 120449   Dual objective     =   49332704933.756416
+Iteration: 122188   Dual objective     =   49332957244.218369
+Iteration: 122245   Dual objective     =   49332961652.055756
+Iteration: 122247   Dual objective     =   49332962465.997040
+Iteration: 122252   Dual objective     =   49332985462.786919
+Iteration: 122352   Dual objective     =   49332985787.645851
+Iteration: 125660   Dual objective     =   49332989731.584290
+Iteration: 128071   Dual objective     =   49332992312.575577
+Removing perturbation.
+Iteration: 128105    Objective     =   49332992147.981216
+
+Barrier solved model.
+
+
+--- LP status (1): optimal.
+--- Cplex Time: 132.98sec (det. 12330.75 ticks)
+
+
+Optimal solution found
+Objective:  49332992147.933678
+
+--- Reading solution for model epmProjectEV
+--- main_expected_value_soln.gms(253) 136 Mb  134 secs
+--- Executing after solve: elapsed 0:03:25.880
+--- main_expected_value_soln.gms(256) 136 Mb
+--- GDX File (execute_unload) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\res_energyEQDS.gdx
+--- main_expected_value_soln.gms(257) 136 Mb
+
+GDXXRW           47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Check that Excel is installed correctly.
+In case you use the "Click-to-Run" version of Excel, uninstall
+this version and install the regular version.
+**** Problem opening Excel: Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Total time = 16 Ms
+--- main_expected_value_soln.gms(259) 136 Mb
+--- GDX File (execute_unload) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\powerGenerationDS.gdx
+--- main_expected_value_soln.gms(260) 136 Mb
+
+GDXXRW           47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Check that Excel is installed correctly.
+In case you use the "Click-to-Run" version of Excel, uninstall
+this version and install the regular version.
+**** Problem opening Excel: Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Total time = 0 Ms
+--- main_expected_value_soln.gms(262) 136 Mb
+--- GDX File (execute_unload) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\res_storageCapacityDS.gdx
+--- main_expected_value_soln.gms(263) 136 Mb
+
+GDXXRW           47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Check that Excel is installed correctly.
+In case you use the "Click-to-Run" version of Excel, uninstall
+this version and install the regular version.
+**** Problem opening Excel: Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Total time = 0 Ms
+--- main_expected_value_soln.gms(265) 136 Mb
+--- GDX File (execute_unload) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\res_storageLoadingDS.gdx
+--- main_expected_value_soln.gms(266) 136 Mb
+
+GDXXRW           47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Check that Excel is installed correctly.
+In case you use the "Click-to-Run" version of Excel, uninstall
+this version and install the regular version.
+**** Problem opening Excel: Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Total time = 16 Ms
+--- main_expected_value_soln.gms(268) 136 Mb
+--- GDX File (execute_unload) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\res_overallLoadDS.gdx
+--- main_expected_value_soln.gms(269) 136 Mb
+
+GDXXRW           47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Check that Excel is installed correctly.
+In case you use the "Click-to-Run" version of Excel, uninstall
+this version and install the regular version.
+**** Problem opening Excel: Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Total time = 16 Ms
+--- main_expected_value_soln.gms(271) 136 Mb
+--- GDX File (execute_unload) C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\res_buildCapacitieDS.gdx
+--- main_expected_value_soln.gms(272) 136 Mb
+
+GDXXRW           47.4.0 838fd78c Jul 30, 2024          WEI x86 64bit/MS Window
+Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Check that Excel is installed correctly.
+In case you use the "Click-to-Run" version of Excel, uninstall
+this version and install the regular version.
+**** Problem opening Excel: Cannot create an instance of Excel: Error = Invalid class string, ProgID: "Excel.Application"
+Total time = 15 Ms
+*** Status: Normal completion
+--- Job main_expected_value_soln.gms Stop 09/14/24 01:36:00 elapsed 0:03:26.162

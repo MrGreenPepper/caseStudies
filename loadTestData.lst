@@ -1,0 +1,126 @@
+GAMS 47.4.0  838fd78c Jul 30, 2024          WEX-WEI x86 64bit/MS Windows - 09/12/24 01:56:31 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1   
+   2   
+   3  Sets
+   4  t /t1*t168, t1460*t1628, t2920*t3088, t4380*t4548, t5840*t6008, t7300*t7468/
+   5  snaps /snap1*snap4/
+   6  plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
+   7  conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
+   8  baseLoadPlants(plants)      /lignite, hardcoal/
+   9  renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, reservoirStorages/
+  10  constraintInvestsPlants(plants)       /water, reservoirStorages/
+  11  storages(plants)
+  12   
+  13  ;
+  14   
+  15   
+  16   
+  18  Parameter PowerDemand(t, scenario)
+****                                  $120
+**** 120  Unknown identifier entered as set
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\powerDemand.gdx
+--- LOAD  PowerDemand = 1:PowerDemand
+  22  ;
+  23   
+  24   
+  25   
+  26  Scalar
+  27  WaterCapacitieFactors /3.793961864/
+  28  ;
+  29   
+  30  Parameter StorageCapacity(storages);
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\storageCapacity.gdx
+--- LOAD  storages = 2:Dim1
+  34  *$load country = dim2
+--- LOAD  StorageCapacity = 1:storageCapacity
+  37  ;
+  38   
+  39   
+  40   
+  42  Parameter Plants_capacities(plants)
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\installedCapacities_2019_01_final.gdx
+--- LOAD  Plants_capacities = 1:Plants_capacities
+  46  ;
+  47   
+  49  Parameter CapacityFactor(t, plants)
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\capFactors.gdx
+--- LOAD  CapacityFactor = 1:CapacityFactor
+  53  ;
+  54   
+  55  Parameter Plants_availability(plants);
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_availabilities_2019.gdx
+--- LOAD  Plants_availability = 1:Plants_availability
+  60  ;
+  61   
+  63  Parameter Plants_carbonEmissions(plants)
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\carbonEmission_2019.gdx
+--- LOAD  Plants_carbonEmissions = 1:Plants_carbonEmissions
+  67  ;
+  68   
+  70  Parameter CarbonEmissionEfficiencyFactor(plants)
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_efficiency.gdx
+--- LOAD  CarbonEmissionEfficiencyFactor = 1:carbonEmissionEfficiencyFactor
+  74  ;
+  75   
+  77  Parameter InvestmentCosts(plants)
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\InvestmentCosts.gdx
+--- LOAD  InvestmentCosts = 1:InvestmentCosts
+  81  ;
+  82   
+  84  Parameter OperatingCosts(plants)
+GDXIN   C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\opperational_costs_2019_2.gdx
+--- LOAD  OperatingCosts = 1:OperatingCosts
+  88  ;
+  89   
+  90   
+  91   
+       
+  95  *import larger tabels like PowerDemand and plant data from excel
+
+**** 1 ERROR(S)   0 WARNING(S)
+GAMS 47.4.0  838fd78c Jul 30, 2024          WEX-WEI x86 64bit/MS Windows - 09/12/24 01:56:31 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\loadTestData.gms
+     2       17 CALL           1      17  gdxxrw.exe powerDemand.xlsx par=PowerDemand rng=gams!A5:B8765 dim=2 cdim=1 rdim=1 log=log_powerDemand.txt
+     3       19 GDXIN          1      19  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\powerDemand.gdx
+     4       31 CALL           1      31  csv2gdx storageCapacities_2019_final.csv output=storageCapacity.gdx id=storageCapacity fieldSep=semiColon decimalSep=comma colCount=2 index=1 value=2 useHeader=y trace=1
+     5       32 GDXIN          1      32  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\storageCapacity.gdx
+     6       41 CALL           1      41  gdxxrw.exe installedCapacities_2019_01_final.xlsx par=Plants_capacities rng=Sheet1!A1:B15 dim=1 cdim=0 rdim=1 log=log_plantCapacities.txt
+     7       43 GDXIN          1      43  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\installedCapacities_2019_01_final.gdx
+     8       48 CALL           1      48  gdxxrw.exe capFactors.xlsx par=CapacityFactor rng=Tabelle1!A1:H8761 dim=2 cdim=1 rdim=1 log=log_capacityFactors.txt
+     9       50 GDXIN          1      50  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\capFactors.gdx
+    10       56 CALL           1      56  gdxxrw.exe plant_availabilities_2019.xlsx par=Plants_availability rng=Sheet1!A1:B14 dim=1 cdim=0 rdim=1 log=log_plantAvail.txt
+    11       57 GDXIN          1      57  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_availabilities_2019.gdx
+    12       62 CALL           1      62  gdxxrw.exe carbonEmission_2019.xlsx par=Plants_carbonEmissions rng=Sheet1!A2:B15 rdim=1 cdim=0 log=log_carbEm.txt
+    13       64 GDXIN          1      64  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\carbonEmission_2019.gdx
+    14       69 CALL           1      69  gdxxrw.exe plant_efficiency.xlsx par=carbonEmissionEfficiencyFactor rng=Sheet1!A2:B5 rdim=1 cdim=0 log=log_carbEmEff.txt
+    15       71 GDXIN          1      71  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\plant_efficiency.gdx
+    16       76 CALL           1      76  gdxxrw.exe InvestmentCosts.xlsx par=InvestmentCosts rng=Sheet1!A2:B20 rdim=1 cdim=0 log=log_investC.txt
+    17       78 GDXIN          1      78  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\InvestmentCosts.gdx
+    18       83 CALL           1      83  gdxxrw.exe opperational_costs_2019_2.xlsx par=OperatingCosts rng=Sheet1!A2:B17 rdim=1 cdim=0 log=log_opC.txt
+    19       85 GDXIN          1      85  C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\opperational_costs_2019_2.gdx
+
+
+COMPILATION TIME     =        0.297 SECONDS      7 MB  47.4.0 838fd78c WEX-WEI
+
+
+USER: Course License                                 S240430|0002AO-GEN
+      TU Dresden, Business Management and Economics             DCE3456
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\loadTestData.gms
+Output     C:\Users\Administrator\Desktop\caseStudies-paper_branch\caseStudies-paper_branch 3\loadTestData.lst
+
+**** USER ERROR(S) ENCOUNTERED

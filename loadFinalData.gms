@@ -3,10 +3,9 @@
 Sets
 t /t1*t8760/
 scenario /s1*s3/
-snaps /snap1*snap4/
 plants /windOff, windOn, water, biomass, solar, waste, geothermal, lignite, nuclear, hardcoal, gas, oil, pumpedStoragesPlants, battery, reservoirStorages/
-conventionalPlants(plants) /lignite, nuclear, hardcoal, gas, oil/
-baseLoadPlants(plants)      /lignite, hardcoal/
+conventionalPlants(plants) /lignite,  hardcoal,nuclear, gas, oil/
+baseLoadPlants(plants)      /lignite, nuclear,hardcoal/
 renewablePlants(plants) /windOff, windOn, water, biomass, solar, waste, reservoirStorages/
 constraintInvestsPlants(plants)       /water, reservoirStorages/
 storages(plants)
@@ -23,7 +22,6 @@ $gdxIn powerDemand.gdx
 $load PowerDemand
 $gdxIn
 ;
-
 
 
 Scalar
@@ -87,10 +85,3 @@ $gdxIn opperational_costs_2019_2.gdx
 $load OperatingCosts
 $gdxIn
 ;
-
-
-
-$onText
-
-$offText
-*import larger tabels like PowerDemand and plant data from excel
